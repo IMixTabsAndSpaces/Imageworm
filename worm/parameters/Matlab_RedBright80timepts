@@ -1,0 +1,166 @@
+%parameter file for matlab nuclear detection
+
+%parameters needed in common usage
+
+conservememory=false;
+
+slices=67;
+xyres=.087;
+zres=.504;  
+
+%Start and end time to be processed
+start_time=1;
+end_time=80;
+
+%Diameter of a nucleus at start time. 
+%At the first time point this parameter needs to be manually set to the size of the nuclei. 
+%For elongated nuclei it should be set a little higher than the short axis. 
+%example:firsttimestepdiam=40;
+firsttimestepdiam=80;
+
+%Guess at cell stage at start_time.
+%Used to index into parameters when they are divided up by cell stage.
+%example:firsttimestepnumcells=4; 
+firsttimestepnumcells=6; 
+
+%Main Tunable Parameters:
+
+%Stages (in number of cells) at which to switch between parameter blocks.
+%example:parameters.staging=[102,181,251,351];
+%20110203 parameters.staging=[102,181,251,351,500];
+parameters.staging=[60,181,251,351,500];
+
+%Threshold on noise maxima to discard (this can be staged as well)
+%(threshold for a significantly bright slice).
+%This should be set a little lower than the brightest filtered 3D maxima corresponding to a nucleus. 
+%example:parameters.intensitythreshold=[8,10,14,16,21,21]
+%parameters.intensitythreshold=.02;
+%parameters.intensitythreshold=[0.01,0.012,0.015,0.022,0.024,0.024];
+%20110107 parameters.intensitythreshold=[0.01,0.012,0.015,0.022,0.026,0.028];
+%20110131 parameters.intensitythreshold=[0.012,0.014,0.018,0.028,0.032,0.036];
+%20110203 parameters.intensitythreshold=[0.020,0.022,0.024,0.032,0.04,0.044];
+%Red67parameters.intensitythreshold=[0.016,0.016,0.018,0.030,0.04,0.044];
+parameters.intensitythreshold=[0.020,0.022,0.024,0.032,0.04,0.046];
+
+%Size filter used in terms of increments of expected diameter.
+%1 is usually a good value. 
+%If nuclei are very separated and strongly multi modal GFP is causing FP this can be raised to smooth more.
+%in that case minDrop typically needs to be raised also to compensate for this blurring.
+%example:parameters.sigma=1
+parameters.sigma=1;
+
+%This block of parameters can either be unstaged in which case are set to number
+%or staged in which case staging defines the cell stages eg 0-102 cells range is 100.
+
+%Threshold on slice inclusion in a nucleus. 
+%the bigger the number is the less likely it is to split ambigious cases into two halves.
+%This is the primary parameter influencing 3D nuclear extraction and iterative discovery of overlooked nuclei. 
+%When nuclei are well separated it will have relatively little effect, 
+%but should be set relatively high to avoid splitting nuclei into multiple fragments during extraction
+%and to ensure nuclei initially detected twice are merged (which will not happen if their slice sets do not overlap). 
+%When images are relatively crowded a low single digit number is typically best, representing a slight bias to claim unlikely looking slices, 
+%but not so high as to cause the claiming of entire separate nuclei.
+%example: parameters.rangethreshold=[100,15,8,6,3];
+%parameters.rangethreshold=[84,21,9,6,4,3];
+%parameters.rangethreshold=[84,31,21,15,10,10];
+%20110107 parameters.rangethreshold=[84,31,21,15,2,1];
+parameters.rangethreshold=[84,31,21,20,10,8];
+
+%Distance at which to merge overlapping nuclei (the larger it is the fewer nuclei will be detected).
+%Distance between their centers at which nuclei with overlapping slice sets are merged regardless of other scores. 
+%In crowded and undersampled images detected centers are often much closer to each other in z than would appear possible given physical constraints. 
+%This requires relatively low thresholds .5 (meaning the center of one nucleus should not sit within the radial boundary of the other) is a typically safe value. 
+%In uncrowded images this can be increased because nuclei are more distant and overlaps are much more likely to correspond to multiple detections of one nucleus. 
+%example: parameters.nndist_merge=[.6,.6,.5,.5,.4];
+parameters.nndist_merge=[.8,.65,.6,.63,.5,.4];
+ 
+%Mergescore above which consider merging if split is really bad (lower it is more merging will occur).
+%Really bad merge score threshold above which things can be merged if their split score is also terrible. 
+%With MinsplitThreshold above these 2 parameters define an unbounded upper left rectangular gating region corresponding to malformed nuclei 
+%that are always merged with their overlapping neighbor.
+parameters.mergelower=[-200,-100,-75,-95,-90,-80];
+
+%Split score below which consider merging nuclei even though merge score isnt so good.
+%Threshold on split score below which things will be merged even if their merge score is not great as long as it is better than MinMergeThreshold below. 
+%A small single digit number is a universally safe starting point. Again this parameter is less critical.
+parameters.split=[15,9,6,5,3,3];
+
+%Merge overlappping nuclei if their aspect ratio is smaller than this.
+%Aspect ration between height (in z) and diameter. If 2 nuclei when merged have an aspect ratio below this cutoff they are merged regardless of merge/split scores. 
+%Given the presence of optical distortion that makes nuclei look stretched in z a relatively high number for this eg 1.5 is preferable in uncrowded images, 
+%while in crowded images nuclei may appear much shorter than their diameter requiring a threshold below 1.  
+%parameters.armerge=[1.6,1.6,1.3,1.12, 0.8,.62];
+%20110106 parameters.armerge=[1.6,1.6,1.3,1.12, 1.0,1.0];
+parameters.armerge=[1.6,1.6,1.3,1.2, 1.2,1.2];
+
+%Fraction by which split needs to be larger than merge to keep overlapping nuclei separate.
+%How much better the split score needs to be than the merge score before overlapping nuclei are split. 
+%1 is a good default value, it can be decreased to bias toward merging if too many FP are present, 
+%but the gain is somewhat minimal for low throughput applications, being fractions of a percent of error. 
+parameters.mergesplit=[1,.5,.4,.4,.5,.6];
+
+
+%Tunable parameters that users arent likely to change:
+
+%Threshold on a boundary ray that is too much longer than its neighbor.
+%The maximum allowable difference between two adjacent ray lengths. 1.5 is a good default.
+%More elongated nuclei need a higher value, but this carries some risk of merging crowded adjacent nuclei.
+parameters.large_ray_threshold=1.55;
+
+%Threshold on a boundary ray that is too much shorter than its neighbor.
+%The minimum allowable difference between adjacent slices.
+%It is not typically necessary to adjust this. 
+parameters.small_ray_threshold=1/3;
+
+%Boundary of nucleus is based on isocontour representing 70 % of maximum intensity.
+%The drop in value from the maximum which is deemed ‘close enough’ to a zero crossing.
+%.3 is a reasonable default (a 70% drop).
+%If the image appears blurry it should be set a bit higher to prevent overestimation of diameter and hence over smoothing. 
+parameters.boundary_percent=.25;
+
+%ROI subergion for examination.
+%Defines subregion of image (in original coordinate system) for processing.
+%Speeds up processing and allows multiple embryos to be processed.
+ROI=false;
+ROIxmin=0;
+ROIxmax=0;
+ROIymin=0;
+ROIymax=0;
+
+
+%Internal program configuration parameters:
+
+%Not using new subtiff green and red side by side images
+newscope=false;
+
+%Name of trained disk inclusion distributions, would only change if you retrained model for new images.
+distribution_file='clean_distributions.mat';
+distribution_file2='clean_distributions.mat';
+
+%Not using LSM files that are all in one tiff 
+LSM=false;
+
+%Output acetree readable slices for the images. This is not necessary for presplit images, 
+%but if you turn it off and are creating lineages starrynite wont know where to find them unless modify the main perl script
+outputSlice=false;
+
+%Obsolete alternate thresholding method. 
+parameters.GRADIENT_THRESH=false; 
+
+%Whether to use SN data to match online.
+nodata=true;
+
+%Obsolete whether to use SN data for diameter and stored bottom information.
+nodatause=true;
+
+%Whether to save all partial results as well as final result in esequence.
+savedata=true; 
+
+%Obsolete flag that detects bottom on a per volume basis instead of at end.
+singlevolume=false; 
+
+%Output nuclei files starrynite can read.
+SNoutput=true; 
+
+%Standard serieses are processed at half resolution, since they arent 'really' that high resolution.
+downsampling=0.5;

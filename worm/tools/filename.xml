@@ -1,0 +1,19 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<experiment>
+  <series name="2018-11-14-15-29-xy1"/>
+  <date date="20181114"/>
+  <person name="LinuxStorage"/>
+  <strain name="n/a"/>
+  <treatments desc="n/a"/>
+  <redsig value="n/a"/>
+  <imageloc loc="/media/zachlab/Windows/LinuxStorage/images/archive/2018-11-14-15-29-xy1"/>
+  <timepts num="240"/>
+  <annots loc="/media/zachlab/Windows/LinuxStorage/images/archive/2018-11-14-15-29-xy1"/>
+  <acetree config="2018-11-14-15-29-xy1.xml"/>
+  <editedby name="n/a"/>
+  <editedtimepts num="n/a"/>
+  <editedcells num="n/a"/>
+  <checkedby name="n/a"/>
+  <comments text="n/a"/>
+  <status case="new"/>
+</experiment>

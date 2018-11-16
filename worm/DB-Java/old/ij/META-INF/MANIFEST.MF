@@ -1,0 +1,15 @@
+Manifest-Version: 1.0
+Laboratory: Murray Laboratory
+Created-By: 1.4.2-70 ("Apple Computer, Inc.")
+ToolsLocation: /home/zachlab/ImageWorm/DB-Java/
+MatlabDefaultParams: mparmDEFAULT.txt
+SNDefaultParms: /home/zachlab/ImageWorm/parameters/greenParameters
+DBLocation: /media/zachlab/Windows/LinuxStorage/embryoDB/
+Ant-Version: Apache Ant 1.6.5
+ArchiveLocation: /media/zachlab/Windows/LinuxStorage/
+AnnotsLocation: /media/zachlab/Windows/LinuxStorage/
+Main-Class: ij.ImageJ
+UserNameLocation: 3
+StarryNite: /home/zachlab/ImageWorm/DB-Java/starrynite-debug
+
+

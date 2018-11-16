@@ -1,0 +1,16 @@
+Manifest-Version: 201009111337
+Laboratory: Murray Laboratory
+UseDats: yes
+Created-By: biowolp biowolp@u.washington.edu
+ToolsLocation: /home/zachlab/ImageWorm/DB-Java/
+MatlabDefaultParams: mparmDEFAULT.txt
+SNDefaultParms: /home/zachlab/ImageWorm/parameters/greenParameters
+DBLocation: /media/zachlab/Windows/LinuxStorage/embryoDB/
+Class-Path: ij.jar flanagan.jar acebatch2.jar AceTree.jar
+University-of-Washington: Department of Genome Sciences
+ArchiveLocation: /media/zachlab/Windows/LinuxStorage/
+AnnotsLocation: /media/zachlab/Windows/LinuxStorage/
+Main-Class: Main
+UserNameLocation: 3
+StarryNite: /home/zachlab/ImageWorm/DB-Java/starrynite-debug
+

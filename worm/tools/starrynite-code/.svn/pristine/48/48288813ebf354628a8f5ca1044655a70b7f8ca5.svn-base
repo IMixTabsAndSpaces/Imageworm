@@ -1,0 +1,68 @@
+/* Copyright (C) 2005-2008 University of Washington
+   Written by Dan Blick
+   This file is part of starrynite.
+
+   This program is free software; you can redistribute it and/or modify
+   it under the terms of the GNU General Public License as published by
+   the Free Software Foundation; either version 3, or (at your option)
+   any later version.
+
+   This program is distributed in the hope that it will be useful,
+   but WITHOUT ANY WARRANTY; without even the implied warranty of
+   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+   GNU General Public License for more details.
+
+   You should have received a copy of the GNU General Public License
+   along with this program; if not, write to the Free Software Foundation,
+   Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.  */
+
+%{
+#if HAVE_CONFIG_H
+#include <config.h>
+#endif
+
+#include <string.h>
+
+#include "lookup_parameter.h"
+%}
+
+%language=ANSI-C
+%enum
+%readonly-tables
+%struct-type
+
+struct parameter;
+%%
+time_start, TIME_START
+time_end, TIME_END
+plane_start, PLANE_START
+plane_end, PLANE_END
+xy_res, XY_RES
+z_res, Z_RES
+time_interval, TIME_INTERVAL
+graphic_output, GRAPHIC_OUTPUT
+neighborhood_size, NEIGHBORHOOD_SIZE
+cell_ct_limit, CELL_CT_LIMIT
+nuc_size, NUC_SIZE
+polar_size, POLAR_SIZE
+max_nuc_size, MAX_NUC_SIZE
+nuc_size_factor1, NUC_SIZE_FACTOR1
+nuc_size_factor2, NUC_SIZE_FACTOR2
+nuc_size_factor3, NUC_SIZE_FACTOR3
+nuc_size_factor4, NUC_SIZE_FACTOR4
+noise_fraction, NOISE_FRACTION
+max_weight_cutoff, MAX_WEIGHT_CUTOFF
+nuc_density_cutoff, NUC_DENSITY_CUTOFF
+nuc_density_cutoff1, NUC_DENSITY_CUTOFF1
+nuc_density_cutoff2, NUC_DENSITY_CUTOFF2
+nuc_density_cutoff3, NUC_DENSITY_CUTOFF3
+noise_factor, NOISE_FACTOR
+noise_factor1, NOISE_FACTOR1
+noise_factor2, NOISE_FACTOR2
+noise_factor3, NOISE_FACTOR3
+noise_time_switch1, NOISE_TIME_SWITCH1
+noise_time_switch2, NOISE_TIME_SWITCH2
+minimal_cell_cycle, MINIMAL_CELL_CYCLE
+ambiguity_cutoff, AMBIGUITY_CUTOFF
+shrink_elastisity, SHRINK_ELASTISITY
+expand_elastisity, EXPAND_ELASTISITY

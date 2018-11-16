@@ -1,0 +1,1345 @@
+	Time	Cell	Tissue
+AB	3		
+ABa	19		
+ABal	43		
+ABala	56		
+ABalaa	75		
+ABalaaa	103		
+ABalaaaa	137		
+ABalaaaal	181		
+ABalaaaala	232		
+ABalaaaalal	330	AINL	Nervous
+ABalaaaalar	330	death	Death
+ABalaaaalp	232		
+ABalaaaalpa	325	death	Death
+ABalaaaalpp	325	ILshL	Glia
+ABalaaaar	181		
+ABalaaaarl	233		
+ABalaaaarla	314	death	Death
+ABalaaaarlp	314	RMEL	Nervous
+ABalaaaarr	233		
+ABalaaaarra	314	death	Death
+ABalaaaarrp	314	RMER	Nervous
+ABalaaap	137		
+ABalaaapa	175		
+ABalaaapal	225		
+ABalaaapall	299	ILsoL	Glia
+ABalaaapalr	299	AVDL	Nervous
+ABalaaapar	225		
+ABalaaaparl	313	death	Death
+ABalaaaparr	313	ILshDL	Glia
+ABalaaapp	175		
+ABalaaappl	226		
+ABalaaappll	312	ILshDR	Glia
+ABalaaapplr	312	death	Death
+ABalaaappr	226		
+ABalaaapprl	300	AVDR	Nervous
+ABalaaapprr	300	ILsoR	Glia
+ABalaap	103		
+ABalaapa	137		
+ABalaapaa	181		
+ABalaapaaa	236		
+ABalaapaaal	334	death	Death
+ABalaapaaar	334	AINR	Nervous
+ABalaapaap	236		
+ABalaapaapa	325	death	Death
+ABalaapaapp	325	ILshR	Glia
+ABalaapap	181		
+ABalaapapa	235	death	Death
+ABalaapapp	235		
+ABalaapappa	309	death	Death
+ABalaapappp	309	CEPsoVR	Glia
+ABalaapp	137		
+ABalaappa	175		
+ABalaappaa	230	death	Death
+ABalaappap	230		
+ABalaappapa	308	AVAR	Nervous
+ABalaappapp	308	OLQsoVR	Glia
+ABalaappp	175		
+ABalaapppa	223		
+ABalaapppaa	316	RIAR	Nervous
+ABalaapppap	316	death	Death
+ABalaapppp	223		
+ABalaappppa	289		
+ABalaappppaa	400	IL1R	Nervous
+ABalaappppap	400	death	Death
+ABalaappppp	289	IL2R	Nervous
+ABalap	75		
+ABalapa	103		
+ABalapaa	135		
+ABalapaaa	175		
+ABalapaaaa	229		
+ABalapaaaaa	348	AVHL	Nervous
+ABalapaaaap	348	death	Death
+ABalapaaap	229		
+ABalapaaapa	301	CANL	Nervous
+ABalapaaapp	301	OLLsoL	Glia
+ABalapaap	175		
+ABalapaapa	225		
+ABalapaapaa	321	RIAL	Nervous
+ABalapaapap	321	death	Death
+ABalapaapp	225		
+ABalapaappa	291		
+ABalapaappaa	400	IL1L	Nervous
+ABalapaappap	400	death	Death
+ABalapaappp	291	IL2L	Nervous
+ABalapap	135		
+ABalapapa	171		
+ABalapapaa	226	death	Death
+ABalapapap	226		
+ABalapapapa	291		
+ABalapapapaa	400	OLQDL	Nervous
+ABalapapapap	400	death	Death
+ABalapapapp	291	URYDL	Nervous
+ABalapapp	171		
+ABalapappa	218		
+ABalapappaa	279		
+ABalapappaaa	400	IL1DL	Nervous
+ABalapappaap	400	death	Death
+ABalapappap	279	IL2DL	Nervous
+ABalapappp	218		
+ABalapapppa	294	AVJL	Nervous
+ABalapapppp	294	CEPsoDL	Glia
+ABalapp	103		
+ABalappa	135		
+ABalappaa	178		
+ABalappaaa	239	death	Death
+ABalappaap	239		
+ABalappaapa	339	RID	Nervous
+ABalappaapp	339	death	Death
+ABalappap	178		
+ABalappapa	227		
+ABalappapaa	332	AVHR	Nervous
+ABalappapap	332	death	Death
+ABalappapp	227		
+ABalappappa	295	CANR	Nervous
+ABalappappp	295	OLLsoR	Glia
+ABalappp	135		
+ABalapppa	172		
+ABalapppaa	219		
+ABalapppaaa	295	ALA	Nervous
+ABalapppaap	295	RMED	Nervous
+ABalapppap	219		
+ABalapppapa	284		
+ABalapppapaa	400	OLQDR	Nervous
+ABalapppapap	400	death	Death
+ABalapppapp	284	URYDR	Nervous
+ABalapppp	172		
+ABalappppa	219		
+ABalappppaa	278		
+ABalappppaaa	400	IL1DR	Nervous
+ABalappppaap	400	death	Death
+ABalappppap	278	IL2DR	Nervous
+ABalappppp	219		
+ABalapppppa	291	AVJR	Nervous
+ABalapppppp	291	CEPsoDR	Glia
+ABalp	56		
+ABalpa	75		
+ABalpaa	102		
+ABalpaaa	134		
+ABalpaaaa	177		
+ABalpaaaaa	232		
+ABalpaaaaaa	307	e3VL	Pharynx
+ABalpaaaaap	307	m2VL	Pharynx
+ABalpaaaap	232		
+ABalpaaaapa	318	m1VL	Pharynx
+ABalpaaaapp	318	death	Death
+ABalpaaap	177		
+ABalpaaapa	230		
+ABalpaaapaa	315	m2L	Pharynx
+ABalpaaapap	315	death	Death
+ABalpaaapp	230		
+ABalpaaappa	313	death	Death
+ABalpaaappp	313	MCL	Pharynx
+ABalpaap	134		
+ABalpaapa	170		
+ABalpaapaa	212		
+ABalpaapaaa	284	arcpost	Arcade
+ABalpaapaap	284	e2DL	Pharynx
+ABalpaapap	212		
+ABalpaapapa	263	mc1DL	Pharynx
+ABalpaapapp	263	m3L	Pharynx
+ABalpaapp	170		
+ABalpaappa	222		
+ABalpaappaa	309	arc_ant	Arcade
+ABalpaappap	309	arcpost	Arcade
+ABalpaappp	222		
+ABalpaapppa	297	hyp1	Epidermis
+ABalpaapppp	297	hyp2	Epidermis
+ABalpap	102		
+ABalpapa	133		
+ABalpapaa	172		
+ABalpapaaa	223		
+ABalpapaaaa	291	RIPL	Nervous
+ABalpapaaap	291	hyp2	Epidermis
+ABalpapaap	223		
+ABalpapaapa	310	arc_ant	Arcade
+ABalpapaapp	310	death	Death
+ABalpapap	172		
+ABalpapapa	222		
+ABalpapapaa	290	RMDDL	Nervous
+ABalpapapap	290		
+ABalpapapapa	400	death	Death
+ABalpapapapp	400	SMBDL	Nervous
+ABalpapapp	222		
+ABalpapappa	302	death	Death
+ABalpapappp	302	SMBVL	Nervous
+ABalpapp	133		
+ABalpappa	168		
+ABalpappaa	213		
+ABalpappaaa	292	death	Death
+ABalpappaap	292		
+ABalpappaapa	400	I2L	Pharynx
+ABalpappaapp	400	death	Death
+ABalpappap	213		
+ABalpappapa	273	e2V	Pharynx
+ABalpappapp	273	mc3V	Pharynx
+ABalpappp	168		
+ABalpapppa	213		
+ABalpapppaa	324	I1L	Pharynx
+ABalpapppap	324	death	Death
+ABalpapppp	213		
+ABalpappppa	265	mc1V	Pharynx
+ABalpappppp	265	m3VL	Pharynx
+ABalpp	75		
+ABalppa	103		
+ABalppaa	135		
+ABalppaaa	179		
+ABalppaaaa	234	death	Death
+ABalppaaap	234		
+ABalppaaapa	311	AVAL	Nervous
+ABalppaaapp	311	OLQsoVL	Glia
+ABalppaap	179		
+ABalppaapa	231	death	Death
+ABalppaapp	231		
+ABalppaappa	308	death	Death
+ABalppaappp	308	CEPsoVL	Glia
+ABalppap	135		
+ABalppapa	172		
+ABalppapaa	220		
+ABalppapaaa	305	RMDVL	Nervous
+ABalppapaap	305	ILshVL	Glia
+ABalppapap	220		
+ABalppapapa	299	SAADL	Nervous
+ABalppapapp	299	ILsoVL	Glia
+ABalppapp	172		
+ABalppappa	218		
+ABalppappaa	296	SMDVL	Nervous
+ABalppappap	296	BAGL	Nervous
+ABalppappp	218		
+ABalppapppa	286		
+ABalppapppaa	400	IL1VL	Nervous
+ABalppapppap	400	death	Death
+ABalppapppp	286	IL2VL	Nervous
+ABalppp	103		
+ABalpppa	134		
+ABalpppaa	173		
+ABalpppaaa	227		
+ABalpppaaaa	313	AVEL	Nervous
+ABalpppaaap	313	OLQshVL	Glia
+ABalpppaap	227		
+ABalpppaapd	318	OLLshL	Glia
+ABalpppaapv	318	death	Death
+ABalpppap	173		
+ABalpppapa	220		
+ABalpppapad	298	RMDL	Nervous
+ABalpppapav	298	AFDL	Nervous
+ABalpppapp	220		
+ABalpppappa	287	death	Death
+ABalpppappp	287		
+ABalpppapppa	400	ASKL	Nervous
+ABalpppapppp	400	death	Death
+ABalpppp	134		
+ABalppppa	169		
+ABalppppaa	218		
+ABalppppaad	297	ADLL	Nervous
+ABalppppaav	297	death	Death
+ABalppppap	218		
+ABalppppapa	290		
+ABalppppapaa	400	OLLL	Nervous
+ABalppppapap	400	death	Death
+ABalppppapp	290	death	Death
+ABalppppp	169		
+ABalpppppa	211		
+ABalpppppaa	286	ADFL	Nervous
+ABalpppppap	286	AWBL	Nervous
+ABalpppppp	211		
+ABalppppppa	264		
+ABalppppppaa	348	ASEL	Nervous
+ABalppppppap	348	death	Death
+ABalppppppp	264		
+ABalpppppppa	338	ASJL	Nervous
+ABalpppppppp	338	AUAL	Nervous
+ABar	43		
+ABara	56		
+ABaraa	75		
+ABaraaa	102		
+ABaraaaa	135		
+ABaraaaaa	179		
+ABaraaaaaa	232		
+ABaraaaaaaa	315	e1VL	Pharynx
+ABaraaaaaap	315	m1L	Pharynx
+ABaraaaaap	232		
+ABaraaaaapa	314	e1VR	Pharynx
+ABaraaaaapp	314	m1R	Pharynx
+ABaraaaap	179		
+ABaraaaapa	238		
+ABaraaaapaa	330	death	Death
+ABaraaaapap	330	e1D	Pharynx
+ABaraaaapp	238	death	Death
+ABaraaap	135		
+ABaraaapa	171		
+ABaraaapaa	214		
+ABaraaapaaa	291	arcpost	Arcade
+ABaraaapaap	291	e2DR	Pharynx
+ABaraaapap	214		
+ABaraaapapa	274	mc1DR	Pharynx
+ABaraaapapp	274	m4R	Pharynx
+ABaraaapp	171		
+ABaraaappa	225		
+ABaraaappaa	314	arcpost	Arcade
+ABaraaappap	314	arcpost	Arcade
+ABaraaappp	225		
+ABaraaapppa	302	arc_ant	Arcade
+ABaraaapppp	302	hyp1	Epidermis
+ABaraap	102		
+ABaraapa	134		
+ABaraapaa	173		
+ABaraapaaa	222		
+ABaraapaaaa	303	e3D	Pharynx
+ABaraapaaap	303	m1DL	Pharynx
+ABaraapaap	222		
+ABaraapaapa	288	m2DL	Pharynx
+ABaraapaapp	288	mc2DL	Pharynx
+ABaraapap	173		
+ABaraapapa	219		
+ABaraapapaa	274		
+ABaraapapaad	400	death	Death
+ABaraapapaav	400	NSML	Nervous
+ABaraapapap	274	m5L	Pharynx
+ABaraapapp	219		
+ABaraapappa	313	M2L	Pharynx
+ABaraapappp	313	M3L	Pharynx
+ABaraapp	134		
+ABaraappa	171		
+ABaraappaa	219		
+ABaraappaaa	302	MI	Pharynx
+ABaraappaap	302	m1DR	Pharynx
+ABaraappap	219		
+ABaraappapa	283	m2DR	Pharynx
+ABaraappapp	283	mc2DR	Pharynx
+ABaraappp	171		
+ABaraapppa	218		
+ABaraapppaa	274		
+ABaraapppaad	400	death	Death
+ABaraapppaav	400	NSMR	Nervous
+ABaraapppap	274	m5R	Pharynx
+ABaraapppp	218		
+ABaraappppa	311	M2R	Pharynx
+ABaraappppp	311	M3R	Pharynx
+ABarap	75		
+ABarapa	102		
+ABarapaa	134		
+ABarapaaa	174		
+ABarapaaaa	228		
+ABarapaaaaa	306	e3VR	Pharynx
+ABarapaaaap	306	m2VR	Pharynx
+ABarapaaap	228		
+ABarapaaapa	316	m1VR	Pharynx
+ABarapaaapp	316	death	Death
+ABarapaap	174		
+ABarapaapa	219		
+ABarapaapaa	315	m2R	Pharynx
+ABarapaapap	315	death	Death
+ABarapaapp	219		
+ABarapaappa	278	m3R	Pharynx
+ABarapaappp	278	MCR	Pharynx
+ABarapap	134		
+ABarapapa	170		
+ABarapapaa	217		
+ABarapapaaa	294	death	Death
+ABarapapaap	294		
+ABarapapaapa	400	I2R	Pharynx
+ABarapapaapp	400	death	Death
+ABarapapap	217		
+ABarapapapa	284	arcpost	Arcade
+ABarapapapp	284	I5	Pharynx
+ABarapapp	170		
+ABarapappa	212		
+ABarapappaa	328	I1R	Pharynx
+ABarapappap	328	death	Death
+ABarapappp	212		
+ABarapapppa	266	mc2V	Pharynx
+ABarapapppp	266	m3VR	Pharynx
+ABarapp	102		
+ABarappa	134		
+ABarappaa	174		
+ABarappaaa	228		
+ABarappaaaa	309	RIPR	Nervous
+ABarappaaap	309	death	Death
+ABarappaap	228		
+ABarappaapa	315	hyp1	Epidermis
+ABarappaapp	315	death	Death
+ABarappap	174		
+ABarappapa	223		
+ABarappapaa	295	RMDDR	Nervous
+ABarappapap	295		
+ABarappapapa	400	death	Death
+ABarappapapp	400	SMBDR	Nervous
+ABarappapp	223		
+ABarappappa	301	DB2	Nervous
+ABarappappp	301	SMBVR	Nervous
+ABarappp	134		
+ABarapppa	171		
+ABarapppaa	221		
+ABarapppaaa	304	RMDVR	Nervous
+ABarapppaap	304	ILshVR	Glia
+ABarapppap	221		
+ABarapppapa	300	SAADR	Nervous
+ABarapppapp	300	ILsoVR	Glia
+ABarapppp	171		
+ABarappppa	219		
+ABarappppaa	296	SMDVR	Nervous
+ABarappppap	296	BAGR	Nervous
+ABarappppp	219		
+ABarapppppa	287		
+ABarapppppaa	400	IL1VR	Nervous
+ABarapppppap	400	death	Death
+ABarapppppp	287	IL2VR	Nervous
+ABarp	56		
+ABarpa	75		
+ABarpaa	103		
+ABarpaaa	132		
+ABarpaaaa	180		
+ABarpaaaaa	232		
+ABarpaaaaal	327	OLQsoDL	Glia
+ABarpaaaaar	327	OLQsoDR	Glia
+ABarpaaaap	232		
+ABarpaaaapa	324	OLQshDL	Glia
+ABarpaaaapp	324	CEPshDL	Glia
+ABarpaaap	180		
+ABarpaaapa	237		
+ABarpaaapaa	325	OLQshSR	Glia
+ABarpaaapap	325	CEPshDR	Glia
+ABarpaaapp	237	death	Death
+ABarpaap	132		
+ABarpaapa	169		
+ABarpaapaa	216	hyp6	Epidermis
+ABarpaapap	216	hyp7	Epidermis
+ABarpaapp	169		
+ABarpaappa	216	hyp7	Epidermis
+ABarpaappp	216	hyp7	Epidermis
+ABarpap	103		
+ABarpapa	134		
+ABarpapaa	171		
+ABarpapaaa	223		
+ABarpapaaaa	315	URADR	Nervous
+ABarpapaaap	315	CEMDR	Nervous
+ABarpapaap	223		
+ABarpapaapa	287	death	Death
+ABarpapaapp	287		
+ABarpapaappa	400	CEPDR	Nervous
+ABarpapaappp	400	URXR	Nervous
+ABarpapap	171		
+ABarpapapa	222	hyp4	Epidermis
+ABarpapapp	222	hyp6	Epidermis
+ABarpapp	134		
+ABarpappa	171		
+ABarpappaa	228	XXXR	Other
+ABarpappap	228	hyp5	Epidermis
+ABarpappp	171		
+ABarpapppa	222	HOR	Epidermis
+ABarpapppp	222	H1R	Epidermis
+ABarpp	75		
+ABarppa	105		
+ABarppaa	135		
+ABarppaaa	176		
+ABarppaaaa	234	ADEshL	Nervous
+ABarppaaap	234	H2L	Epidermis
+ABarppaap	176		
+ABarppaapa	227	hyp7	Epidermis
+ABarppaapp	227		
+ABarppaappa	400	ALML	Nervous
+ABarppaappp	400	BDUL	Nervous
+ABarppap	135		
+ABarppapa	178		
+ABarppapaa	235	V1L	Epidermis
+ABarppapap	235	V2L	Epidermis
+ABarppapp	178		
+ABarppappa	236	V4L	Epidermis
+ABarppappp	236	V6L	Epidermis
+ABarppp	105		
+ABarpppa	135		
+ABarpppaa	175		
+ABarpppaaa	231	ADEshR	Nervous
+ABarpppaap	231	H2R	Epidermis
+ABarpppap	175		
+ABarpppapa	226	hyp7	Epidermis
+ABarpppapp	226		
+ABarpppappa	400	ALMR	Nervous
+ABarpppappp	400	BDUR	Nervous
+ABarpppp	135		
+ABarppppa	177		
+ABarppppaa	232	V1R	Epidermis
+ABarppppap	232	V2R	Epidermis
+ABarppppp	177		
+ABarpppppa	234	V4R	Epidermis
+ABarpppppp	234	V6R	Epidermis
+ABp	19		
+ABpl	43		
+ABpla	56		
+ABplaa	74		
+ABplaaa	102		
+ABplaaaa	133		
+ABplaaaaa	171		
+ABplaaaaaa	224		
+ABplaaaaaaa	317	URADL	Nervous
+ABplaaaaaap	317	CEMDL	Nervous
+ABplaaaaap	224		
+ABplaaaaapa	289	death	Death
+ABplaaaaapp	289		
+ABplaaaaappa	400	CEPDL	Nervous
+ABplaaaaappp	400	URXL	Nervous
+ABplaaaap	171		
+ABplaaaapa	223	hyp6	Epidermis
+ABplaaaapp	223	hyp6	Epidermis
+ABplaaap	133		
+ABplaaapa	172		
+ABplaaapaa	229	XXXL	Other
+ABplaaapap	229	hyp5	Epidermis
+ABplaaapp	172		
+ABplaaappa	223	HOL	Epidermis
+ABplaaappp	223	H1L	Epidermis
+ABplaap	102		
+ABplaapa	132		
+ABplaapaa	171		
+ABplaapaaa	222		
+ABplaapaaaa	307	hyp3	Epidermis
+ABplaapaaap	307	ILsoDL	Glia
+ABplaapaap	222		
+ABplaapaapa	295	URBL	Nervous
+ABplaapaapp	295	AMshL	Glia
+ABplaapap	171		
+ABplaapapa	221		
+ABplaapapaa	308	AWAL	Nervous
+ABplaapapap	308	ASGL	Nervous
+ABplaapapp	221		
+ABplaapappa	285	AIBL	Nervous
+ABplaapappp	285		
+ABplaapapppa	400	ASIL	Nervous
+ABplaapapppp	400	death	Death
+ABplaapp	132		
+ABplaappa	167		
+ABplaappaa	221	hyp4	Epidermis
+ABplaappap	221	hyp6	Epidermis
+ABplaappp	167		
+ABplaapppa	214	hyp7	Epidermis
+ABplaapppp	214	hyp7	Epidermis
+ABplap	74		
+ABplapa	102		
+ABplapaa	132		
+ABplapaaa	172		
+ABplapaaaa	222		
+ABplapaaaaa	302	death	Death
+ABplapaaaap	302		
+ABplapaaaapa	400	ADEL	Nervous
+ABplapaaaapp	400	ADAL	Nervous
+ABplapaaap	222		
+ABplapaaapa	300		
+ABplapaaapad	400	FLPL	Nervous
+ABplapaaapav	400	AIZL	Nervous
+ABplapaaapp	300	RMGL	Nervous
+ABplapaap	172		
+ABplapaapa	227	G2	Epidermis
+ABplapaapp	227	P1/2L	Epidermis
+ABplapap	132		
+ABplapapa	168		
+ABplapapaa	219		
+ABplapapaaa	400	QL	Nervous
+ABplapapaap	400	V5L	Epidermis
+ABplapapap	219	P9/10L	Epidermis
+ABplapapp	168		
+ABplapappa	216	P11	Epidermis
+ABplapappp	216		
+ABplapapppa	305	death	Death
+ABplapapppp	305		
+ABplapappppaa	400	PLML	Nervous
+ABplapappppap	400	ALNL	Nervous
+ABplapappppp	400	death	Death
+ABplapp	102		
+ABplappa	133		
+ABplappaa	172		
+ABplappaaa	222	P3/4L	Epidermis
+ABplappaap	222	P5/6L	Epidermis
+ABplappaapa	400		
+ABplappaapp	400		
+ABplappap	172		
+ABplappapa	222	V3L	Epidermis
+ABplappapp	222	P7/8L	Epidermis
+ABplappp	133		
+ABplapppa	174		
+ABplapppaa	230		
+ABplapppaaa	326	PVQL	Nervous
+ABplapppaap	326	death	Death
+ABplapppap	230		
+ABplapppapa	301	death	Death
+ABplapppapp	301		
+ABplapppappa	400	HSNL	Nervous
+ABplapppappp	400	PHBL	Nervous
+ABplapppp	174		
+ABplappppa	230	hyp7	Epidermis
+ABplappppp	230	TL	Epidermis
+ABplp	56		
+ABplpa	75		
+ABplpaa	103		
+ABplpaaa	135		
+ABplpaaaa	173		
+ABplpaaaaa	220		
+ABplpaaaaaa	299	SAAVL	Nervous
+ABplpaaaaap	299	AWCL	Nervous
+ABplpaaaap	220		
+ABplpaaaapa	290	exc_duct	Excretory
+ABplpaaaapp	290	DB1/3	Nervous
+ABplpaaap	173		
+ABplpaaapa	222		
+ABplpaaapaa	317	URAVL	Nervous
+ABplpaaapap	317	CEPshVL	Glia
+ABplpaaapp	222		
+ABplpaaappa	290		
+ABplpaaappaa	400	OLQVL	Nervous
+ABplpaaappap	400	death	Death
+ABplpaaappp	290	URYVL	Nervous
+ABplpaap	135		
+ABplpaapa	172		
+ABplpaapaa	222		
+ABplpaapaaa	300	RIVL	Nervous
+ABplpaapaap	300	AVBL	Nervous
+ABplpaapap	222		
+ABplpaapapa	299	AMsoL	Glia
+ABplpaapapp	299	CEMVL	Nervous
+ABplpaapp	172		
+ABplpaappa	219		
+ABplpaappaa	293	ASHL	Nervous
+ABplpaappap	293	RIBL	Nervous
+ABplpaappp	219		
+ABplpaapppa	289	AIML	Nervous
+ABplpaapppp	289		
+ABplpaappppa	400	CEPVL	Nervous
+ABplpaappppp	400	death	Death
+ABplpap	103		
+ABplpapa	133		
+ABplpapaa	171		
+ABplpapaaa	224		
+ABplpapaaaa	304	SMDDL	Nervous
+ABplpapaaap	304	AIYL	Nervous
+ABplpapaap	224		
+ABplpapaapa	305	SIADL	Nervous
+ABplpapaapp	305	SIBVL	Nervous
+ABplpapap	171		
+ABplpapapa	221		
+ABplpapapaa	291	exc_gl_L	Excretory
+ABplpapapap	291	AVKL	Nervous
+ABplpapapp	221		
+ABplpapappa	293	SIAVL	Nervous
+ABplpapappp	293	DB5	Nervous
+ABplpapp	133		
+ABplpappa	168		
+ABplpappaa	213		
+ABplpappaaa	268	RMEV	Nervous
+ABplpappaap	268	exc_cell	Excretory
+ABplpappap	213	death	Death
+ABplpappp	168		
+ABplpapppa	222		
+ABplpapppaa	299	K	Rectal
+ABplpapppap	299	K'	Rectal
+ABplpapppp	222		
+ABplpappppa	304	PVT	Nervous
+ABplpappppp	304	rect_D	Rectal
+ABplpp	75		
+ABplppa	104		
+ABplppaa	136		
+ABplppaaa	179		
+ABplppaaaa	235		
+ABplppaaaaa	297	SIBDL	Nervous
+ABplppaaaap	297		
+ABplppaaaapa	400	death	Death
+ABplppaaaapp	400	RICL	Nervous
+ABplppaaap	235	death	Death
+ABplppaap	179		
+ABplppaapa	231		
+ABplppaapaa	317	death	Death
+ABplppaapap	317	RIML	Nervous
+ABplppaapp	231		
+ABplppaappa	310	AIAL	Nervous
+ABplppaappp	310	DB6	Nervous
+ABplppap	136		
+ABplppapa	176		
+ABplppapaa	227		
+ABplppapaaa	296		
+ABplppapaaaa	400	SABVL	Nervous
+ABplppapaaap	400	RIFL	Nervous
+ABplppapaap	296	SABD	Nervous
+ABplppapap	227		
+ABplppapapa	315	DA2	Nervous
+ABplppapapp	315	DA4	Nervous
+ABplppapp	176		
+ABplppappa	231		
+ABplppappaa	309	RIGL	Nervous
+ABplppappap	309	DD1	Nervous
+ABplppappp	231		
+ABplppapppa	320	DD3	Nervous
+ABplppapppp	320	DD5	Nervous
+ABplppp	104		
+ABplpppa	135		
+ABplpppaa	173		
+ABplpppaaa	223		
+ABplpppaaaa	304	DA9	Nervous
+ABplpppaaap	304	DA6	Nervous
+ABplpppaap	223		
+ABplpppaapa	300		
+ABplpppaapaa	400	PVCL	Nervous
+ABplpppaapap	400	LUAL	Nervous
+ABplpppaapp	300	PHAL	Nervous
+ABplpppap	173		
+ABplpppapa	223		
+ABplpppapaa	278	PHshL	Nervous
+ABplpppapap	278	hyp8/9	Epidermis
+ABplpppapp	223	death	Death
+ABplpppp	135		
+ABplppppa	171		
+ABplppppaa	219		
+ABplppppaaa	293	PVPL	Nervous
+ABplppppaap	293	rect_VL	Rectal
+ABplppppap	219		
+ABplppppapa	292	U	Rectal
+ABplppppapp	292	F	Rectal
+ABplppppp	171		
+ABplpppppa	222		
+ABplpppppaa	313	mu_int_L	Muscle
+ABplpppppap	313	mu_anal	Muscle
+ABplpppppp	222		
+ABplppppppa	293	spike	Epidermis
+ABplppppppp	293	hyp10	Epidermis
+ABpr	43		
+ABpra	56		
+ABpraa	75		
+ABpraaa	102		
+ABpraaaa	134		
+ABpraaaaa	177		
+ABpraaaaaa	232		
+ABpraaaaaaa	316	AVER	Nervous
+ABpraaaaaap	316	OLQshVR	Glia
+ABpraaaaap	232		
+ABpraaaaapd	327	OLLshR	Glia
+ABpraaaaapv	327	death	Death
+ABpraaaap	177		
+ABpraaaapa	224		
+ABpraaaapad	303	RMDR	Nervous
+ABpraaaapav	303	AFDR	Nervous
+ABpraaaapp	224		
+ABpraaaappa	293	death	Death
+ABpraaaappp	293		
+ABpraaaapppa	400	ASKR	Nervous
+ABpraaaapppp	400	death	Death
+ABpraaap	134		
+ABpraaapa	172		
+ABpraaapaa	224		
+ABpraaapaad	309	ADLR	Nervous
+ABpraaapaav	309	death	Death
+ABpraaapap	224		
+ABpraaapapa	299		
+ABpraaapapaa	400	OLLR	Nervous
+ABpraaapapap	400	death	Death
+ABpraaapapp	299	death	Death
+ABpraaapp	172		
+ABpraaappa	215		
+ABpraaappaa	295	ADFR	Nervous
+ABpraaappap	295	AWBR	Nervous
+ABpraaappp	215		
+ABpraaapppa	269		
+ABpraaapppaa	359	ASER	Nervous
+ABpraaapppap	359	death	Death
+ABpraaapppp	269		
+ABpraaappppa	349	ASJR	Nervous
+ABpraaappppp	349	AUAR	Nervous
+ABpraap	102		
+ABpraapa	133		
+ABpraapaa	173		
+ABpraapaaa	224		
+ABpraapaaaa	307	hyp3	Epidermis
+ABpraapaaap	307	ILsoDR	Glia
+ABpraapaap	224		
+ABpraapaapa	295	URBR	Nervous
+ABpraapaapp	295	AMshR	Glia
+ABpraapap	173		
+ABpraapapa	222		
+ABpraapapaa	309	AWAR	Nervous
+ABpraapapap	309	ASGR	Nervous
+ABpraapapp	222		
+ABpraapappa	287	AIBR	Nervous
+ABpraapappp	287		
+ABpraapapppa	400	ASIR	Nervous
+ABpraapapppp	400	death	Death
+ABpraapp	133		
+ABpraappa	169		
+ABpraappaa	225	hyp4	Epidermis
+ABpraappaaa	400		
+ABpraappaap	400		
+ABpraappap	225	hyp6	Epidermis
+ABpraappp	169		
+ABpraapppa	218	hyp7	Epidermis
+ABpraapppp	218	hyp7	Epidermis
+ABprap	75		
+ABprapa	102		
+ABprapaa	133		
+ABprapaaa	174		
+ABprapaaaa	225		
+ABprapaaaaa	307	death	Death
+ABprapaaaap	307		
+ABprapaaaapa	400	ADER	Nervous
+ABprapaaaapp	400	ADAR	Nervous
+ABprapaaap	225		
+ABprapaaapa	303		
+ABprapaaapad	400	FLPR	Nervous
+ABprapaaapav	400	AIZR	Nervous
+ABprapaaapp	303	RMGR	Nervous
+ABprapaap	174		
+ABprapaapa	230	W	Epidermis
+ABprapaapp	230	P1/2R	Epidermis
+ABprapap	133		
+ABprapapa	170		
+ABprapapaa	222		
+ABprapapaaa	400	QR	Nervous
+ABprapapaap	400	V5R	Epidermis
+ABprapapap	222	P9/10R	Epidermis
+ABprapapp	170		
+ABprapappa	219	P12	Epidermis
+ABprapappp	219		
+ABprapapppa	310	death	Death
+ABprapapppp	310		
+ABprapappppaa	400	PLMR	Nervous
+ABprapappppap	400	ALNR	Nervous
+ABprapappppp	400	death	Death
+ABprapp	102		
+ABprappa	133		
+ABprappaa	174		
+ABprappaaa	226	P3/4R	Epidermis
+ABprappaap	226	P5/6R	Epidermis
+ABprappap	174		
+ABprappapa	226	V3R	Epidermis
+ABprappapp	226	P7/8R	Epidermis
+ABprappappa	400		
+ABprappappp	400		
+ABprappp	133		
+ABprapppa	176		
+ABprapppaa	233		
+ABprapppaaa	333	PVQR	Nervous
+ABprapppaap	333	death	Death
+ABprapppap	233		
+ABprapppapa	306	death	Death
+ABprapppapp	306		
+ABprapppappa	400	HSNR	Nervous
+ABprapppappp	400	PHRB	Nervous
+ABprapppp	176		
+ABprappppa	233	hyp7	Epidermis
+ABprappppp	233	TR	Epidermis
+ABprp	56		
+ABprpa	75		
+ABprpaa	103		
+ABprpaaa	135		
+ABprpaaaa	173		
+ABprpaaaaa	221		
+ABprpaaaaaa	301	SAAVR	Nervous
+ABprpaaaaap	301	AWCR	Nervous
+ABprpaaaap	221		
+ABprpaaaapa	291	G1	Excretory
+ABprpaaaapp	291	DB3/1	Nervous
+ABprpaaap	173		
+ABprpaaapa	222		
+ABprpaaapaa	317	URAVR	Nervous
+ABprpaaapap	317	CEPshVR	Glia
+ABprpaaapp	222		
+ABprpaaappa	290		
+ABprpaaappaa	400	OLQVR	Nervous
+ABprpaaappap	400	death	Death
+ABprpaaappp	290	URYVR	Nervous
+ABprpaap	135		
+ABprpaapa	172		
+ABprpaapaa	223		
+ABprpaapaaa	301	RIVR	Nervous
+ABprpaapaap	301	AVBR	Nervous
+ABprpaapap	223		
+ABprpaapapa	301	AMsoR	Glia
+ABprpaapapp	301	CEMVR	Nervous
+ABprpaapp	172		
+ABprpaappa	220		
+ABprpaappaa	293	ASHR	Nervous
+ABprpaappap	293	RIBR	Nervous
+ABprpaappp	220		
+ABprpaapppa	291	AIMR	Nervous
+ABprpaapppp	291		
+ABprpaappppa	400	CEPVR	Nervous
+ABprpaappppp	400	death	Death
+ABprpap	103		
+ABprpapa	134		
+ABprpapaa	172		
+ABprpapaaa	226		
+ABprpapaaaa	305	SMDDR	Nervous
+ABprpapaaap	305	AIYR	Nervous
+ABprpapaap	226		
+ABprpapaapa	305	SIADR	Nervous
+ABprpapaapp	305	SIBVR	Nervous
+ABprpapap	172		
+ABprpapapa	222		
+ABprpapapaa	291	exc_gl_R	Excretory
+ABprpapapap	291	AVKR	Nervous
+ABprpapapp	222		
+ABprpapappa	293	SIAVR	Nervous
+ABprpapappp	293	DA8	Nervous
+ABprpapp	134		
+ABprpappa	170		
+ABprpappaa	219		
+ABprpappaaa	287	RIH	Nervous
+ABprpappaap	287	AVL	Nervous
+ABprpappap	219		
+ABprpappapa	289	RIS	Nervous
+ABprpappapp	289	DB4	Nervous
+ABprpappp	170		
+ABprpapppa	220		
+ABprpapppaa	295	RIR	Nervous
+ABprpapppap	295	AVG	Nervous
+ABprpapppp	220		
+ABprpappppa	292	virR	Rectal
+ABprpappppp	292	virL	Rectal
+ABprpp	75		
+ABprppa	104		
+ABprppaa	137		
+ABprppaaa	179		
+ABprppaaaa	235		
+ABprppaaaaa	298	SIBDR	Nervous
+ABprppaaaap	298		
+ABprppaaaapa	400	death	Death
+ABprppaaaapp	400	RICR	Nervous
+ABprppaaap	235	death	Death
+ABprppaap	179		
+ABprppaapa	231		
+ABprppaapaa	317	death	Death
+ABprppaapap	317	RIMR	Nervous
+ABprppaapp	231		
+ABprppaappa	309	AIAR	Nervous
+ABprppaappp	309	DB7	Nervous
+ABprppap	137		
+ABprppapa	176		
+ABprppapaa	226		
+ABprppapaaa	297		
+ABprppapaaaa	400	SABVR	Nervous
+ABprppapaaap	400	RIFR	Nervous
+ABprppapaap	297	DA1	Nervous
+ABprppapap	226		
+ABprppapapa	319	DA3	Nervous
+ABprppapapp	319	DA5	Nervous
+ABprppapp	176		
+ABprppappa	231		
+ABprppappaa	309	RIGR	Nervous
+ABprppappap	309	DD2	Nervous
+ABprppappp	231		
+ABprppapppa	323	DD4	Nervous
+ABprppapppp	323	DD6	Nervous
+ABprppp	104		
+ABprpppa	135		
+ABprpppaa	173		
+ABprpppaaa	224		
+ABprpppaaaa	303	PDA/Y	Rectal
+ABprpppaaap	303	DA7	Nervous
+ABprpppaap	224		
+ABprpppaapa	304		
+ABprpppaapaa	400	PVCR	Nervous
+ABprpppaapap	400	LUAR	Nervous
+ABprpppaapp	304	PHAR	Nervous
+ABprpppap	173		
+ABprpppapa	225		
+ABprpppapaa	280	PHshR	Nervous
+ABprpppapap	280	hyp8/9	Epidermis
+ABprpppapp	225	death	Death
+ABprpppp	135		
+ABprppppa	172		
+ABprppppaa	220		
+ABprppppaaa	294	PVPR	Nervous
+ABprppppaap	294	rect_VR	Rectal
+ABprppppap	220		
+ABprppppapa	291	B	Rectal
+ABprppppapp	291	DVA	Nervous
+ABprppppp	172		
+ABprpppppa	223		
+ABprpppppaa	310	mu_bod	Muscle
+ABprpppppap	310	mu_sph	Muscle
+ABprpppppp	223		
+ABprppppppa	293	spike	Epidermis
+ABprppppppp	293	hyp10	Epidermis
+C	49		
+Ca	67		
+Caa	94		
+Caaa	128		
+Caaaa	168		
+Caaaaa	219	hyp7	Epidermis
+Caaaap	219	hyp7	Epidermis
+Caaap	168		
+Caaapa	216	hyp7	Epidermis
+Caaapp	216	hyp7	Epidermis
+Caap	128		
+Caapa	176		
+Caapaa	306	DVC	Nervous
+Caapap	306	death	Death
+Caapp	176		
+Caappd	231	hyp7	Epidermis
+Caappv	231	PVR	Nervous
+Cap	94		
+Capa	133		
+Capaa	189		
+Capaaa	247		
+Capaaaa	327	mu_bod	Muscle
+Capaaap	327	mu_bod	Muscle
+Capaap	247		
+Capaapa	336	mu_bod	Muscle
+Capaapp	336	mu_bod	Muscle
+Capap	189		
+Capapa	248		
+Capapaa	333	mu_bod	Muscle
+Capapap	333	mu_bod	Muscle
+Capapp	248		
+Capappa	343	mu_bod	Muscle
+Capappp	343	mu_bod	Muscle
+Capp	133		
+Cappa	181		
+Cappaa	237		
+Cappaaa	311	mu_bod	Muscle
+Cappaap	311	mu_bod	Muscle
+Cappap	237		
+Cappapa	320	mu_bod	Muscle
+Cappapp	320	mu_bod	Muscle
+Cappp	181		
+Capppa	242		
+Capppaa	323	mu_bod	Muscle
+Capppap	323	mu_bod	Muscle
+Capppp	242		
+Cappppd	337	mu_bod	Muscle
+Cappppv	337	mu_bod	Muscle
+Cp	67		
+Cpa	94		
+Cpaa	127		
+Cpaaa	165		
+Cpaaaa	220	hyp7	Epidermis
+Cpaaap	220	hyp7	Epidermis
+Cpaap	165		
+Cpaapa	216	hyp7	Epidermis
+Cpaapp	216	hyp7	Epidermis
+Cpap	127		
+Cpapa	167		
+Cpapaa	225	hyp7	Epidermis
+Cpapap	225	hyp7	Epidermis
+Cpapp	167		
+Cpappd	227	hyp7	Epidermis
+Cpappv	227	hyp11	Epidermis
+Cpp	94		
+Cppa	131		
+Cppaa	186		
+Cppaaa	244		
+Cppaaaa	324	mu_bod	Muscle
+Cppaaap	324	mu_bod	Muscle
+Cppaap	244		
+Cppaapa	337	mu_bod	Muscle
+Cppaapp	337	mu_bod	Muscle
+Cppap	186		
+Cppapa	245		
+Cppapaa	331	mu_bod	Muscle
+Cppapap	331	mu_bod	Muscle
+Cppapp	245		
+Cppappa	340	mu_bod	Muscle
+Cppappp	340	mu_bod	Muscle
+Cppp	131		
+Cpppa	178		
+Cpppaa	233		
+Cpppaaa	303	mu_bod	Muscle
+Cpppaap	303	mu_bod	Muscle
+Cpppap	233		
+Cpppapa	317	mu_bod	Muscle
+Cpppapp	317	mu_bod	Muscle
+Cpppp	178		
+Cppppa	237		
+Cppppaa	317	mu_bod	Muscle
+Cppppap	317	mu_bod	Muscle
+Cppppp	237		
+Cpppppd	329	mu_bod	Muscle
+Cpppppv	329	mu_bod	Muscle
+D	75		
+Da	114		
+Daa	161		
+Daaa	214		
+Daaaa	276	mu_bod	Muscle
+Daaap	276	mu_bod	Muscle
+Daap	214		
+Daapa	281	mu_bod	Muscle
+Daapp	281	mu_bod	Muscle
+Dap	161		
+Dapa	208		
+Dapaa	271	mu_bod	Muscle
+Dapap	271	mu_bod	Muscle
+Dapp	208		
+Dappa	268		
+Dappaa	352	mu_bod	Muscle
+Dappap	352	mu_bod	Muscle
+Dappp	268		
+Dapppa	363	mu_bod	Muscle
+Dapppp	363	mu_bod	Muscle
+Dp	114		
+Dpa	161		
+Dpaa	213		
+Dpaaa	279	mu_bod	Muscle
+Dpaap	279	mu_bod	Muscle
+Dpap	213		
+Dpapa	280	mu_bod	Muscle
+Dpapp	280	mu_bod	Muscle
+Dpp	161		
+Dppa	207		
+Dppaa	274	mu_bod	Muscle
+Dppap	274	mu_bod	Muscle
+Dppp	207		
+Dpppa	269		
+Dpppaa	353	mu_bod	Muscle
+Dpppap	353	mu_bod	Muscle
+Dpppp	269		
+Dppppa	400	mu_bod	Muscle
+Dppppp	400	mu_bod	Muscle
+E	46		
+Ea	63		
+Eal	108		
+Eala	155		
+Ealaa	224		
+Ealaad	400	int	Intestine
+Ealaav	400	int	Intestine
+Ealap	224	int	Intestine
+Ealp	155		
+Ealpa	227	int	Intestine
+Ealpp	227	int	Intestine
+Ear	108		
+Eara	157		
+Earaa	230		
+Earaad	400	int	Intestine
+Earaav	400	int	Intestine
+Earap	230	int	Intestine
+Earp	157		
+Earpa	232	int	Intestine
+Earpp	232	int	Intestine
+EMS	23		
+Ep	63		
+Epl	110		
+Epla	160		
+Eplaa	232	int	Intestine
+Eplap	232	int	Intestine
+Eplp	160		
+Eplpa	238	int	Intestine
+Eplpp	238		
+Eplppa	400	int	Intestine
+Eplppp	400	int	Intestine
+Epr	110		
+Epra	161		
+Epraa	235	int	Intestine
+Eprap	235	int	Intestine
+Eprp	161		
+Eprpa	241	int	Intestine
+Eprpp	241		
+Eprppa	400	int	Intestine
+Eprppp	400	int	Intestine
+MS	46		
+MSa	62		
+MSaa	85		
+MSaaa	113		
+MSaaaa	145		
+MSaaaaa	179		
+MSaaaaaa	221		
+MSaaaaaal	400	GLRDL	Nervous
+MSaaaaaar	400	GLRDR	Nervous
+MSaaaaap	221		
+MSaaaaapa	271		
+MSaaaaapaa	346	I3	Pharynx
+MSaaaaapap	346	g1P	Pharynx
+MSaaaaapp	271	m4DL	Pharynx
+MSaaaap	179		
+MSaaaapa	225		
+MSaaaapaa	287	I4	Pharynx
+MSaaaapap	287	m5DL	Pharynx
+MSaaaapp	225		
+MSaaaappa	300	death	Death
+MSaaaappp	300	m7D	Pharynx
+MSaaap	145		
+MSaaapa	183		
+MSaaapaa	223		
+MSaaapaaa	278	m3DL	Pharynx
+MSaaapaap	278	m4L	Pharynx
+MSaaapap	223		
+MSaaapapa	285	mc3DL	Pharynx
+MSaaapapp	285	m8	Pharynx
+MSaaapp	183		
+MSaaappa	259	death	Death
+MSaaappp	259	vpi3D	Pharynx
+MSaap	113		
+MSaapa	145		
+MSaapaa	179		
+MSaapaaa	221		
+MSaapaaaa	282	m4VL	Pharynx
+MSaapaaap	282	m5VL	Pharynx
+MSaapaap	221		
+MSaapaapa	276		
+MSaapaapaa	400	g1AL	Pharynx
+MSaapaapap	400	death	Death
+MSaapaapp	276	m7VL	Pharynx
+MSaapap	179		
+MSaapapa	231		
+MSaapapaa	351	g2L	Pharynx
+MSaapapap	351	death	Death
+MSaapapp	231		
+MSaapappa	295	m6VL	Pharynx
+MSaapappp	295	vpi2DL	Pharynx
+MSaapp	145		
+MSaappa	189		
+MSaappaa	276	vpi2V	Pharynx
+MSaappap	276	vpi3V	Pharynx
+MSaappp	189		
+MSaapppa	266		
+MSaapppaa	351	mu_bod	Muscle
+MSaapppap	351	mu_bod	Muscle
+MSaapppp	266		
+MSaappppa	400	mu_bod	Muscle
+MSaappppp	400	mu_bod	Muscle
+MSap	85		
+MSapa	116		
+MSapaa	149		
+MSapaaa	189		
+MSapaaaa	239		
+MSapaaaad	400	GLRL	Nervous
+MSapaaaav	400	GLRVL	Nervous
+MSapaaap	239	mu_bod	Muscle
+MSapaap	189		
+MSapaapa	261	death	Death
+MSapaapp	261	M	Muscle
+MSapap	149		
+MSapapa	189		
+MSapapaa	239		
+MSapapaaa	400	ccAL	Other
+MSapapaap	400	ccPL	Other
+MSapapap	239	mu_bod	Muscle
+MSapapp	189		
+MSapappa	249	mu_bod	Muscle
+MSapappp	249	mu_bod	Muscle
+MSapp	116		
+MSappa	150		
+MSappaa	196		
+MSappaaa	263	hmc	Muscle
+MSappaap	263	Z4	Gonad
+MSappap	196		
+MSappapa	273	death	Death
+MSappapp	273	mu_bod	Muscle
+MSappp	150		
+MSapppa	200		
+MSapppaa	260	mu_bod	Muscle
+MSapppap	260	mu_bod	Muscle
+MSapppp	200		
+MSappppa	265	mu_bod	Muscle
+MSappppp	265	mu_bod	Muscle
+MSp	62		
+MSpa	85		
+MSpaa	113		
+MSpaaa	146		
+MSpaaaa	180		
+MSpaaaaa	222		
+MSpaaaaaa	320	M4	Pharynx
+MSpaaaaap	320	death	Death
+MSpaaaap	222		
+MSpaaaapa	278	m3DR	Pharynx
+MSpaaaapp	278	m4DR	Pharynx
+MSpaaap	180		
+MSpaaapa	225		
+MSpaaapaa	311	I6	Pharynx
+MSpaaapap	311	M5	Pharynx
+MSpaaapp	225		
+MSpaaappa	281	m5DR	Pharynx
+MSpaaappp	281	m6D	Pharynx
+MSpaap	146		
+MSpaapa	187		
+MSpaapaa	231		
+MSpaapaaa	319	M1	Pharynx
+MSpaapaap	319	death	Death
+MSpaapap	231		
+MSpaapapa	291	mc3DR	Pharynx
+MSpaapapp	291	vpi1	Pharynx
+MSpaapp	187	death	Death
+MSpap	113		
+MSpapa	146		
+MSpapaa	180		
+MSpapaaa	222		
+MSpapaaaa	283	m4VR	Pharynx
+MSpapaaap	283	m5VR	Pharynx
+MSpapaap	222		
+MSpapaapa	277		
+MSpapaapaa	400	g1AR	Pharynx
+MSpapaapap	400	death	Death
+MSpapaapp	277	m7VR	Pharynx
+MSpapap	180		
+MSpapapa	231		
+MSpapapaa	343	g2R	Pharynx
+MSpapapap	343	death	Death
+MSpapapp	231		
+MSpapappa	295	m6VR	Pharynx
+MSpapappp	295	vpi2DR	Pharynx
+MSpapp	146		
+MSpappa	189		
+MSpappaa	279	mu_bod	Muscle
+MSpappap	279	mu_bod	Muscle
+MSpappp	189		
+MSpapppa	263		
+MSpapppaa	348	mu_bod	Muscle
+MSpapppap	348	mu_bod	Muscle
+MSpapppp	263		
+MSpappppa	400	mu_bod	Muscle
+MSpappppp	400	mu_bod	Muscle
+MSpp	85		
+MSppa	116		
+MSppaa	150		
+MSppaaa	190		
+MSppaaaa	238		
+MSppaaaad	400	GLRR	Nervous
+MSppaaaav	400	GLRVR	Nervous
+MSppaaap	238	mu_bod	Muscle
+MSppaap	190		
+MSppaapa	263	death	Death
+MSppaapp	263	mu_int_R	Muscle
+MSppap	150		
+MSppapa	189		
+MSppapaa	238		
+MSppapaaa	400	ccAR	Other
+MSppapaap	400	ccPR	Other
+MSppapap	238	mu_bod	Muscle
+MSppapp	189		
+MSppappa	248	mu_bod	Muscle
+MSppappp	248	mu_bod	Muscle
+MSppp	116		
+MSpppa	150		
+MSpppaa	194		
+MSpppaaa	261	death	Death
+MSpppaap	261	Z1	Gonad
+MSpppap	194		
+MSpppapa	268	death	Death
+MSpppapp	268	mu_bod	Muscle
+MSpppp	150		
+MSppppa	200		
+MSppppaa	261	mu_bod	Muscle
+MSppppap	261	mu_bod	Muscle
+MSppppp	200		
+MSpppppa	266	mu_bod	Muscle
+MSpppppp	266	mu_bod	Muscle
+P1	3		
+P2	23		
+P3	49		
+P4	75		
+Z2	142	Z2	Gonad
+Z3	142	Z3	Gonad

@@ -1,0 +1,87 @@
+# the start and end time points in the image series to be processed
+time_start 1
+time_end 300
+
+# the start and end planes in a stack to be processed
+plane_start 1
+plane_end 31
+
+# image resolution (um)
+xy_res 0.09
+z_res 1.00
+
+# time interval between time points (min)
+time_interval 1
+
+# expected diameter of nuclei for the first time point, measured in pixels
+# If your expected size is above 120, you should change the max_nuc_size to 200 (at the bottom of this file).
+nuc_size 80
+
+# expected diameter of the polar body, measured in pixels. Used to distinguish polar bodies from embryonic nuclei
+polar_size 45
+
+
+# neighborhood size (for the low pass noise filter), use larger value for less noisy images
+neighborhood_size 15
+
+
+
+# various cutoffs for noise thresholding
+
+# the top fraction of the Gaussian noise distribution to be retained, i.e., 1 minus the noise_fraction is the fraction of the distribution to be masked.  The lower this value is, the more it masks
+noise_fraction 0.05
+
+# based on the GFP expression levels and image settings, we divide the series into three time zones and use different noise stringency.  The time_switches specify the boundaries of these time zones.  Measured in the number of cells present in the embryo.
+noise_time_switch1 55
+noise_time_switch2 180
+
+# additional noise cutoffs for finer control.  noise_factors are fudge factors applied to the noise thresholds.  nuc_density_cutoffs specify how much brighter a nucleus should be compared to the noise threshold.  Higher values of either may cause weak nuclei to be missed.  Three sets are provided for the three time zones.
+nuc_density_cutoff1 1.2
+noise_factor1 1.3
+
+nuc_density_cutoff2 1.6
+noise_factor2 1.3
+
+nuc_density_cutoff3 1.7
+noise_factor3 1.4
+
+
+# a cutoff to speed up the search for local maxima.  Higher value may cause weak nuclei to be missed.  Safest to set this to zero at the beginning of optimizing the noise cutoffs
+max_weight_cutoff 0.2
+
+
+# used to optimize nuclear size. (0,1].  Higher values make it more difficult to shrink or expand the spherical model of nuclei.  optimize this after optimizing the noise cutoffs. you might be able to further optimize the noise cutoff after optimizing these
+shrink_elastisity 0.6
+expand_elastisity 0.8
+
+
+# shortest cell cycle acceptable, in minutes
+minimal_cell_cycle 10
+
+
+
+#
+# run time parameters that should not be changed lightly
+#
+
+# used for relaxing the minimal movement algorithm.  Higher value means more nuclei at the previous time point would be considered as a potential match for the nucleus in question
+ambiguity_cutoff 1.2
+
+
+# maximal number of cells. Used to allocated memory to store the identified nuclei.  If the value is too low, the program will automatically adjust.  a value of 0 will cause the program to crash.
+cell_ct_limit 5000
+
+
+# used to calculate spehere models. If this value is smaller than the largest nucleus the program finds, it will cause trouble.  Measured in pixels
+max_nuc_size 150
+
+
+# window size and spatial range for the scanning box algorithm of nuclear identification, relative to nuc_size
+nuc_size_factor1 0.8
+nuc_size_factor2 0.8
+nuc_size_factor3 0.85
+nuc_size_factor4 0.75
+
+
+# run time flag.  changing graphic_output to 1 will lead the software to generate annotated images (with red circles to mark the spherical models of the identified nuclei).  ACeTree is a much better way to view the images and the annotation.  Mostly for debugging reasons.
+graphic_output 0

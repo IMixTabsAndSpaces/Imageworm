@@ -1,0 +1,8 @@
+Manifest-Version: 201811131127
+Main-Class: Main
+Class-Path: ij.jar flanagan.jar acebatch2.jar AceTree.jar
+Created-By: biowolp biowolp@u.washington.edu
+University-of-Washington: Department of Genome Sciences
+Laboratory: Waterston Laboratory
+DBLocation: /media/zachlab/Windows/LinuxStorage/embryoDB/
+UseDats: yes

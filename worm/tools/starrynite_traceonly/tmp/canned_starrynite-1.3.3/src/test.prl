@@ -1,0 +1,6 @@
+#!/usr/bin/perl -w
+
+
+printf("l:\\test\ part2\\b\n");
+
+printf("l:\\test\ part2\\b"."junk123\n");
