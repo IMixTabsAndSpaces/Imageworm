@@ -1,0 +1,19 @@
+Manifest-Version: 1.0
+Implementation-Title: ImageJ
+Automatic-Module-Name: 
+Implementation-Version: 1.52h
+Archiver-Version: Plexus Archiver
+Built-By: jenkins
+Specification-Vendor: NIH
+Specification-Title: ImageJ
+Implementation-Vendor-Id: net.imagej
+Implementation-Date: 2018-10-16T15:38:33+0000
+Implementation-Vendor: NIH
+Main-Class: ij.ImageJ
+Premain-Class: 
+Implementation-Build: 2ec74d471decb2cb2570f694023ec7574fb82a97
+Created-By: Apache Maven 3.5.3
+Build-Jdk: 1.8.0_111
+Specification-Version: 1.52h
+Implementation-URL: https://imagej.net/
+

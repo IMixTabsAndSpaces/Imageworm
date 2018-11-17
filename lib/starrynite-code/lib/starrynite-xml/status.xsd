@@ -1,0 +1,14 @@
+<?xml version="1.0"?>
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+	xmlns="http://starrynite.sf.net/ns/1" targetNamespace="http://starrynite.sf.net/ns/1"
+	elementFormDefault="qualified">
+	<xsd:include schemaLocation="types.xsd" />
+	<xsd:element name="status" type="status" />
+
+	<xsd:complexType name="status">
+		<xsd:sequence>
+			<xsd:element name="parameters" type="parameter"></xsd:element>
+			<xsd:element name="movie" type="movie"></xsd:element>
+		</xsd:sequence>
+	</xsd:complexType>
+</xsd:schema>

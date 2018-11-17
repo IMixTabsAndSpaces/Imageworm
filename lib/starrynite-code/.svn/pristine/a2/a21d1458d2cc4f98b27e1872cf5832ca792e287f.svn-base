@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<schema targetNamespace="http://starrynite.sf.net/ns/1"
+	elementFormDefault="qualified" xmlns="http://www.w3.org/2001/XMLSchema"
+	xmlns:tns="http://starrynite.sf.net/ns/1">
+
+	<complexType name="frame">
+		<sequence>
+			<element name="width" type="int"></element>
+			<element name="height" type="int"></element>
+			<element name="image_size" type="int"></element>
+			<element name="num_planes" type="int"></element>
+		</sequence>
+	</complexType>
+
+	<complexType name="movie">
+		<sequence>
+			<element name="frame" type="tns:frame"></element>
+			<element name="max_distance" type="float"></element>
+			<element name="xy_res" type="float"></element>
+			<element name="z_res" type="float"></element>
+			<element name="plane_start" type="int"></element>
+			<element name="plane_end" type="int"></element>
+			<element name="t_interval" type="int"></element>
+			<element name="time_start" type="int"></element>
+			<element name="time_end" type="int"></element>
+			<element name="num_timepts" type="int"></element>
+		</sequence>
+	</complexType>
+
+	<complexType name="parameter">
+		<sequence>
+			<element name="movie" type="tns:parameter_movie"></element>
+			<element name="sizes" type="tns:parameter_sizes"></element>
+
+			<element name="graphic_output" type="int" maxOccurs="1"
+				minOccurs="1" />
+			<element name="neighborhood_size" type="int" maxOccurs="1"
+				minOccurs="1" />
+			<element name="nuc_size" type="int" maxOccurs="1" minOccurs="1" />
+			<element name="polar_size" type="int" maxOccurs="1"
+				minOccurs="1" />
+			<element name="max_nuc_size" type="int" maxOccurs="1"
+				minOccurs="1" />
+			<element name="min_nuc_size" type="int" maxOccurs="1"
+				minOccurs="1" />
+			<element name="nuc_size1" type="int" maxOccurs="1" minOccurs="1" />
+			<element name="nuc_size2" type="int" maxOccurs="1" minOccurs="1" />
+			<element name="nuc_size3" type="int" maxOccurs="1" minOccurs="1" />
+			<element name="nuc_size4" type="int" maxOccurs="1" minOccurs="1" />
+			<element name="nuc_size_factor1" type="float" maxOccurs="1"
+				minOccurs="1" />
+			<element name="nuc_size_factor2" type="float" maxOccurs="1"
+				minOccurs="1" />
+			<element name="nuc_size_factor3" type="float" maxOccurs="1"
+				minOccurs="1" />
+			<element name="nuc_size_factor4" type="float" maxOccurs="1"
+				minOccurs="1" />
+			<element name="z_res_fudge" type="float" maxOccurs="1"
+				minOccurs="1" />
+			<element name="z_factor" type="float" maxOccurs="1"
+				minOccurs="1" />
+			<element name="z_size1" type="int" maxOccurs="1" minOccurs="1" />
+			<element name="cube_size" type="int" maxOccurs="1" minOccurs="1" />
+			<element name="cen_ct_limit" type="int" maxOccurs="1"
+				minOccurs="1" />
+			<element name="t" type="int" maxOccurs="1" minOccurs="1" />
+			<element name="noise_time_switch1" type="int" maxOccurs="1"
+				minOccurs="1" />
+			<element name="noise_time_switch2" type="int" maxOccurs="1"
+				minOccurs="1" />
+			<element name="noise_fraction" type="float" maxOccurs="1"
+				minOccurs="1" />
+			<element name="max_weight_cutoff" type="float" maxOccurs="1"
+				minOccurs="1" />
+			<element name="nuc_density_cutoff" type="float" maxOccurs="1"
+				minOccurs="1" />
+			<element name="noise_factor" type="float" maxOccurs="1"
+				minOccurs="1" />
+			<element name="nuc_density_cutoff1" type="float" maxOccurs="1"
+				minOccurs="1" />
+			<element name="noise_factor1" type="float" maxOccurs="1"
+				minOccurs="1" />
+			<element name="nuc_density_cutoff2" type="float" maxOccurs="1"
+				minOccurs="1" />
+			<element name="noise_factor2" type="float" maxOccurs="1"
+				minOccurs="1" />
+			<element name="nuc_density_cutoff3" type="float" maxOccurs="1"
+				minOccurs="1" />
+			<element name="noise_factor3" type="float" maxOccurs="1"
+				minOccurs="1" />
+			<element name="axis" type="int" maxOccurs="1" minOccurs="1" />
+			<element name="ap" type="int" maxOccurs="1" minOccurs="1" />
+			<element name="lr" type="int" maxOccurs="1" minOccurs="1" />
+			<element name="dv" type="int" maxOccurs="1" minOccurs="1" />
+			<element name="minimal_cell_cycle" type="int" maxOccurs="1"
+				minOccurs="1" />
+			<element name="ambiguity_cutoff" type="float" maxOccurs="1"
+				minOccurs="1" />
+			<element name="shrink_elastisity" type="float" maxOccurs="1"
+				minOccurs="1" />
+			<element name="expand_elastisity" type="float" maxOccurs="1"
+				minOccurs="1" />
+
+
+		</sequence>
+	</complexType>
+
+	<complexType name="parameter_movie">
+		<sequence>
+			<element name="time_start" type="int"></element>
+			<element name="time_end" type="int"></element>
+			<element name="num_timepts" type="int"></element>
+			<element name="plane_start" type="int"></element>
+			<element name="plane_end" type="int"></element>
+			<element name="xy_res" type="float"></element>
+			<element name="z_res" type="float"></element>
+			<element name="t_interval" type="int"></element>
+		</sequence>
+	</complexType>
+
+
+
+
+	<complexType name="parameter_sizes">
+		<sequence>
+			<element name="size" type="int" maxOccurs="unbounded" minOccurs="1"></element>
+		</sequence>
+	</complexType>
+</schema>

@@ -1,0 +1,26 @@
+starrynite
+----------
+
+Required dependencies:
+
+* libtiff
+
+Optional dependencies:
+
+* autoconf 2.6.1 or greater
+* automake 1.10 or greater
+* gperf
+
+- autoconf is required to rebuild the configure script from configure.ac.
+- automake can be used to regenerate the Makefile.in files used during the
+  build.
+- gperf is only required to regenerate the file parameters-tools.c from
+  its source, parameters-tools.gperf.
+
+To build this project, use:
+
+configure [OPTION]... [VAR=VALUE]... && make && make install
+
+For a list of configuration options:
+
+configure --help

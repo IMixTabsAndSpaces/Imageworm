@@ -1,0 +1,127 @@
+%parameter file for matlab nuclear detection
+
+%version for old scope data
+
+%start and end time to be processed
+%start_time=1;
+%end_time=5;
+
+
+
+
+%parameters needed in common usage
+
+slices=75;
+xyres=.09;
+zres=0.5;  
+
+
+% diameter of a nucleus at start time
+%%%firsttimestepdiam=160;
+firsttimestepdiam=80;
+%%%firsttimestepdiam=45;
+
+%guess at cell stage at start_time
+%is used to index into parameters when they are divided up by cell stage
+%firsttimestepnumcells=4; 
+firsttimestepnumcells=4; 
+
+
+
+
+
+%main tunable parameters (these can be staged like below params, but doing so wasnt useful in these images)
+
+
+% threshold on noise maxima to discard
+parameters.intensitythreshold=.02
+
+
+
+%user tunable parameters that arent likely to use
+
+
+%size filter used in terms of increments of expected diameter
+parameters.sigma=1;
+
+%stages (in number of cells) at which to switch between parameter blocks
+%%%parameters.staging=[102,181,251,351];
+parameters.staging=[102,181,251,351];
+
+%this block of parameters can either be unstaged in which case are set to number
+%or staged in which case staging defines the cell stages eg 0-102 cells range is 100
+
+% threshold on slice inclusion in a nucleus, the bigger the number is the less likely it is to split ambigious cases into two halves
+%%parameters.rangethreshold=[100,15,8,6,3];
+parameters.rangethreshold=[100,15,8,7,6];
+
+
+% distance at which to merge overlapping nuclei (the larger it is the fewer nuclei will be detected)
+%%parameters.nndist_merge=[.6,.6,.5,.5,.4];
+parameters.nndist_merge=[.6,.6,.55,.55,.7];
+
+ 
+% mergescore above which consider merging if split is really bad (lower it is more merging will occur)
+parameters.mergelower=[-75,-75,-75,-30,-75];
+
+%split score  below which consider merging nuclei even though merge score isnt so good
+parameters.split=[13,8,3,5,0];
+
+% merge overlappping nuclei if their aspect ratio is smaller than this
+parameters.armerge=[1.6,1.2,1.2,.5,.5];
+
+%fraction by which split needs to be larger than merge to keep overlapping nuclei separate 
+parameters.mergesplit=[1,1,1.2,1,1];
+
+% boundary of nucleus is based on isocontour representing 70 % of maximum intensity 
+parameters.boundary_percent=.3;
+
+%threshold on a boundary ray that is too much longer than its neighbor
+parameters.large_ray_threshold=1.5;
+%threshold on a boundary ray that is too much shorter than its neighbor
+parameters.small_ray_threshold=1/3;
+
+ 
+%ROI subergion for examination
+%defines subregion of image (in original coordinate system) for processing 
+%speeds up processing and allows multiple embryos to be processed 
+ROI=false;
+
+ROIxmin=0;
+ROIxmax=0;
+
+ROIymin=0;
+ROIymax=0;
+
+
+
+
+
+% internal program configuration parameters
+
+%not using new subtiff green and red side by side images
+newscope=false;
+
+% name of trained disk inclusion distributions, would only change if you retrained model for new images
+distribution_file='clean_distributions.mat';
+distribution_file2='clean_distributions.mat';
+
+%not using LSM files that are all in one tiff 
+LSM=false; %single volume lsm files
+
+%output acetree readable slices for the images, this is not necessary for presplit images, but if you turn it off  and are creating lineages starrynite wont know where to find them unless modify the main perl script
+outputSlice=true;
+
+
+parameters.GRADIENT_THRESH=false; %obsolete alternate thresholding method 
+
+
+nodata=true;%whether to use SN data to match online
+nodatause=true;% obsolete whether to use SN data for diameter and stored bottom information
+savedata=true; %whether to save all partial results as well as final result in esequence
+singlevolume=false; %obsolete flag that detects bottom on a per volume basis instead of at end
+
+SNoutput=true; %output nuclei files starrynite can read
+
+downsampling=.5;  % standard serieses are processed at half resolution, since they arent 'really' that high resolution
+

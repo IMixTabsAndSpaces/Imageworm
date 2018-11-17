@@ -1,0 +1,10 @@
+#!/usr/bin/perl -w
+while (<@ARGV>){
+ #/60x\stime\sover\sz\s0\sto\s65%\srampt(\d*)z(\d*).tif/;
+ #printf("cp ".$_." "."file-t".$1."-p".$2.".tif");
+#printf("cp"."file-t".$1."-p".$2.".tif");
+printf($_."\n");
+
+}
+
+

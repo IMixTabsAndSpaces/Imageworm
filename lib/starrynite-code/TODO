@@ -1,0 +1,23 @@
+* Continue eliminating over-general parameter types from function
+  parameter lists:
+
+    TOOL_t, PARAMETER_t and MOVIE_t are too big and non-specific;
+    subfunctions using them should be simplified.
+
+    Going through the subfunctions and eliminating TOOL_t, PARAMETER,t
+    and MOVIE_t where possible will make the code easier to understand
+    and more flexible.
+
+* Improve the library functions
+
+    Make sure they are simple, organized, well-named and documented.
+
+* Add Doxygen doc comments
+
+* Improve the language bindings
+
+* Address TODO notes in code.
+
+* THINGS THAT COULD BE FLOATING-POINT:
+
+- **xrange: see initialize_slice, set to (int) sqrtf(dist)

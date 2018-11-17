@@ -1,0 +1,67 @@
+//filelist = getArgument();
+//file = split(filelist,'#');
+
+//open(file[0]);
+//run("Invert");
+//close();
+//run("Quit");
+
+
+//run("Bio-Formats Importer", "open=" + path + " autoscale color_mode=Default view=Hyperstack);
+//run("Stack Slicer", "split_channels stack_order=XYCZT");
+//selectWindow("ChannelGFP,TxRed_Seq0000.nd2 - ChannelGFP,TxRed_Seq0000.nd2 (series 01) - C=0");
+//run("Image Sequence... ", "format=TIFF save=[/mnt/Disk_2/work/series1/autosave/ChannelGFP,TxRed_Seq0000.nd2 - ChannelGFP,TxRed_Seq0000_t001_z001.tif]");
+
+
+// Get path to temp directory
+//temp = getDirectory("temp");
+//if (tmp=="")
+//    exit("No temp directory available");
+//outPath = "/mnt/Disk_2/work/images/raw"
+// Create a directory in temp
+//myDir = outPath+"/my-test-dir";
+//File.makeDirectory(myDir);
+//if (!File.exists(myDir))
+//    exit("Unable to create directory");
+//print(myDir);
+
+
+
+
+
+
+
+macro "Break up a lif into individual TIFF" {
+// open the file manager to select a lif file to break it into TIFFs
+// in this case, only the metadata specific to a series will be written
+
+//path = File.openDialog("Select a File");
+path ="/mnt/Disk_2/work/test0/ChannelGFP,TxRed_Seq0000.nd2";
+print(path)
+outPath = "/mnt/Disk_2/work/images/raw";
+
+
+
+run("Bio-Formats Macro Extensions");
+Ext.setId(path);
+Ext.getCurrentFile(file);
+Ext.getSeriesCount(seriesCount);
+
+
+for (s=1; s<=seriesCount; s++) {
+// Bio-Formats Importer uses an argument that can be built by concatenate a set of strings
+   run("Bio-Formats Importer", "open=&path autoscale color_mode=Default view=Hyperstack stack_order=XYCZT series_"+s);
+//out_path = getDirectory("image") + getTitle() + ".tif";
+//saveAs("tiff", out_path);
+//myDir = outPath+"ChannelGFP,TxRed_Seq000"+s;
+//print(myDir)
+//File.makeDirectory(myDir);
+//if (!File.exists(myDir))
+//    exit("Unable to create directory");
+//print(myDir);
+
+//run("Image Sequence... ", "format=TIFF save=[myDir+"/ChannelGFP,TxRed_Seq0000_t001_z001_c001.tif]");
+//close();
+    }
+//run("Quit");
+}

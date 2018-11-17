@@ -1,0 +1,14 @@
+Manifest-Version: 201007220759
+Main-Class: SNLMNoUI
+Class-Path: AceTree.jar
+Created-By: biowolp biowolp@u.washington.edu
+University-of-Washington: Department of Genome Sciences
+Laboratory: Waterston Laboratory
+DBLocation: /media/zachlab/Windows/LinuxStorage/embryoDB/
+StarryNite: /home/zachlab/ImageWorm/DB-Java/starrynite-debug
+SNDefaultParms: /home/zachlab/ImageWorm/parameters/greenParameters
+MatlabDefaultParams: /home/zachlab/ImageWorm/DB-Java/mparmDEFAULT.txt
+ArchiveLocation: /media/zachlab/Windows/LinuxStorage/
+AnnotsLocation: /media/zachlab/Windows/LinuxStorage/
+ToolsLocation: /home/zachlab/ImageWorm/DB-Java/
+UserNameLocation: 2

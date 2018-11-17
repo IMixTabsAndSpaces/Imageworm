@@ -1,0 +1,98 @@
+starrynite
+----------
+
+starrynite is an image analysis tool for tracking fluorescently-labeled
+nuclei during C. elegans embryogenesis. For more information, visit the
+project web site at:
+
+http://starrynite.sourceforge.net/
+
+An image series useful for testing purposes is available from:
+
+http://waterston.gs.washington.edu/StarryNite.html
+
+=====
+
+Please use the mailing list at <starrynite-devel@lists.sourceforge.net>
+for all discussion: bug reports, enhancements, etc.
+
+Patches are welcome; if possible, please use subversion to obtain a recent
+working tree from:
+
+http://starrynite.svn.sf.net/svnroot/starrynite/trunk
+
+and generate a patch with:
+
+svn diff >patch.diff
+
+=====
+
+For instructions on building and installing the software from source code,
+see the file in this directory named 'INSTALL'.
+
+starrynite has one required dependency:
+
+* libtiff
+  http://www.libtiff.org/
+
+and several optional dependencies:
+
+* python
+  http://www.python.org/
+  
+  The python development libraries are required to build the Python
+  language bindings for starrynite.  This option is enabled by passing
+  --enable-python to configure.
+
+* xsdcxx
+  http://codesynthesis.com/projects/xsd/
+
+  The CodeSynthesis XSD development libraries are required to build
+  support for XML serialization and deserialization.  This option also
+  requires a C++ compiler, and is enabled by passing --enable-xml to
+  configure.
+
+* autoconf 2.6.1 or greater
+  http://www.gnu.org/software/autoconf/
+
+  autoconf can be used to rebuild the script 'configure' from
+  configure.ac.
+
+* automake 1.10 or greater
+  http://www.gnu.org/software/automake/
+
+  automake can be used to regenerate the Makefile.in files used during the
+  build.
+
+* gperf
+  http://www.gnu.org/software/gperf/
+
+  gperf can be used to regenerate the file parameters-tools.c from its
+  source, parameters-tools.gperf.
+
+* doxygen
+  http://www.doxygen.org/
+
+  doxygen can be used to generate documentation for libstarrynite with
+  'make doxygen-doc'.
+
+* cython
+  http://www.cython.org/
+
+  cython can be used to regenerate the Python-specific interface files
+  from their sources in lib/starrynite-py.
+  
+For a list of other configuration options, use:
+
+./configure --help
+
+======
+
+The algorithm used by starrynite was described by Zhirong Bao.  Dan Blick
+is the current maintainer.
+
+starrynite is free software; you can redistribute it and/or modify it
+under the terms of the GNU General Public License version 3 or later. A
+copy of this license is provided in the file 'COPYING'.
+
+Report bugs to <starrynite-devel@lists.sourceforge.net>.
