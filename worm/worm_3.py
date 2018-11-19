@@ -1,78 +1,155 @@
-from PyQt5 import QtCore, QtGui, QtWidgets, QtSql
+from PyQt5.QtCore import (QFile, QFileInfo, QPoint, QRect, QSettings, QSize,
+        Qt, QTextStream)
+from PyQt5.QtGui import QIcon, QKeySequence
+from PyQt5.QtWidgets import (QAction, QApplication, QFileDialog, QMainWindow,
+        QMessageBox, QTextEdit, QVBoxLayout, QGroupBox, QHBoxLayout, QPushButton,
+        QLineEdit, QDialog, QWidget, QTableWidget, QLabel, QPushButton,
+        QTreeWidget, QTreeWidgetItem)
+from PyQt5.QtSql import QSqlTableModel
 
-class Ui_Form(object):
+import DB_Manager, sys
 
+class MainWindow(QMainWindow):
     def __init__(self):
-        object.__init__(self)
-        self.db = QtSql.QSqlDatabase.addDatabase('QMYSQL')
-        self.db.setHostName("localhost")
-        self.db.setDatabaseName("test2")
-        self.db.setUserName("root")
-        self.db.setPassword("Qq1!Ww2@")
+        super(MainWindow, self).__init__()
+        self.nd2_file= '/media/zachlab/Windows/LinuxStorage/images/ND2_Files'
 
-    def loadData(self):
-        status = self.db.open()
-        if status == False:
-            QtWidgets.QMessageBox.warning(self, "Error", self.db.lastError().text(), QtWidgets.QMessageBox.Discard)
-        else:
-            self.tableWidget.setColumnCount(3)
-            self.tableWidget.setHorizontalHeaderLabels(['id', 'name', 'surname'])
-            row = 0
-            sql = "SELECT * FROM student"
-            query = QtSql.QSqlQuery(sql)
-            while query.next():
-                self.tableWidget.insertRow(row)
-                id = QtWidgets.QTableWidgetItem(str(query.value(0)))
-                nome = QtWidgets.QTableWidgetItem(str(query.value(1)))
-                surname = QtWidgets.QTableWidgetItem(str(query.value(2)))
-                self.tableWidget.setItem(row, 0, id)
-                self.tableWidget.setItem(row, 1, nome)
-                self.tableWidget.setItem(row, 2, surname)
-                row = row + 1
-        #self.db.close()
+        self.createND2FileGroupBox()
 
-    def setupUi(self, Form):
-        Form.setObjectName("Form")
-        Form.resize(382, 316)
-        self.tableWidget = QtWidgets.QTableWidget(Form)
-        self.tableWidget.setGeometry(QtCore.QRect(20, 50, 319, 201))
-        self.tableWidget.setAlternatingRowColors(True)
-        self.tableWidget.setRowCount(16)
-        self.tableWidget.setObjectName("tableWidget")
-        self.tableWidget.setColumnCount(3)
-        item = QtWidgets.QTableWidgetItem()
-        self.tableWidget.setHorizontalHeaderItem(0, item)
-        item = QtWidgets.QTableWidgetItem()
-        self.tableWidget.setHorizontalHeaderItem(1, item)
-        item = QtWidgets.QTableWidgetItem()
-        self.tableWidget.setHorizontalHeaderItem(2, item)
-        self.tableWidget.horizontalHeader().setVisible(True)
-        self.tableWidget.verticalHeader().setVisible(False)
-        self.pushButton = QtWidgets.QPushButton(Form)
-        self.pushButton.setGeometry(QtCore.QRect(140, 270, 75, 23))
-        self.pushButton.setObjectName("pushButton")
-        self.pushButton.clicked.connect(self.loadData)
-
-        self.retranslateUi(Form)
-        QtCore.QMetaObject.connectSlotsByName(Form)
-
-    def retranslateUi(self, Form):
-        _translate = QtCore.QCoreApplication.translate
-        Form.setWindowTitle(_translate("Form", "Form"))
-        item = self.tableWidget.horizontalHeaderItem(0)
-        item.setText(_translate("Form", "Code"))
-        item = self.tableWidget.horizontalHeaderItem(1)
-        item.setText(_translate("Form", "Name"))
-        item = self.tableWidget.horizontalHeaderItem(2)
-        item.setText(_translate("Form", "Surname"))
-        self.pushButton.setText(_translate("Form", "Load"))
+        #create center widget stuff
+        self.createActions()
+        self.createTabel()
+        self.createCenterWidget()        
+        self.setCentralWidget(self.centerWiget)
 
 
-if __name__ == "__main__":
+        #set up application stuff
+        self.createActions()
+        self.createMenus()
+        self.createToolBars()
+        self.createStatusBar()
+        self.setWindowTitle("IMAGEWORM")
+        self.readSettings()
+    
+    def createTabel(self):
+        self.dataTable = QWidget()
+        database = "test2"
+        tableName = "student"
+        self.dbu = DB_Manager.DatabaseUtility(database, tableName)
+        self.verticalLayout_2 = QVBoxLayout()
+        self.verticalLayout = QVBoxLayout()
+        self.label = QLabel("Label")
+        self.label.setAlignment(Qt.AlignCenter)
+        self.horizontalLayout = QHBoxLayout()
+        self.lineEdit = QLineEdit()
+        self.horizontalLayout.addWidget(self.lineEdit)
+        self.commitButton = QPushButton("Commit")
+        self.commitButton.clicked.connect(self.Commit)
+        self.horizontalLayout.addWidget(self.commitButton)
+        self.verticalLayout.addLayout(self.horizontalLayout)
+        self.treeWidget = QTreeWidget()
+        self.verticalLayout.addWidget(self.treeWidget)
+        self.verticalLayout_2.addLayout(self.verticalLayout)
+        self.dataTable.setLayout(self.verticalLayout_2)
+
+        self.UpdateTree()
+
+    
+    def Commit(self):
+        text = self.lineEdit.text()
+        self.dbu.AddEntryToTable(text)
+        self.UpdateTree()
+
+    def UpdateTree(self):
+        col = self.dbu.GetColumns()
+        table = self.dbu.GetTable()
+        
+        for c in range(len(col)):
+            self.treeWidget.headerItem().setText(c, col[c][0])
+        
+        self.treeWidget.clear()
+        
+        for item in range(len(table)):
+            QTreeWidgetItem(self.treeWidget)
+            for value in range(len(table[item])):
+                self.treeWidget.topLevelItem(item).setText(value, str(table[item][value]))
+
+    def createCenterWidget(self):
+        mainLayout = QVBoxLayout(self)
+        mainLayout.addWidget(self.dataTable)#self.ND2FileBox)
+        
+        self.centerWiget = QWidget(self)
+        self.centerWiget.setLayout(mainLayout)
+
+
+    def createND2FileGroupBox(self):
+        self.ND2FileBox = QGroupBox("ND2 File Location")
+        layout = QHBoxLayout()
+        bntFile = QPushButton('&Find File')
+        bntFile.clicked.connect(self.updateND2)
+        layout.addWidget(bntFile)
+        self.ND2line = QLineEdit(self.nd2_file)
+        layout.addWidget(self.ND2line)
+        self.ND2FileBox.setLayout(layout)
+
+    def createActions(self):
+        root = QFileInfo(__file__).absolutePath()
+
+        self.addAct = QAction(QIcon(root + '/images/new.png'), "&Add", self,
+                shortcut=QKeySequence.New, statusTip="Create new DB entry")#,
+                #triggered=self.addEntry)
+        
+        self.exitAct = QAction("E&xit", self, shortcut="Ctrl+Q",
+                statusTip="Exit the application", triggered=self.close)
+
+        self.commit = QAction("&Refresh", self, triggered=self.update)
+            #text = self.lineEdit.text()
+            #self.dbu.AddEntryToTable(text)
+            #self.UpdateTree())
+
+    def createMenus(self):
+        self.fileMenu = self.menuBar().addMenu("&File")
+        self.fileMenu.addAction(self.addAct)
+        self.fileMenu.addAction(self.exitAct)
+
+    def createToolBars(self):
+        self.fileToolBar = self.addToolBar("File")
+        self.fileToolBar.addAction(self.addAct)
+
+    def updateND2(self):
+        self.nd2_file = str(QFileDialog.getExistingDirectory(self, 'Select nd2 directory', '/home'))
+        self.ND2line.setText(self.nd2_file)
+    
+    def createStatusBar(self):
+        self.statusBar().showMessage("Ready")
+    
+    def readSettings(self):
+        settings = QSettings("Trolltech", "Application Example")
+        pos = settings.value("pos", QPoint(200, 200))
+        size = settings.value("size", QSize(400, 400))
+        self.resize(size)
+        self.move(pos)
+
+    def maybeSave(self):
+        if self.textEdit.document().isModified():
+            ret = QMessageBox.warning(self, "Application",
+                    "The document has been modified.\nDo you want to save "
+                    "your changes?",
+                    QMessageBox.Save | QMessageBox.Discard | QMessageBox.Cancel)
+
+            if ret == QMessageBox.Save:
+                return False#self.save()
+
+            if ret == QMessageBox.Cancel:
+                return False
+
+        return True
+
+if __name__ == '__main__':
+
     import sys
-    app = QtWidgets.QApplication(sys.argv)
-    Form = QtWidgets.QWidget()
-    ui = Ui_Form()
-    ui.setupUi(Form)
-    Form.show()
+
+    app = QApplication(sys.argv)
+    mainWin = MainWindow()
+    mainWin.show()
     sys.exit(app.exec_())

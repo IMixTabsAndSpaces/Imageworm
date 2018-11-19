@@ -3,7 +3,8 @@ from PyQt5.QtCore import (QFile, QFileInfo, QPoint, QRect, QSettings, QSize,
 from PyQt5.QtGui import QIcon, QKeySequence
 from PyQt5.QtWidgets import (QAction, QApplication, QFileDialog, QMainWindow,
         QMessageBox, QTextEdit, QVBoxLayout, QGroupBox, QHBoxLayout, QPushButton,
-        QLineEdit, QDialog, QWidget, QTableWidget)
+        QLineEdit, QDialog, QWidget, QTableWidget, QLabel, QPushButton,
+        QTreeWidget, QTreeWidgetItem)
 from PyQt5.QtSql import QSqlTableModel
 
 import DB_Manager, sys
@@ -16,12 +17,13 @@ class MainWindow(QMainWindow):
         self.createND2FileGroupBox()
 
         #create center widget stuff
+        self.createActions()
+        self.createTabel()
         self.createCenterWidget()        
         self.setCentralWidget(self.centerWiget)
 
 
         #set up application stuff
-        self.createTabel()
         self.createActions()
         self.createMenus()
         self.createToolBars()
@@ -30,12 +32,51 @@ class MainWindow(QMainWindow):
         self.readSettings()
     
     def createTabel(self):
-        self.dataTable = QWidget(self)
-        #self.dbu = DB_Manager.DatabaseUtility(database, tableName)
+        self.dataTable = QWidget()
+        database = "test2"
+        tableName = "student1"
+        self.dbu = DB_Manager.DatabaseUtility(database, tableName)
+        self.verticalLayout_2 = QVBoxLayout()
+        self.verticalLayout = QVBoxLayout()
+        self.label = QLabel("Label")
+        self.label.setAlignment(Qt.AlignCenter)
+        self.horizontalLayout = QHBoxLayout()
+        self.lineEdit = QLineEdit()
+        self.horizontalLayout.addWidget(self.lineEdit)
+        self.commitButton = QPushButton("Commit")
+        self.commitButton.clicked.connect(self.Commit)
+        self.horizontalLayout.addWidget(self.commitButton)
+        self.verticalLayout.addLayout(self.horizontalLayout)
+        self.treeWidget = QTreeWidget()
+        self.verticalLayout.addWidget(self.treeWidget)
+        self.verticalLayout_2.addLayout(self.verticalLayout)
+        self.dataTable.setLayout(self.verticalLayout_2)
+
+        self.UpdateTree()
+
+    
+    def Commit(self):
+        text = self.lineEdit.text()
+        self.dbu.AddEntryToTable(text)
+        self.UpdateTree()
+
+    def UpdateTree(self):
+        col = self.dbu.GetColumns()
+        table = self.dbu.GetTable()
+        
+        for c in range(len(col)):
+            self.treeWidget.headerItem().setText(c, col[c][0])
+        
+        self.treeWidget.clear()
+        
+        for item in range(len(table)):
+            QTreeWidgetItem(self.treeWidget)
+            for value in range(len(table[item])):
+                self.treeWidget.topLevelItem(item).setText(value, str(table[item][value]))
 
     def createCenterWidget(self):
         mainLayout = QVBoxLayout(self)
-        mainLayout.addWidget(QTableWidget())#self.ND2FileBox)
+        mainLayout.addWidget(self.dataTable)#self.ND2FileBox)
         
         self.centerWiget = QWidget(self)
         self.centerWiget.setLayout(mainLayout)
@@ -60,6 +101,11 @@ class MainWindow(QMainWindow):
         
         self.exitAct = QAction("E&xit", self, shortcut="Ctrl+Q",
                 statusTip="Exit the application", triggered=self.close)
+
+        self.commit = QAction("&Refresh", self, triggered=self.update)
+            #text = self.lineEdit.text()
+            #self.dbu.AddEntryToTable(text)
+            #self.UpdateTree())
 
     def createMenus(self):
         self.fileMenu = self.menuBar().addMenu("&File")
