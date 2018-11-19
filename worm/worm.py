@@ -67,6 +67,8 @@ class Dialog(QDialog):
         super(Dialog, self).__init__()
         sys.stdout = EmittingStream(textWritten=self.normalOutputWritten)
 
+
+
         self.nd2_file= '/media/zachlab/Windows/LinuxStorage/images/ND2_Files'
         #creat layout widgets
         self.createMenu()
@@ -110,7 +112,6 @@ class Dialog(QDialog):
         self.exitAction = self.fileMenu.addAction("E&xit")
         self.exitAction.setShortcut("Ctrl+Q")
         self.menuBar.addMenu(self.fileMenu)
-
         self.exitAction.triggered.connect(self.accept)
 
     def createND2FileGroupBox(self):
