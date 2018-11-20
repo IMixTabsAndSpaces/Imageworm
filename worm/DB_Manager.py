@@ -37,12 +37,24 @@ class DatabaseUtility:
 
 	def CreateTable(self):
 		cmd = (" CREATE TABLE IF NOT EXISTS " + self.tableName + " ("
-			" `ID` int(5) NOT NULL AUTO_INCREMENT,"
-			" `date` date NOT NULL,"
-			" `time` time NOT NULL,"
-			" `message` char(50) NOT NULL,"
-			" PRIMARY KEY (`ID`)"
-			") ENGINE=InnoDB;")
+			" Worm_ID INT UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY,"
+			" Series VARCHAR(30) NOT NULL,"
+			" Date_entered TIMESTAMP,"
+			" Person char(50) NULL,"
+			" Strain VARCHAR(60) NULL,"
+			" Treatments VARCHAR(60) NULL,"
+			" Redsig VARCHAR(60) NULL,"
+			" Imageloc VARCHAR(200) NULL,"
+			" Timepts VARCHAR(60) NOT NULL,"
+			" Annots VARCHAR(200) NULL,"
+			" Acetree VARCHAR(200) NULL,"
+			" Edited_by VARCHAR(60) NULL,"
+			" Edited_time_pts VARCHAR(60) NULL,"
+			" Edited_cells VARCHAR(60) NULL,"
+			" Checked_by CHAR(50) NULL,"
+			" Comments VARCHAR(60) NULL,"
+			" Status CHAR(10) NOT NULL DEFAULT 'NEW'"
+			") ENGINE=InnoDB;")	
 		self.RunCommand(cmd)
 
 	def GetTable(self):
@@ -65,12 +77,9 @@ class DatabaseUtility:
 			msg = self.cursor.fetchone()
 		return msg
 
-	def AddEntryToTable(self, message):
-		date1 = datetime.now().strftime("%y-%m-%d")
-		time = datetime.now().strftime("%H:%M")
-		
-		cmd = " INSERT INTO " + self.tableName + " (date, time, message)"
-		cmd += " VALUES ('%s', '%s', '%s' );" % (date1, time, message)
+	def AddEntryToTable(self, seriesName, TimePoint):
+		cmd = " INSERT INTO " + self.tableName + " (Series, Timepts)"
+		cmd += " VALUES ('%s', '%s' );" % (seriesName, TimePoint)
 		self.RunCommand(cmd)
 
 	def __del__(self):
