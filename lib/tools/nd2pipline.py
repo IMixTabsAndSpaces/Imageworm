@@ -1,3 +1,4 @@
+#!/usr/bin/env python
 
 import sys
 import getpass
@@ -5,21 +6,23 @@ import shutil
 import os
 from FSConvert import Timetrack, logger, Makefilelist
 
+os.system("source ./env_setup.sh")
+ROOT_DIR = os.path.dirname(os.path.abspath(__file__)) # This is your Project Root
 
 @Timetrack
 @logger
 def extractTIFF(files, targetDir):
     for i in files:
-        print("/home/zachlab/ImageWorm/Fiji.app/ImageJ-linux64 --ij2 -macro split_nd2 \"{} {}/\"".format(i, targetDir))
-        os.system("/home/zachlab/ImageWorm/Fiji.app/ImageJ-linux64 -- -macro split_nd2 \"{} {}/\"".format(i, targetDir))
+        print("ImageJ-linux64 --ij2 -macro split_nd2 \"{} {}/\"".format(i, targetDir))
+        os.system("ImageJ-linux64 -- -macro split_nd2 \"{} {}/\"".format(i, targetDir))
 
         
 @Timetrack
 def Main():
-    targetDir = "/media/zachlab/Windows/LinuxStorage/images/archive"
+    targetDir = "/mnt/Disk_2/work/images/archive"
     #print("OUTPUTTING TO: {}".format(targetDir))
-    nd2File = "/media/zachlab/Windows/LinuxStorage/images/ND2_Files"  #sys.argv[1]
-    mlParamLoc = "/media/zachlab/Windows/LinuxStorage/images/matlabParams" #sys.argv[2]
+    nd2File = "/mnt/Disk_2/work/images/images/ND2_Files"  #sys.argv[1]
+    mlParamLoc = "/mnt/Disk_2/work/images/images/matlabParams" #sys.argv[2]
     
     imagelist = Makefilelist(nd2File, "*.nd2", True)
     print("EXTRACTING IMAGES....")
@@ -32,7 +35,7 @@ def Main():
         extractTIFF(imagelist, targetDir+"/temp")
     
     print("RENAMEING IMAGES....")
-    os.chdir("/home/zachlab/ImageWorm/tools/")
+    os.chdir(ROOT_DIR)
     os.system("python rename.py {}/".format(targetDir+"/temp"))
     
     print("RUNNING MATLAB....")

@@ -38,14 +38,14 @@ class DatabaseUtility:
 	def CreateTable(self):
 		cmd = (" CREATE TABLE IF NOT EXISTS " + self.tableName + " ("
 			" Worm_ID INT UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY,"
-			" Series VARCHAR(30) NOT NULL,"
+			" Series VARCHAR(30) NOT NULL DEFAULT 'SeriesName',"
 			" Date_entered TIMESTAMP,"
 			" Person char(50) NULL,"
 			" Strain VARCHAR(60) NULL,"
 			" Treatments VARCHAR(60) NULL,"
 			" Redsig VARCHAR(60) NULL,"
 			" Imageloc VARCHAR(200) NULL,"
-			" Timepts VARCHAR(60) NOT NULL,"
+			" Timepts INT NOT NULL DEFAULT 60,"
 			" Annots VARCHAR(200) NULL,"
 			" Acetree VARCHAR(200) NULL,"
 			" Edited_by VARCHAR(60) NULL,"
@@ -77,10 +77,30 @@ class DatabaseUtility:
 			msg = self.cursor.fetchone()
 		return msg
 
-	def AddEntryToTable(self, seriesName, TimePoint):
-		cmd = " INSERT INTO " + self.tableName + " (Series, Timepts)"
-		cmd += " VALUES ('%s', '%s' );" % (seriesName, TimePoint)
+	def AddEntryToTable(self):
+		cmd = " INSERT INTO " + self.tableName
+		cmd += " VALUES ();"
 		self.RunCommand(cmd)
+
+	def delEntry(self, ID):
+		cmd = "DELETE FROM " + self.tableName + " WHERE Worm_ID=" + ID + ";"
+		self.RunCommand(cmd)
+	
+	def editTableEntry(self, valueDic={}):
+		colName = []
+		values = []
+		for key in valueDic:
+			if not valueDic[key] == "":
+				colName.append(key)
+				values.append("'"+
+				  valueDic[key]+"'")
+		
+		colName = "("+", ".join(colName)+")"
+		values = "("+", ".join(values)+")"
+		cmd = " REPLACE INTO " + self.tableName + colName
+		cmd += " VALUES"+ values +";"
+		self.RunCommand(cmd)
+	
 
 	def __del__(self):
 		self.cnx.commit()

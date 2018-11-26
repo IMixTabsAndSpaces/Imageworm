@@ -1,98 +1,31 @@
+#!/usr/bin/env python
+
 from PyQt5.QtCore import (QFile, QFileInfo, QPoint, QRect, QSettings, QSize,
-        Qt, QTextStream, QObject, pyqtSignal)
+        Qt, QTextStream, QObject, pyqtSignal, QItemSelectionModel)
 from PyQt5.QtGui import QIcon, QKeySequence
-import PyQt5.QtGui
+import PyQt5.QtGui as QtGui
 from PyQt5.QtWidgets import (QAction, QApplication, QFileDialog, QMainWindow,
         QMessageBox, QTextEdit, QVBoxLayout, QGroupBox, QHBoxLayout, QPushButton,
         QLineEdit, QDialog, QWidget, QTableWidget, QLabel, QPushButton, QComboBox,
         QTreeWidget, QTreeWidgetItem, QDialogButtonBox, QFormLayout, QMenu, QMenuBar,
         QGridLayout, QSpinBox, QAbstractScrollArea)
+
 import DB_Manager, sys, os
-class EmittingStream(QObject):
-
-    textWritten = pyqtSignal(str)
-
-    def write(self, text):
-        self.textWritten.emit(str(text))
-
-
-
-class AddDialog(QDialog):
- 
-    def __init__(self):
-        super(AddDialog, self).__init__()
-        sys.stdout = EmittingStream(textWritten=self.normalOutputWritten)
-
-        self.nd2_file= '/media/zachlab/Windows/LinuxStorage/images/ND2_Files'
-        #creat layout widgets
-        self.createND2FileGroupBox()
-        self.bigEditor = QTextEdit("Process Info:")
-        self.bigEditor.setReadOnly(True)
-
-        buttonBox = QDialogButtonBox(QDialogButtonBox.Ok | QDialogButtonBox.Cancel)
-        buttonBox.accepted.connect(self.runpipline)
-        buttonBox.rejected.connect(self.reject)
-
-        #creat layout with built widgets
-        mainLayout = QVBoxLayout()
-        mainLayout.addWidget(self.ND2FileBox)
-        mainLayout.addWidget(self.bigEditor)
-        mainLayout.addWidget(buttonBox)
-        self.setLayout(mainLayout)
-        self.setWindowTitle("ADD ENTRY FROM ND2 FILE")
-    
-    def __del__(self):
-        # Restore sys.stdout
-        sys.stdout = sys.__stdout__
-
-    def normalOutputWritten(self, text):
-        """Append text to the QTextEdit."""
-        # Maybe QTextEdit.append() works as well, but this is how I do it:
-        self.bigEditor.append(text)
-
-    def createND2FileGroupBox(self):
-        self.ND2FileBox = QGroupBox("ND2 File Location")
-        layout = QHBoxLayout()
-
-        bntFile = QPushButton('Find File')
-        bntFile.clicked.connect(self.updateND2)
-        layout.addWidget(bntFile)
-        self.ND2line = QLineEdit(self.nd2_file)
-        layout.addWidget(self.ND2line)
-        self.ND2FileBox.setLayout(layout)
-
-    def createFormGroupBox(self):
-        self.formGroupBox = QGroupBox("Form layout")
-        layout = QFormLayout()
-        layout.addRow(QLabel("Line 1:"), QLineEdit())
-        layout.addRow(QLabel("Line 2, long text:"), QComboBox())
-        layout.addRow(QLabel("Line 3:"), QSpinBox())
-        self.formGroupBox.setLayout(layout)
-    
-    def updateND2(self):
-        self.nd2_file = str(QFileDialog.getExistingDirectory(self, 'Select nd2 directory', '/home'))
-        self.ND2line.setText(self.nd2_file)
-
-    def runpipline(self):
-        #print("here")
-        os.system("python ./nd2pipline.py")
-
+from subMenu import AddDialog
 
 class MainWindow(QMainWindow):
     root = QFileInfo(__file__).absolutePath()
 
     def __init__(self):
         super(MainWindow, self).__init__()
+        #this is just a default and not an required to be set
         self.nd2_file= '/media/zachlab/Windows/LinuxStorage/images/ND2_Files'
-
-
 
         #create center widget stuff
         self.createActions()
         self.createTabel()
         self.createCenterWidget()        
         self.setCentralWidget(self.centerWiget)
-
 
         #set up application stuff
         self.createActions()
@@ -107,20 +40,13 @@ class MainWindow(QMainWindow):
         database = "test2"
         tableName = "worms"
         self.dbu = DB_Manager.DatabaseUtility(database, tableName)
-    
-        #self.verticalLayout_2 = QVBoxLayout()
-        #self.verticalLayout = QVBoxLayout()
         self.label = QLabel("Label")
         self.label.setAlignment(Qt.AlignCenter)
-        #self.horizontalLayout = QHBoxLayout()
-        #self.lineEdit = QLineEdit()
-        #self.horizontalLayout.addWidget(self.lineEdit)
-
-
         self.treeWidget = QTreeWidget()
-        self.commitButton = QPushButton("Commit")
-        self.commitButton.clicked.connect(self.Commit)
-
+        self.treeWidget.itemSelectionChanged.connect(self.loadSelectedID)
+        self.treeWidget.selectionModel().selectionChanged.connect(self.calledMethod)
+        self.commitButton = QPushButton("CommitEdit")
+        self.commitButton.clicked.connect(self.CommitEdit)
         self.editButton = QPushButton("Edit")
         self.editButton.clicked.connect(self.showEditMenu)
         self.verticalLayout = QGridLayout()
@@ -132,12 +58,10 @@ class MainWindow(QMainWindow):
         self.menu = QWidget()
         self.menu.setMaximumWidth(300)
         self.menu.setLayout(self.verticalLayout)
-    
         self.grid = QGridLayout()
         self.grid.addWidget(self.treeWidget, 0, 0)
         self.grid.addWidget(self.menu, 0, 1)
         self.dataTable.setLayout(self.grid)
-
         self.UpdateTree()
     
     def showEditMenu(self):
@@ -149,7 +73,6 @@ class MainWindow(QMainWindow):
             horizontalLayout = QHBoxLayout()
             lineEdit = QLineEdit()
             label = QLabel(col[c][0]+":")
-            
             horizontalLayout.addWidget(label)
             horizontalLayout.addWidget(lineEdit)
             tempW = QWidget()
@@ -161,24 +84,29 @@ class MainWindow(QMainWindow):
         self.label.setHidden(True)
         self.verticalLayout.addWidget(self.editmenu, 1, 0)
     
-    def Commit(self):
+    def loadSelectedID(self):
+        getSelected = self.treeWidget.selectedItems()
+        if getSelected:
+            baseNode = getSelected[0]
+            print(baseNode)
+            self.getSelectedID = baseNode.text(0)
+            self.isID = True
+
+    def CommitEdit(self):
         results = {}
         for key in self.editLabels:
             results[key] = self.editLabels[key].text()
-        self.dbu.AddEntryToTable(results['Series'],results['Timepts'])
+
+        self.dbu.editTableEntry(results)
         self.UpdateTree()
 
     def UpdateTree(self):
         col = self.dbu.GetColumns()
         table = self.dbu.GetTable()
-        
         for c in range(len(col)):
             self.treeWidget.headerItem().setText(c, col[c][0])
 
-        
-        
         self.treeWidget.clear()
-        
         for item in range(len(table)):
             QTreeWidgetItem(self.treeWidget)
             for value in range(len(table[item])):
@@ -200,6 +128,10 @@ class MainWindow(QMainWindow):
                 shortcut="Ctrl+P", statusTip="Manually add DB Entry", 
                 triggered=self.addEntry)
         
+        self.delAct = QAction(QIcon(MainWindow.root + '/images/Delete.png'), "&Delete", self,
+                shortcut="Ctrl+x", statusTip="delet DB Entry: Ctrl+x",
+                triggered=self.delRow)
+        
         self.exitAct = QAction("E&xit", self, shortcut="Ctrl+Q",
                 statusTip="Exit the application", triggered=self.close)
 
@@ -215,6 +147,7 @@ class MainWindow(QMainWindow):
         self.fileToolBar = self.addToolBar("File")
         self.fileToolBar.addAction(self.processAct)
         self.fileToolBar.addAction(self.addAct)
+        self.fileToolBar.addAction(self.delAct)
    
     def createStatusBar(self):
         self.statusBar().showMessage("Ready")
@@ -227,12 +160,47 @@ class MainWindow(QMainWindow):
         self.move(pos)
         self.setGeometry(0, 0, 2040, 1080)
 
+    def calledMethod(self,newIndex,oldIndex=None):
+        try: #if qItemSelection
+            newIndex=newIndex.indexes()[0]
+        except: #if qModelIndex
+            pass
+
+    def SelectIdRow(self):
+        widget=self.treeWidget
+        itemOrText='3'
+        #oldIndex=widget.selectionModel().currentIndex()
+        try: #an item is given--------------------------------------------
+            newIndex=widget.model().indexFromItem(itemOrText)
+            print(newIndex)
+        except: #a text is given and we are looking for the first match---
+            listIndexes=widget.model().match(widget.model().index(0, 0),
+                            Qt.DisplayRole,
+                            itemOrText,
+                            Qt.MatchStartsWith)
+            try:
+                newIndex=listIndexes[0]
+            except:
+                return
+        widget.selectionModel().select( #programmatical selection---------
+                newIndex,
+                QItemSelectionModel.ClearAndSelect)
+
     def addEntry(self):
-        pass
+        self.dbu.AddEntryToTable()
+        self.UpdateTree()
+        self.SelectIdRow()
+        self.showEditMenu()
 
     def processEntry(self):
         self.AddEntry = AddDialog()
         self.AddEntry.show()
+    
+    def delRow(self):
+        if self.isID:
+            self.dbu.delEntry(self.getSelectedID)
+        self.UpdateTree()
+
 if __name__ == '__main__':
 
     import sys
@@ -241,3 +209,4 @@ if __name__ == '__main__':
     mainWin = MainWindow()
     mainWin.show()
     sys.exit(app.exec_())
+
