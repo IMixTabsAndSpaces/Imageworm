@@ -3,7 +3,7 @@ use File::Spec::Functions qw(rel2abs);
 use File::Basename;
 use File::Copy;
 use Cwd;
-$SCRIPTLOCATION=dirname(rel2abs($0));
+$SCRIPTLOCATION=$ENV{'IW_LIB'};
 #SCRIPTLOCATION=dirname(0);
 printf("Scriptlocation: ".$SCRIPTLOCATION."\n");
 #check that have 2 arguments tiff path and parameter file
@@ -206,7 +206,7 @@ print PARAMFILE "<nuclei file=\"".$SERIESDIR."dats/".$FILEROOT."-edit.zip\"/>\n"
 #print PARAMFILE "<image file=\"../tif/".$TIFFLOCATION.$FILEROOT."-t001-p01.tif\"/>\n";
 #print PARAMFILE "<nuclei file=\"./".$FILEROOT."-edit.zip\"/>\n";
 
-print PARAMFILE "<end index=\"599\"/>\n";
+print PARAMFILE "<end index=\"60\"/>\n";
 #print PARAMFILE "<resolution xyRes=\"0.254\" zRes=\"1\" planeEnd=\"30\"/> <exprCorr type=\"blot\"/>\n";
  
 print PARAMFILE "<resolution xyRes=\"".$XYRES."\" zRes=\"".$ZRES."\" planeEnd=\"".$SLICES."\"/>\n"; 

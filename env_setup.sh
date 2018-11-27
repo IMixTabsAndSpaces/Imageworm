@@ -1,11 +1,19 @@
 #!/bin/sh
-export IW_HOME=/home/stephen/Documents/python/Imageworm/worm
-export IW_LIB=/home/stephen/Documents/python/Imageworm/lib
-export Fiji=/home/stephen/Documents/python/Imageworm/lib/Fiji.app
-export PATH=$PATH:$IW_HOME:$IW_LIB:$Fiji
+export IW_HOME=$PWD
+export IW_LIB=$IW_HOME/lib 
+export Fiji=$IW_LIB/Fiji.app
+export targetDir=/media/zachlab/Windows/LinuxStorage/images/archive
+export nd2File=/media/zachlab/Windows/LinuxStorage/images/ND2_Files  #sys.argv[1]
+export mlParamLoc=/media/zachlab/Windows/LinuxStorage/images/matlabParams #sys.argv[2]
 
-#export M2_HOME=/vagrant/tools/maven
-#export PATH=$PATH:$M2_HOME/bin
-#export JAVA_HOME=/usr/lib/jvm/jdk1.7.0_65
-#export ANT_HOME=/usr/local/apache-ant-1.9.7
-#export MAVEN_HOME=$M2_HOME
+#for Java
+export DBLocation=/media/zachlab/Windows/LinuxStorage/embryoDB/
+export StarryNite=$IW_LIB/DB-Java/starrynite-debug
+export SNDefaultParms=$IW_HOME/docs/parameters/greenParameters
+export MatlabDefaultParams=$IW_LIB/DB-Java/mparmDEFAULT.txt
+export ArchiveLocation=/media/zachlab/Windows/LinuxStorage/
+export AnnotsLocation=/media/zachlab/Windows/LinuxStorage/
+echo $StarryNite
+echo $SNDefaultParms
+echo $MatlabDefaultParams
+#export PATH=$PATH:$IW_HOME:$IW_LIB:$Fiji

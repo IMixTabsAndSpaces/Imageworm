@@ -10,7 +10,8 @@ foreach $argnum (0 .. $#ARGV) {
 
 my $nl = "\n";
 my $sp = " ";
-my $basecommand = 'nice java -mx500m -cp /home/zachlab/ImageWorm/DB-Java/pipeline2.jar DBEntryMaker';
+$LIB_HOME = $ENV{'IW_LIB'};
+my $basecommand = "nice java -mx500m -cp $LIB_HOME/DB-Java/pipeline2.jar DBEntryMaker";
 #new code 10/29/15 to hack access to /murrlab2 filesystem via symlink from murrlab
 my $targetDir = $ARGV[0];
 my $linkDir = $targetDir;
@@ -31,12 +32,12 @@ system (($command) || print STDERR "execution failed for " . $command . $nl);
 
 my $dir = $ARGV[0];
 if($dir=~/([^\/]+)\/?$/){
-	print "odd statment is running";
     my $seriesname = $1;
     my $annots = "NOTDIR";
     my $imagedir = "NOTDIR";
-    if (-e "/media/zachlab/Windows/LinuxStorage/embryoDB/$seriesname.xml"){
-	foreach (`cat /media/zachlab/Windows/LinuxStorage/embryoDB/$seriesname.xml`){
+	$DBLocation = $ENV{'DBLocation'};
+    if (-e "$DBLocation/$seriesname.xml"){
+	foreach (`cat $DBLocation/$seriesname.xml`){
 	    if(/annots loc=\"(.+)\"/){
 	        $annots = $1 . "/dats";
 	    }
@@ -56,7 +57,7 @@ if($dir=~/([^\/]+)\/?$/){
 	    print OUT "<image file=\"$imagedir/$seriesname" . "-t001-p01.tif\"/>\n";
 	    print OUT "<nuclei file=\"$annots/$seriesname" . "-edit.zip\"/>\n";
 	    print OUT "<start index=\"1\"/>\n";
-	    print OUT "<end index=\"240\"/>\n";
+	    print OUT "<end index=\"60\"/>\n";
 	    print OUT "<axis axis=\"ADL\"/>\n";
 	    print OUT "<resolution xyRes=\".087\" zRes=\".504\" planeEnd=\"66\"/>\n";
 	    print OUT "</embryo>\n";

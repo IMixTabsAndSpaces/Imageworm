@@ -1,6 +1,0 @@
-README.md
-setup.py
-Imageworm.egg-info/PKG-INFO
-Imageworm.egg-info/SOURCES.txt
-Imageworm.egg-info/dependency_links.txt
-Imageworm.egg-info/top_level.txt
