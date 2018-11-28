@@ -2,9 +2,12 @@
 import mysql.connector
 from mysql.connector import errorcode
 from datetime import datetime
+import os
+lib = os.environ['IW_LIB']
+path = os.path.join(lib,'tools')+'FSConvert'
+from helpers.FSConvert import xmldata
 
 ##===============================================
-
 class DatabaseUtility: 
 	def __init__(self, database, tableName):
 		self.db = database
@@ -38,22 +41,22 @@ class DatabaseUtility:
 	def CreateTable(self):
 		cmd = (" CREATE TABLE IF NOT EXISTS " + self.tableName + " ("
 			" Worm_ID INT UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY,"
-			" Series VARCHAR(30) NOT NULL DEFAULT 'SeriesName',"
-			" Date_entered TIMESTAMP,"
-			" Person char(50) NULL,"
-			" Strain VARCHAR(60) NULL,"
-			" Treatments VARCHAR(60) NULL,"
-			" Redsig VARCHAR(60) NULL,"
-			" Imageloc VARCHAR(200) NULL,"
-			" Timepts INT NOT NULL DEFAULT 60,"
-			" Annots VARCHAR(200) NULL,"
-			" Acetree VARCHAR(200) NULL,"
-			" Edited_by VARCHAR(60) NULL,"
-			" Edited_time_pts VARCHAR(60) NULL,"
-			" Edited_cells VARCHAR(60) NULL,"
-			" Checked_by CHAR(50) NULL,"
-			" Comments VARCHAR(60) NULL,"
-			" Status CHAR(10) NOT NULL DEFAULT 'NEW'"
+			" series VARCHAR(30) NOT NULL DEFAULT 'SeriesName',"
+			" date TIMESTAMP,"
+			" person char(50) NULL,"
+			" strain VARCHAR(60) NULL,"
+			" treatments VARCHAR(60) NULL,"
+			" redsig VARCHAR(60) NULL,"
+			" imageloc VARCHAR(200) NULL,"
+			" timepts INT NOT NULL DEFAULT 60,"
+			" annots VARCHAR(200) NULL,"
+			" acetree VARCHAR(200) NULL,"
+			" edited_by VARCHAR(60) NULL,"
+			" edited_time_pts VARCHAR(60) NULL,"
+			" edited_cells VARCHAR(60) NULL,"
+			" checked_by CHAR(50) NULL,"
+			" comments VARCHAR(60) NULL,"
+			" status CHAR(10) NOT NULL DEFAULT 'NEW'"
 			") ENGINE=InnoDB;")	
 		self.RunCommand(cmd)
 
@@ -63,6 +66,10 @@ class DatabaseUtility:
 
 	def GetColumns(self):
 		return self.RunCommand("SHOW COLUMNS FROM %s;" % self.tableName)
+	
+	def GetRow(self, ID):
+		return self.RunCommand("SELECT * FROM {} WHERE Worm_ID = {};".format(self.tableName, ID))
+
 
 	def RunCommand(self, cmd):
 		print ("RUNNING COMMAND: " + cmd)
@@ -81,6 +88,12 @@ class DatabaseUtility:
 		cmd = " INSERT INTO " + self.tableName
 		cmd += " VALUES ();"
 		self.RunCommand(cmd)
+	
+	def AddXmlToTable(self, files):
+		for f in files:
+			name = os.path.basename(f)
+			dat = xmldata(os.path.join(f, 'dats', name+'.xml'))
+			self.RunCommand(dat.mysqlentry('worms'))
 
 	def delEntry(self, ID):
 		cmd = "DELETE FROM " + self.tableName + " WHERE Worm_ID=" + ID + ";"

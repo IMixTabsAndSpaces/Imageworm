@@ -2,7 +2,7 @@ import os
 import fileinput
 import time
 from fnmatch import fnmatch
-
+#==============================================================
 
 def ReplaceAll(filelist, old, new):
     for i, x in enumerate(filelist):
@@ -110,7 +110,9 @@ def logger(orig_func):
 import pandas as pd
 import xml.etree.ElementTree as ET
 from lxml import etree
-
+import getpass
+import datetime
+#===============================================================
 class xmldata():
     def __init__(self, file=False):
         self.Keys = []
@@ -122,6 +124,16 @@ class xmldata():
     def __iter__(self):
         for i in range(len(self.Keys)):
             yield self.Keys[i], self.labels[i], self.Values[i]
+
+    def _del(self,idx=True):
+        if type(idx) == bool:
+            self.Keys.clear()
+            self.labels.clear()
+            self.Values.clear()
+        else:
+            del self.Keys[idx]
+            del self.labels[idx]
+            del self.Values[idx]
 
     def __str__(self):
         for k, l, V in self:
@@ -147,8 +159,45 @@ class xmldata():
         ctree.write(outfile ,pretty_print=True,xml_declaration=True, encoding='utf-8')
 
     def mysqlentry(self, table_name=str):
+
+        def go_up(path, n):
+            for i in range(n):
+                path = os.path.dirname(path)
+
+            return path
+        self._del(-1)
+        timepts = self.Values[self.Keys.index('end')]
+        timepts.zfill(3)
+        first_img = self.Values[self.Keys.index('image')]
+        imageloc = go_up(first_img, 2)
+        annots = imageloc
+        series = os.path.basename(imageloc)
+        acetree = series + '.xml'
+        status = 'new'
+        person = getpass.getuser()
+        date = datetime.datetime.today().strftime('%Y%m%d')
+        self._del()
+        KEYS = ('series', 'date', 'person', 'strain', 'treatments', 'redsig',
+            'imageloc','timepts', 'annots', 'acetree', 'editedby', 'editedtimepts',
+            'editedcells', 'checkedby', 'comments', 'status')
+
+        LABEL = ('name', 'date', 'name', 'name', 'desc', 'value',
+            'loc','num', 'loc', 'config', 'name', 'num',
+            'num', 'name', 'text', 'case')
+        
+        VALUES = (series, date, person, 'n/a', 'n/a', 'n/a',
+            imageloc, timepts, annots, acetree, 'n/a', 'n/a',
+            'n/a', 'n/a', 'n/a', 'new')
+        for i in range(len(KEYS)):
+            self._append(KEYS[i],LABEL[i],VALUES[i])
+
+        return self.mysqlentryRaw(table_name)
+
+    def mysqlentryRaw(self, table_name=str):
         cmd = 'INSERT INTO {} '.format(table_name)
-        cmd += str(tuple(k for k,l,v in self if not v == 'n/a'))
-        cmd += '\nVALUES\n'
+        cmd += str(tuple(k for k,l,v in self if not v == 'n/a')).replace("'", "")
+        cmd += ' VALUES '
         cmd += str(tuple(v for k,l,v in self if not v == 'n/a'))
+        cmd += ';'
         return cmd
+        

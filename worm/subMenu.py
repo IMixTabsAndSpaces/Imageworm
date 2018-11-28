@@ -9,6 +9,8 @@ from PyQt5.QtWidgets import (QAction, QApplication, QFileDialog, QMainWindow,
         QGridLayout, QSpinBox, QAbstractScrollArea)
 import sys, os
 
+import helpers.Ianalysis
+
 class EmittingStream(QObject):
 
     textWritten = pyqtSignal(str)
@@ -22,9 +24,11 @@ class AddDialog(QDialog):
  
     def __init__(self):
         super(AddDialog, self).__init__()
+        #self.setWindowModality(QMainWindow)
         sys.stdout = EmittingStream(textWritten=self.normalOutputWritten)
 
         self.nd2_file= '/media/zachlab/Windows/LinuxStorage/images/ND2_Files'
+        self.outfiles= ['/media/zachlab/Windows/LinuxStorage/images/archive/2018-11-28-16-56-xy2']
         #creat layout widgets
         self.createND2FileGroupBox()
         self.bigEditor = QTextEdit("Process Info:")
@@ -75,5 +79,7 @@ class AddDialog(QDialog):
         self.ND2line.setText(self.nd2_file)
 
     def runpipline(self):
-        #print("here")
-        os.system("python ./nd2pipline.py")
+        self.bigEditor = QTextEdit('''Processing Please wait...
+            This will take a while.''')
+        self.outfiles = helpers.Ianalysis.Main()
+        print(self.outfiles)

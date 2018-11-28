@@ -12,7 +12,6 @@ from PyQt5.QtWidgets import (QAction, QApplication, QFileDialog, QMainWindow,
 
 import DB_Manager, sys, os
 from subMenu import AddDialog
-
 class MainWindow(QMainWindow):
     root = QFileInfo(__file__).absolutePath()
 
@@ -44,7 +43,7 @@ class MainWindow(QMainWindow):
         self.label.setAlignment(Qt.AlignCenter)
         self.treeWidget = QTreeWidget()
         self.treeWidget.itemSelectionChanged.connect(self.loadSelectedID)
-        self.treeWidget.selectionModel().selectionChanged.connect(self.calledMethod)
+        #self.treeWidget.selectionModel().selectionChanged.connect(self.calledMethod)
         self.commitButton = QPushButton("CommitEdit")
         self.commitButton.clicked.connect(self.CommitEdit)
         self.editButton = QPushButton("Edit")
@@ -83,14 +82,18 @@ class MainWindow(QMainWindow):
         self.editmenu.setLayout(editMenuLayout)
         self.label.setHidden(True)
         self.verticalLayout.addWidget(self.editmenu, 1, 0)
+        if self.isID:
+            self.dbu.GetRow
+            for key in self.editLabels:
+            results[key] = self.editLabels[key].text()
     
     def loadSelectedID(self):
         getSelected = self.treeWidget.selectedItems()
         if getSelected:
             baseNode = getSelected[0]
-            print(baseNode)
             self.getSelectedID = baseNode.text(0)
             self.isID = True
+            print(self.getSelectedID)
 
     def CommitEdit(self):
         results = {}
@@ -115,15 +118,14 @@ class MainWindow(QMainWindow):
     def createCenterWidget(self):
         mainLayout = QVBoxLayout(self)
         mainLayout.addWidget(self.dataTable)
-        
         self.centerWiget = QWidget(self)
         self.centerWiget.setLayout(mainLayout)
 
-    def createActions(self):
-        
+    def createActions(self): 
         self.processAct = QAction(QIcon(MainWindow.root + '/images/open.png'), "&Process", self,
                 shortcut=QKeySequence.New, statusTip="Create new DB Entry",
                 triggered=self.processEntry)
+
         self.addAct = QAction(QIcon(MainWindow.root+'/images/new.png'), "&Add", self,
                 shortcut="Ctrl+P", statusTip="Manually add DB Entry", 
                 triggered=self.addEntry)
@@ -131,6 +133,10 @@ class MainWindow(QMainWindow):
         self.delAct = QAction(QIcon(MainWindow.root + '/images/Delete.png'), "&Delete", self,
                 shortcut="Ctrl+x", statusTip="delet DB Entry: Ctrl+x",
                 triggered=self.delRow)
+        
+        self.editAct = QAction(QIcon(MainWindow.root+ '/images/edit.png'), "&Edit", self, 
+                shortcut="Ctrl+E", statusTip="Edit Entry: Ctrl+E",
+                triggered=self.showEditMenu)
         
         self.exitAct = QAction("E&xit", self, shortcut="Ctrl+Q",
                 statusTip="Exit the application", triggered=self.close)
@@ -141,12 +147,14 @@ class MainWindow(QMainWindow):
         self.fileMenu = self.menuBar().addMenu("&File")
         self.fileMenu.addAction(self.processAct)
         self.fileMenu.addAction(self.addAct)
+        self.fileMenu.addAction(self.editAct)
         self.fileMenu.addAction(self.exitAct)
 
     def createToolBars(self):
         self.fileToolBar = self.addToolBar("File")
         self.fileToolBar.addAction(self.processAct)
         self.fileToolBar.addAction(self.addAct)
+        self.fileToolBar.addAction(self.editAct)
         self.fileToolBar.addAction(self.delAct)
    
     def createStatusBar(self):
@@ -159,7 +167,7 @@ class MainWindow(QMainWindow):
         self.resize(size)
         self.move(pos)
         self.setGeometry(0, 0, 2040, 1080)
-
+    '''
     def calledMethod(self,newIndex,oldIndex=None):
         try: #if qItemSelection
             newIndex=newIndex.indexes()[0]
@@ -185,7 +193,7 @@ class MainWindow(QMainWindow):
         widget.selectionModel().select( #programmatical selection---------
                 newIndex,
                 QItemSelectionModel.ClearAndSelect)
-
+    '''
     def addEntry(self):
         self.dbu.AddEntryToTable()
         self.UpdateTree()
@@ -193,8 +201,11 @@ class MainWindow(QMainWindow):
         self.showEditMenu()
 
     def processEntry(self):
-        self.AddEntry = AddDialog()
-        self.AddEntry.show()
+        AddEntry = AddDialog()
+        AddEntry.exec_()
+        self.dbu.AddXmlToTable(AddEntry.outfiles)
+        self.UpdateTree()
+        
     
     def delRow(self):
         if self.isID:
