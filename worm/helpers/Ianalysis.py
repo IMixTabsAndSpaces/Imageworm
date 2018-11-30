@@ -4,8 +4,10 @@ import sys
 import getpass
 import shutil
 import os
-from helpers.FSConvert import Timetrack, logger, Makefilelist
-#from FSConvert import Timetrack, logger, Makefilelist
+try:
+    from helpers.FSConvert import Timetrack, logger, Makefilelist
+except:
+    from FSConvert import Timetrack, logger, Makefilelist
 ROOT_DIR = os.environ['IW_HOME'] # This is your Project Root
 print(ROOT_DIR)
 

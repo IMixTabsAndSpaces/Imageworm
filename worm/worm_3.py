@@ -8,10 +8,11 @@ from PyQt5.QtWidgets import (QAction, QApplication, QFileDialog, QMainWindow,
         QMessageBox, QTextEdit, QVBoxLayout, QGroupBox, QHBoxLayout, QPushButton,
         QLineEdit, QDialog, QWidget, QTableWidget, QLabel, QPushButton, QComboBox,
         QTreeWidget, QTreeWidgetItem, QDialogButtonBox, QFormLayout, QMenu, QMenuBar,
-        QGridLayout, QSpinBox, QAbstractScrollArea)
-
+        QGridLayout, QSpinBox, QAbstractScrollArea, QSizePolicy, QHeaderView,
+        QTableWidgetItem, QAbstractItemView)
+from PyQt5.QtSql import QSqlTableModel
 import DB_Manager, sys, os
-from subMenu import AddDialog
+from helpers.subMenu import AddDialog
 class MainWindow(QMainWindow):
     root = QFileInfo(__file__).absolutePath()
 
@@ -41,9 +42,18 @@ class MainWindow(QMainWindow):
         self.dbu = DB_Manager.DatabaseUtility(database, tableName)
         self.label = QLabel("Label")
         self.label.setAlignment(Qt.AlignCenter)
-        self.treeWidget = QTreeWidget()
-        self.treeWidget.itemSelectionChanged.connect(self.loadSelectedID)
-        #self.treeWidget.selectionModel().selectionChanged.connect(self.calledMethod)
+        self.tableWidget = QTableWidget()
+        self.tableWidget.setSelectionBehavior(QAbstractItemView.SelectRows)
+        self.tableWidget.setShowGrid(False)
+        self.tableWidget.verticalHeader().hide()
+        self.tableWidget.itemSelectionChanged.connect(self.loadSelectedID)
+        self.tableWidget.setSortingEnabled(True)
+        self.tableWidget.setEditTriggers(QAbstractItemView.NoEditTriggers)
+        #self.tableWidget.setSizeAdjustPolicy(QAbstractScrollArea.AdjustToContents)
+        #self.tableWidget.horizontalHeader().setStretchLastSection(False)
+        #self.tableWidget.setHorizontalScrollBarPolicy(Qt.ScrollBarAlwaysOff)
+        #self.tableWidget.selectionModel().selectionChanged.connect(self.calledMethod)
+
         self.commitButton = QPushButton("CommitEdit")
         self.commitButton.clicked.connect(self.CommitEdit)
         self.editButton = QPushButton("Edit")
@@ -58,7 +68,7 @@ class MainWindow(QMainWindow):
         self.menu.setMaximumWidth(300)
         self.menu.setLayout(self.verticalLayout)
         self.grid = QGridLayout()
-        self.grid.addWidget(self.treeWidget, 0, 0)
+        self.grid.addWidget(self.tableWidget, 0, 0)
         self.grid.addWidget(self.menu, 0, 1)
         self.dataTable.setLayout(self.grid)
         self.UpdateTree()
@@ -82,16 +92,17 @@ class MainWindow(QMainWindow):
         self.editmenu.setLayout(editMenuLayout)
         self.label.setHidden(True)
         self.verticalLayout.addWidget(self.editmenu, 1, 0)
-        if self.isID:
-            self.dbu.GetRow
-            for key in self.editLabels:
-            results[key] = self.editLabels[key].text()
+        #if self.isID:
+        #    self.dbu.GetRow
+        #    for key in self.editLabels:
+        #    results[key] = self.editLabels[key].text()
     
     def loadSelectedID(self):
-        getSelected = self.treeWidget.selectedItems()
+        getSelected = self.tableWidget.selectedItems()
         if getSelected:
             baseNode = getSelected[0]
-            self.getSelectedID = baseNode.text(0)
+            #self.getSelectedID = baseNode.text(0)
+            self.getSelectedID = baseNode.text()
             self.isID = True
             print(self.getSelectedID)
 
@@ -102,18 +113,44 @@ class MainWindow(QMainWindow):
 
         self.dbu.editTableEntry(results)
         self.UpdateTree()
-
+           
     def UpdateTree(self):
         col = self.dbu.GetColumns()
         table = self.dbu.GetTable()
+        self.tableWidget.setRowCount(len(table))
+        self.tableWidget.setColumnCount(len(col))
+        self.model = QSqlTableModel(self)
+        self.tableWidget.clear()
         for c in range(len(col)):
-            self.treeWidget.headerItem().setText(c, col[c][0])
+            self.tableWidget.setHorizontalHeaderItem(c, QTableWidgetItem(col[c][0]))
+            #self.tableWidget.headerItem().setText(c, col[c][0])
 
-        self.treeWidget.clear()
+        
+        #self.tableWidget.setSortingEnabled(False)
         for item in range(len(table)):
-            QTreeWidgetItem(self.treeWidget)
+            #QTableWidgetItem(self.tableWidget)
             for value in range(len(table[item])):
-                self.treeWidget.topLevelItem(item).setText(value, str(table[item][value]))
+                self.tableWidget.setItem(item, value, QTableWidgetItem(str(table[item][value])))
+                #self.tableWidget.topLevelItem(item).setText(value, str(table[item][value]))
+        #self.tableWidget.resizeColumnsToContents()
+        #self.tableWidget.resize(self.tableWidget.sizeHint().width(), self.tableWidget.minimumWidth())
+        #self.tableWidget.
+        #self.tableWidget.setSizePolicy(QSizePolicy.Expanding, QSizePolicy.Fixed)
+        #for i in range(len(self.dbu.GetColumns())):
+        #    self.tableWidget.resizeColumnToContents(i)
+        header = self.tableWidget.horizontalHeader()
+        
+        for i in range(len(self.dbu.GetColumns())):
+            if i == 0:
+                header.setSectionResizeMode(i, QHeaderView.Stretch)
+            elif i == 7 or 9:
+                header.setSectionResizeMode(i, QHeaderView.Stretch)
+                #self.tableWidget.setColumnWidth(i, 80)
+            else:
+                header.setSectionResizeMode(i, QHeaderView.Stretch)#ResizeToContents)
+                
+            #self.tableWidget.resizeColumnToContents(i, QHeaderView.Stretch)
+
 
     def createCenterWidget(self):
         mainLayout = QVBoxLayout(self)
@@ -167,37 +204,11 @@ class MainWindow(QMainWindow):
         self.resize(size)
         self.move(pos)
         self.setGeometry(0, 0, 2040, 1080)
-    '''
-    def calledMethod(self,newIndex,oldIndex=None):
-        try: #if qItemSelection
-            newIndex=newIndex.indexes()[0]
-        except: #if qModelIndex
-            pass
 
-    def SelectIdRow(self):
-        widget=self.treeWidget
-        itemOrText='3'
-        #oldIndex=widget.selectionModel().currentIndex()
-        try: #an item is given--------------------------------------------
-            newIndex=widget.model().indexFromItem(itemOrText)
-            print(newIndex)
-        except: #a text is given and we are looking for the first match---
-            listIndexes=widget.model().match(widget.model().index(0, 0),
-                            Qt.DisplayRole,
-                            itemOrText,
-                            Qt.MatchStartsWith)
-            try:
-                newIndex=listIndexes[0]
-            except:
-                return
-        widget.selectionModel().select( #programmatical selection---------
-                newIndex,
-                QItemSelectionModel.ClearAndSelect)
-    '''
     def addEntry(self):
         self.dbu.AddEntryToTable()
         self.UpdateTree()
-        self.SelectIdRow()
+        #self.SelectIdRow()
         self.showEditMenu()
 
     def processEntry(self):

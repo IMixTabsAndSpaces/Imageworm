@@ -8,8 +8,12 @@ from PyQt5.QtWidgets import (QAction, QApplication, QFileDialog, QMainWindow,
         QTreeWidget, QTreeWidgetItem, QDialogButtonBox, QFormLayout, QMenu, QMenuBar,
         QGridLayout, QSpinBox, QAbstractScrollArea)
 import sys, os
-
-import helpers.Ianalysis
+try:
+    import helpers.Ianalysis as Ianalysis
+    from helpers.TextEditor_Code import Editor
+except:
+    import Ianalysis
+    from TextEditor_Code import Editor
 
 class EmittingStream(QObject):
 
@@ -26,11 +30,13 @@ class AddDialog(QDialog):
         super(AddDialog, self).__init__()
         #self.setWindowModality(QMainWindow)
         sys.stdout = EmittingStream(textWritten=self.normalOutputWritten)
-
+        self.ParameterFile= '/media/zachlab/Windows/LinuxStorage/images/matlabParams'
         self.nd2_file= '/media/zachlab/Windows/LinuxStorage/images/ND2_Files'
-        self.outfiles= ['/media/zachlab/Windows/LinuxStorage/images/archive/2018-11-28-16-56-xy2']
+        self.out_file= '/media/zachlab/Windows/LinuxStorage/images/archive'
         #creat layout widgets
+        self.createToolsGroupBox()
         self.createND2FileGroupBox()
+        self.createOutputGroupBox()
         self.bigEditor = QTextEdit("Process Info:")
         self.bigEditor.setReadOnly(True)
 
@@ -40,7 +46,9 @@ class AddDialog(QDialog):
 
         #creat layout with built widgets
         mainLayout = QVBoxLayout()
+        mainLayout.addWidget(self.ToolsBox)
         mainLayout.addWidget(self.ND2FileBox)
+        mainLayout.addWidget(self.OutputBox)
         mainLayout.addWidget(self.bigEditor)
         mainLayout.addWidget(buttonBox)
         self.setLayout(mainLayout)
@@ -55,8 +63,17 @@ class AddDialog(QDialog):
         # Maybe QTextEdit.append() works as well, but this is how I do it:
         self.bigEditor.append(text)
 
+    def createToolsGroupBox(self):
+        self.ToolsBox = QGroupBox()
+        layout = QHBoxLayout()
+
+        bntFile = QPushButton('Edit Parameters')
+        bntFile.clicked.connect(self.updateParameters)
+        layout.addWidget(bntFile)
+        self.ToolsBox.setLayout(layout)
+
     def createND2FileGroupBox(self):
-        self.ND2FileBox = QGroupBox("ND2 File Location")
+        self.ND2FileBox = QGroupBox("ND2 File Location:")
         layout = QHBoxLayout()
 
         bntFile = QPushButton('Find File')
@@ -65,6 +82,17 @@ class AddDialog(QDialog):
         self.ND2line = QLineEdit(self.nd2_file)
         layout.addWidget(self.ND2line)
         self.ND2FileBox.setLayout(layout)
+    
+    def createOutputGroupBox(self):
+        self.OutputBox = QGroupBox("Output File Location:")
+        layout = QHBoxLayout()
+
+        bntFile = QPushButton('Find File')
+        bntFile.clicked.connect(self.updateOut)
+        layout.addWidget(bntFile)
+        self.outline = QLineEdit(self.out_file)
+        layout.addWidget(self.outline)
+        self.OutputBox.setLayout(layout)
 
     def createFormGroupBox(self):
         self.formGroupBox = QGroupBox("Form layout")
@@ -74,12 +102,29 @@ class AddDialog(QDialog):
         layout.addRow(QLabel("Line 3:"), QSpinBox())
         self.formGroupBox.setLayout(layout)
     
+    def updateParameters(self):
+        self.editor = Editor(self.ParameterFile)
+        self.editor.show()
+
     def updateND2(self):
         self.nd2_file = str(QFileDialog.getExistingDirectory(self, 'Select nd2 directory', '/home'))
         self.ND2line.setText(self.nd2_file)
 
+    def updateOut(self):
+        self.out_file = str(QFileDialog.getExistingDirectory(self, 'Select Output directory', '/home'))
+        self.ND2line.setText(self.out_file)
+
     def runpipline(self):
         self.bigEditor = QTextEdit('''Processing Please wait...
             This will take a while.''')
-        self.outfiles = helpers.Ianalysis.Main()
+        self.outfiles = Ianalysis.Main()
         print(self.outfiles)
+
+if __name__ == '__main__':
+
+    import sys
+
+    app = QApplication(sys.argv)
+    mainWin = AddDialog()
+    mainWin.show()
+    sys.exit(app.exec_())
