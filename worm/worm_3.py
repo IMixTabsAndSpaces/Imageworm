@@ -20,7 +20,7 @@ class MainWindow(QMainWindow):
         super(MainWindow, self).__init__()
         #this is just a default and not an required to be set
         self.nd2_file= '/media/zachlab/Windows/LinuxStorage/images/ND2_Files'
-
+        self.isID=False
         #create center widget stuff
         self.createActions()
         self.createTabel()
@@ -40,8 +40,7 @@ class MainWindow(QMainWindow):
         database = "test2"
         tableName = "worms"
         self.dbu = DB_Manager.DatabaseUtility(database, tableName)
-        self.label = QLabel("Label")
-        self.label.setAlignment(Qt.AlignCenter)
+
         self.tableWidget = QTableWidget()
         self.tableWidget.setSelectionBehavior(QAbstractItemView.SelectRows)
         self.tableWidget.setShowGrid(False)
@@ -56,26 +55,32 @@ class MainWindow(QMainWindow):
 
         self.commitButton = QPushButton("CommitEdit")
         self.commitButton.clicked.connect(self.CommitEdit)
-        self.editButton = QPushButton("Edit")
-        self.editButton.clicked.connect(self.showEditMenu)
-        self.verticalLayout = QGridLayout()
+
         self.horizontalLayout = QHBoxLayout()
         self.horizontalLayout.addWidget(self.commitButton)
-        self.horizontalLayout.addWidget(self.editButton)
-        self.verticalLayout.addLayout(self.horizontalLayout, 0, 0)
-        self.verticalLayout.addWidget(self.label, 1, 0)
-        self.menu = QWidget()
-        self.menu.setMaximumWidth(300)
-        self.menu.setLayout(self.verticalLayout)
+        #self.verticalLayout.addLayout(self.horizontalLayout, 0, 0)
+        self.createSideMenu()
+        self.createEditMenu()
         self.grid = QGridLayout()
         self.grid.addWidget(self.tableWidget, 0, 0)
-        self.grid.addWidget(self.menu, 0, 1)
+        self.grid.addWidget(self.sideMenu, 0, 1)
         self.dataTable.setLayout(self.grid)
         self.UpdateTree()
-    
-    def showEditMenu(self):
+
+    def createSideMenu(self):
+        self.label = QLabel("Label")
+        self.label.setAlignment(Qt.AlignCenter)
+        self.verticalLayout = QGridLayout()
+        self.verticalLayout.addWidget(self.label, 0, 0)
+
+        self.sideMenu = QWidget()
+        self.sideMenu.setMaximumWidth(300)
+        self.sideMenu.setLayout(self.verticalLayout)
+
+    def createEditMenu(self):
         self.editmenu = QWidget()
         editMenuLayout = QVBoxLayout()
+        editMenuLayout.addWidget(self.commitButton)
         self.editLabels = {}
         col = self.dbu.GetColumns()
         for c in range(len(col)):
@@ -88,14 +93,24 @@ class MainWindow(QMainWindow):
             tempW.setLayout(horizontalLayout)
             self.editLabels[col[c][0]] = lineEdit
             editMenuLayout.addWidget(tempW)
-
+        
         self.editmenu.setLayout(editMenuLayout)
+        self.editmenu.setHidden(True)
+        self.verticalLayout.addWidget(self.editmenu, 0, 0)
+    
+    def showSideMenu(self):
+        self.editmenu.setHidden(True)
+        self.label.setHidden(False)
+        self.verticalLayout.addWidget(self.label, 0, 0)
+    
+    def showEditMenu(self):
         self.label.setHidden(True)
-        self.verticalLayout.addWidget(self.editmenu, 1, 0)
-        #if self.isID:
-        #    self.dbu.GetRow
-        #    for key in self.editLabels:
-        #    results[key] = self.editLabels[key].text()
+        self.editmenu.setHidden(False)
+        if self.isID:
+            values = self.dbu.GetRow(self.getSelectedID)
+            print(values)
+            for i, key in enumerate(self.editLabels):
+                self.editLabels[key].setText(str(values[0][i]))
     
     def loadSelectedID(self):
         getSelected = self.tableWidget.selectedItems()
@@ -113,6 +128,7 @@ class MainWindow(QMainWindow):
 
         self.dbu.editTableEntry(results)
         self.UpdateTree()
+        self.showSideMenu()
            
     def UpdateTree(self):
         col = self.dbu.GetColumns()
@@ -212,10 +228,15 @@ class MainWindow(QMainWindow):
         self.showEditMenu()
 
     def processEntry(self):
-        AddEntry = AddDialog()
-        AddEntry.exec_()
-        self.dbu.AddXmlToTable(AddEntry.outfiles)
-        self.UpdateTree()
+        self.AddEntry = AddDialog()
+        def endprocess(*args, **kwargs):
+            self.dbu.AddXmlToTable(self.AddEntry.outfiles)
+            self.UpdateTree()
+
+        self.AddEntry.accepted.connect(endprocess)
+        self.AddEntry.show()
+
+
         
     
     def delRow(self):

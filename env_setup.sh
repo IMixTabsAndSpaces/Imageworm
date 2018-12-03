@@ -2,17 +2,18 @@
 export IW_HOME=$PWD
 export IW_LIB=$IW_HOME/lib 
 export Fiji=$IW_LIB/Fiji.app
-export targetDir=/media/zachlab/Windows/LinuxStorage/images/archive
-export nd2File=/media/zachlab/Windows/LinuxStorage/images/ND2_Files  #sys.argv[1]
-export mlParamLoc=/media/zachlab/Windows/LinuxStorage/images/matlabParams #sys.argv[2]
+export Storage=/mnt/Disk_2/work
+export targetDir=$Storage/images/archive
+export nd2File=$Storage/images/ND2_Files  #sys.argv[1]
+export mlParamLoc=$Storage/images/matlabParams #sys.argv[2]
 
 #for Java
-export DBLocation=/media/zachlab/Windows/LinuxStorage/embryoDB/
+export DBLocation=$Storage/embryoDB/
 export StarryNite=$IW_LIB/DB-Java/starrynite-debug
 export SNDefaultParms=$IW_HOME/docs/parameters/greenParameters
 export MatlabDefaultParams=$IW_LIB/DB-Java/mparmDEFAULT.txt
-export ArchiveLocation=/media/zachlab/Windows/LinuxStorage/
-export AnnotsLocation=/media/zachlab/Windows/LinuxStorage/
+export ArchiveLocation=$Storage
+export AnnotsLocation=$Storage
 echo $StarryNite
 echo $SNDefaultParms
 echo $MatlabDefaultParams

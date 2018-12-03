@@ -30,3 +30,7 @@ INFO:root:Ran with args: (['/media/zachlab/Windows/LinuxStorage/images/ND2_Files
 INFO:root:Ran with args: (['/media/zachlab/Windows/LinuxStorage/images/ND2_Files/20181030_seq0_xy2.nd2'], '/media/zachlab/Windows/LinuxStorage/images/archive/temp'), and kwargs: {}
 INFO:root:Ran with args: (['/media/zachlab/Windows/LinuxStorage/images/ND2_Files/20181030_seq0_xy2.nd2'], '/media/zachlab/Windows/LinuxStorage/images/archive/temp'), and kwargs: {}
 INFO:root:Ran with args: (['/media/zachlab/Windows/LinuxStorage/images/ND2_Files/20181030_seq0_xy2.nd2'], '/media/zachlab/Windows/LinuxStorage/images/archive/temp'), and kwargs: {}
+INFO:root:Ran with args: (['/mnt/Disk_2/work/images/ND2_Files/seq0000_xy1.nd2', '/mnt/Disk_2/work/images/ND2_Files/seq0001_xy1.nd2'], '/mnt/Disk_2/work/images/archive/temp'), and kwargs: {}
+INFO:root:Ran with args: (['/mnt/Disk_2/work/images/ND2_Files/seq0000_xy1.nd2', '/mnt/Disk_2/work/images/ND2_Files/seq0001_xy1.nd2'], '/mnt/Disk_2/work/images/archive/temp'), and kwargs: {}
+INFO:root:Ran with args: (['/mnt/Disk_2/work/images/ND2_Files/seq0000_xy1.nd2', '/mnt/Disk_2/work/images/ND2_Files/seq0001_xy1.nd2'], '/mnt/Disk_2/work/images/archive/temp'), and kwargs: {}
+INFO:root:Ran with args: (['/mnt/Disk_2/work/images/ND2_Files/seq0000_xy1.nd2', '/mnt/Disk_2/work/images/ND2_Files/seq0001_xy1.nd2'], '/mnt/Disk_2/work/images/archive/temp'), and kwargs: {}
