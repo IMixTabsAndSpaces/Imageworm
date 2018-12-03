@@ -56,7 +56,7 @@ class DatabaseUtility:
 			" edited_cells VARCHAR(60) NULL,"
 			" checked_by CHAR(50) NULL,"
 			" comments VARCHAR(60) NULL,"
-			" status CHAR(10) NOT NULL DEFAULT 'NEW'"
+			" status BOOLEAN NOT NULL DEFAULT true"
 			") ENGINE=InnoDB;")	
 		self.RunCommand(cmd)
 
@@ -70,6 +70,10 @@ class DatabaseUtility:
 	def GetRow(self, ID):
 		return self.RunCommand("SELECT * FROM {} WHERE Worm_ID = {};".format(self.tableName, ID))
 
+	def GetCol(self, COL_NAME):
+		cmd = ("SELECT {} FROM {};".format(COL_NAME, self.tableName))
+		ans = [i[0] for i in self.RunCommand(cmd)]
+		return ans
 
 	def RunCommand(self, cmd):
 		print ("RUNNING COMMAND: " + cmd)
@@ -129,8 +133,3 @@ if __name__ == '__main__':
 	tableName = 'student1'
 
 	dbu = DatabaseUtility(db, tableName)
-
-	# dbu.AddEntryToTable ('testing')
-	# dbu.AddEntryToTable ('testing2')
-	# print (dbu.GetColumns())
-	# print (dbu.GetTable())

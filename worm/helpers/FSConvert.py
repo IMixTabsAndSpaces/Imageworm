@@ -187,7 +187,7 @@ class xmldata():
         
         VALUES = (series, date, person, 'n/a', 'n/a', 'n/a',
             imageloc, timepts, annots, acetree, 'n/a', 'n/a',
-            'n/a', 'n/a', 'n/a', 'new')
+            'n/a', 'n/a', 'n/a', 'n/a')
         for i in range(len(KEYS)):
             self._append(KEYS[i],LABEL[i],VALUES[i])
 

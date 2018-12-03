@@ -2,7 +2,12 @@
 export IW_HOME=$PWD
 export IW_LIB=$IW_HOME/lib 
 export Fiji=$IW_LIB/Fiji.app
-export Storage=/mnt/Disk_2/work
+#this is what you need to change 
+#==========================================================
+#export Storage=/mnt/Disk_2/work
+export Storage=/media/zachlab/Windows/LinuxStorage
+export archiveDir=/mnt/NAS/data/Documents/embryo_movies
+#==========================================================
 export targetDir=$Storage/images/archive
 export nd2File=$Storage/images/ND2_Files  #sys.argv[1]
 export mlParamLoc=$Storage/images/matlabParams #sys.argv[2]
@@ -14,7 +19,4 @@ export SNDefaultParms=$IW_HOME/docs/parameters/greenParameters
 export MatlabDefaultParams=$IW_LIB/DB-Java/mparmDEFAULT.txt
 export ArchiveLocation=$Storage
 export AnnotsLocation=$Storage
-echo $StarryNite
-echo $SNDefaultParms
-echo $MatlabDefaultParams
 #export PATH=$PATH:$IW_HOME:$IW_LIB:$Fiji
