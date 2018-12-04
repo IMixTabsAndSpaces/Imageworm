@@ -17,8 +17,8 @@ def extractTIFF(files, targetDir):
     for i in files:
         #print("ImageJ-linux64 --ij2 -macro split_nd2 \"{} {}/\"".format(i, targetDir))
         #os.system("ImageJ-linux64 -- -macro split_nd2 \"{} {}/\"".format(i, targetDir))
-        print("/home/zachlab/ImageWorm/Fiji.app/ImageJ-linux64 --ij2 -macro split_nd2 \"{} {}/\"".format(i, targetDir))
-        os.system("/home/zachlab/ImageWorm/Fiji.app/ImageJ-linux64 -- -macro split_nd2 \"{} {}/\"".format(i, targetDir))
+        print("{}/Fiji.app/ImageJ-linux64 --ij2 -macro split_nd2 \"{} {}/\"".format(os.environ['IW_LIB'], i, targetDir))
+        os.system("{}/Fiji.app/ImageJ-linux64 -- -macro split_nd2 \"{} {}/\"".format(os.environ['IW_LIB'], i, targetDir))
 
         
 @Timetrack

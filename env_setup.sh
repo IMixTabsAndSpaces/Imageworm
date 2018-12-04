@@ -1,12 +1,12 @@
 #!/bin/sh
 export IW_HOME=$PWD
 export IW_LIB=$IW_HOME/lib 
-export Fiji=$IW_LIB/Fiji.app
 #this is what you need to change 
 #==========================================================
-#export Storage=/mnt/Disk_2/work
-export Storage=/media/zachlab/Windows/LinuxStorage
-export archiveDir=/mnt/NAS/data/Documents/embryo_movies
+export Storage=/mnt/Disk_2/work
+#export Storage=/media/zachlab/Windows/LinuxStorage
+export archiveDir=/mnt/Disk_2/work/embryo_movies
+#export archiveDir=/mnt/NAS/data/Documents/embryo_movies
 #==========================================================
 export targetDir=$Storage/images/archive
 export nd2File=$Storage/images/ND2_Files  #sys.argv[1]

@@ -34,3 +34,5 @@ INFO:root:Ran with args: (['/mnt/Disk_2/work/images/ND2_Files/seq0000_xy1.nd2', 
 INFO:root:Ran with args: (['/mnt/Disk_2/work/images/ND2_Files/seq0000_xy1.nd2', '/mnt/Disk_2/work/images/ND2_Files/seq0001_xy1.nd2'], '/mnt/Disk_2/work/images/archive/temp'), and kwargs: {}
 INFO:root:Ran with args: (['/mnt/Disk_2/work/images/ND2_Files/seq0000_xy1.nd2', '/mnt/Disk_2/work/images/ND2_Files/seq0001_xy1.nd2'], '/mnt/Disk_2/work/images/archive/temp'), and kwargs: {}
 INFO:root:Ran with args: (['/mnt/Disk_2/work/images/ND2_Files/seq0000_xy1.nd2', '/mnt/Disk_2/work/images/ND2_Files/seq0001_xy1.nd2'], '/mnt/Disk_2/work/images/archive/temp'), and kwargs: {}
+INFO:root:Ran with args: (['/mnt/Disk_2/work/images/ND2_Files/seq0000_xy1.nd2', '/mnt/Disk_2/work/images/ND2_Files/seq0001_xy1.nd2'], '/mnt/Disk_2/work/images/archive/temp'), and kwargs: {}
+INFO:root:Ran with args: (['/mnt/Disk_2/work/images/ND2_Files/seq0000_xy1.nd2', '/mnt/Disk_2/work/images/ND2_Files/seq0001_xy1.nd2'], '/mnt/Disk_2/work/images/archive/temp'), and kwargs: {}
