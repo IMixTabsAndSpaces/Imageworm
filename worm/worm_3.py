@@ -12,6 +12,8 @@ from PyQt5.QtWidgets import (QAction, QApplication, QFileDialog, QMainWindow,
 from PyQt5.QtSql import QSqlTableModel
 import DB_Manager, sys, os
 from helpers.subMenu import AddDialog
+from helpers.rerunMenu import runMenu
+from helpers.FSConvert import zipMove, unZipMove
 #=============================================================================
 
 class MainWindow(QMainWindow):
@@ -77,16 +79,24 @@ class MainWindow(QMainWindow):
         sideMenuLayout = QGridLayout()
         updateButton = QPushButton("Update DB")
         updateButton.clicked.connect(self.UpdateDB)
+        addButton = QPushButton("Add Entry")
+        addButton.clicked.connect(self.processEntry)
+        rerunButton = QPushButton("Rerun Entry")
+        rerunButton.clicked.connect(self.rerunEntry)
         treeButton = QPushButton("Print Tree")
         AcetreeButton = QPushButton("Launch AceTree")
         AcetreeButton.clicked.connect(self.LaunchAceTree)
         ArchiveButton = QPushButton("Archive")
+        ArchiveButton.clicked.connect(self.archiveEntry)
         unArchiveButton = QPushButton("Retrieve")
+        unArchiveButton.clicked.connect(self.RetrieveEntry)
         sideMenuLayout.addWidget(updateButton, 0, 0, 1, 2)
-        sideMenuLayout.addWidget(ArchiveButton, 1,0)
-        sideMenuLayout.addWidget(unArchiveButton, 1, 1)
-        sideMenuLayout.addWidget(AcetreeButton, 2, 0)
-        sideMenuLayout.addWidget(treeButton, 2, 1)
+        sideMenuLayout.addWidget(addButton, 1, 0)
+        sideMenuLayout.addWidget(rerunButton, 1, 1)
+        sideMenuLayout.addWidget(ArchiveButton, 2,0)
+        sideMenuLayout.addWidget(unArchiveButton, 2, 1)
+        sideMenuLayout.addWidget(AcetreeButton, 3, 0)
+        sideMenuLayout.addWidget(treeButton, 3, 1)
         sideMenuLayout.setAlignment(Qt.AlignTop)
         self.Menu.setLayout(sideMenuLayout)
         
@@ -200,7 +210,7 @@ class MainWindow(QMainWindow):
         for key in self.editLabels:
             results[key] = self.editLabels[key].text()
 
-        self.dbu.editTableEntry(results)
+        self.dbu.editTableEntry(results, self.getSelectedID)
         self.UpdateTree()
         self.showSideMenu()
            
@@ -226,8 +236,8 @@ class MainWindow(QMainWindow):
         #    self.tableWidget.resizeColumnToContents(i)
         header = self.tableWidget.horizontalHeader()
         
-        for i in range(len(self.dbu.GetColumns())):
-            header.setSectionResizeMode(i, QHeaderView.Stretch)
+        #for i in range(len(self.dbu.GetColumns())):
+        #    header.setSectionResizeMode(i, QHeaderView.Stretch)
 
             #self.tableWidget.resizeColumnToContents(i, QHeaderView.Stretch)
 
@@ -253,18 +263,22 @@ class MainWindow(QMainWindow):
 
         self.AddEntry.accepted.connect(endprocess)
         self.AddEntry.show()
+    
+    def rerunEntry(self):
+        rerun = runMenu()
+        rerun.exec_()
+    
+    def archiveEntry(self):
+        if self.isID:
+            zipMove(self.annots, os.environ['archiveDir'])
+            self.dbu.editTableEntry({'status': str(0)}, self.getSelectedID)
+            self.UpdateTree()
 
-    @property
-    def annots(self):
-        return self.loadSelectedID(9)
-    
-    @property
-    def acetree(self):
-        return self.loadSelectedID(10)
-    
-    @property
-    def series(self):
-        return self.loadSelectedID(1)
+    def RetrieveEntry(self):
+        if self.isID:
+            unZipMove(self.series, os.environ['targetDir'])
+            self.dbu.editTableEntry({'status': str(1)}, self.getSelectedID)
+            self.UpdateTree()
 
     def LaunchAceTree(self):
         pathAceTree = os.path.join(os.environ['IW_LIB'], 'AceTree/AceTree.jar')
@@ -274,8 +288,7 @@ class MainWindow(QMainWindow):
     def UpdateDB(self):
         series_names = self.dbu.GetCol("series")
         add_file = []
-
-
+        
         local_dir = os.environ['targetDir']
         local_vids = os.listdir(local_dir)
 
@@ -296,6 +309,18 @@ class MainWindow(QMainWindow):
         if self.isID:
             self.dbu.delEntry(self.getSelectedID)
         self.UpdateTree()
+
+    @property
+    def annots(self):
+        return self.loadSelectedID(9)
+    
+    @property
+    def acetree(self):
+        return self.loadSelectedID(10)
+    
+    @property
+    def series(self):
+        return self.loadSelectedID(1)
 
 if __name__ == '__main__':
 

@@ -2,7 +2,52 @@ import os
 import fileinput
 import time
 from fnmatch import fnmatch
+import shutil
+import zipfile
 #==============================================================
+
+def Timetrack(orginal_func):
+    def wrapper(*args, **kwargs):
+        start_time = time.time()
+        result = orginal_func(*args, **kwargs)
+        end_time = time.time() - start_time
+
+        if end_time >= 60:
+            end_time /= 60
+            print("Process {0} Finished in {1:.3f} min.".format(orginal_func.__name__,end_time))
+        else:
+            print("Process {0} Finished in {1:.3f} sec.".format(orginal_func.__name__,end_time))
+        return result
+    return wrapper
+
+def logger(orig_func):
+    import logging
+    logging.basicConfig(filename='{}.log'.format(orig_func.__name__), level=logging.INFO)
+
+    def wrapper(*args, **kwargs):
+        logging.info(
+            'Ran with args: {}, and kwargs: {}'.format(args, kwargs))
+        return orig_func(*args,**kwargs)
+    return wrapper
+
+@Timetrack
+def zipMove(Dpath, outF):
+    print("Archive image ....")
+    if not os.path.isdir(Dpath):
+        raise FileExistsError("Dir Does not exist")
+    Dname = os.path.basename(Dpath)
+    shutil.make_archive(Dname, 'zip', Dpath)
+    #print("moooving file - its bean a long day")
+    #shutil.move(Dname+'.zip', outF)
+
+def unZipMove(zpath, dpath):
+    zfile = os.path.basename(zpath)
+    zdir = os.path.splitext(zfile)[0]
+    os.mkdir(os.path.join(dpath, zdir))
+    
+    zip = zipfile.ZipFile(zpath)
+    zip.extractall(os.path.join(dpath, zdir))
+    
 
 def ReplaceAll(filelist, old, new):
     for i, x in enumerate(filelist):
@@ -82,29 +127,7 @@ def groupfile(filelist):
     matches = [sorted(matches[i]) for i in range(len(matches)) if i == 0 or matches[i] != matches[i-1]]
     return matches
 
-def Timetrack(orginal_func):
-    def wrapper(*args, **kwargs):
-        start_time = time.time()
-        result = orginal_func(*args, **kwargs)
-        end_time = time.time() - start_time
 
-        if end_time >= 60:
-            end_time /= 60
-            print("Process {0} Finished in {1:.3f} min.".format(orginal_func.__name__,end_time))
-        else:
-            print("Process {0} Finished in {1:.3f} sec.".format(orginal_func.__name__,end_time))
-        return result
-    return wrapper
-
-def logger(orig_func):
-    import logging
-    logging.basicConfig(filename='{}.log'.format(orig_func.__name__), level=logging.INFO)
-
-    def wrapper(*args, **kwargs):
-        logging.info(
-            'Ran with args: {}, and kwargs: {}'.format(args, kwargs))
-        return orig_func(*args,**kwargs)
-    return wrapper
 
     
 import pandas as pd
@@ -200,4 +223,8 @@ class xmldata():
         cmd += str(tuple(v for k,l,v in self if not v == 'n/a'))
         cmd += ';'
         return cmd
-        
+
+if __name__ == "__main__":
+    zipMove("/media/zachlab/Windows/LinuxStorage/images/archive/2018-11-30-08-41-xy2", "/media/zachlab/Windows/LinuxStorage/images/archive")
+    #unZipMove('/media/zachlab/Windows/LinuxStorage/old/embryoDB.zip','/media/zachlab/Windows/LinuxStorage/old/')
+    

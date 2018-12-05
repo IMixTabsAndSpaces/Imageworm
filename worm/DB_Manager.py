@@ -103,19 +103,17 @@ class DatabaseUtility:
 		cmd = "DELETE FROM " + self.tableName + " WHERE Worm_ID=" + ID + ";"
 		self.RunCommand(cmd)
 	
-	def editTableEntry(self, valueDic={}):
-		colName = []
+	def editTableEntry(self, valueDic={}, ID=None):
+		if not ID:
+			raise TypeError("ID not specifyed")
 		values = []
 		for key in valueDic:
-			if not valueDic[key] == "":
-				colName.append(key)
-				values.append("'"+
-				  valueDic[key]+"'")
-		
-		colName = "("+", ".join(colName)+")"
-		values = "("+", ".join(values)+")"
-		cmd = " REPLACE INTO " + self.tableName + colName
-		cmd += " VALUES"+ values +";"
+			if not valueDic[key] == "None" and key != "Worm_ID":
+				values.append("{} = '{}'".format(key,valueDic[key]))
+
+		values = ", ".join(values)
+		cmd = "UPDATE " + self.tableName + " SET " + values
+		cmd += " WHERE Worm_ID = "+ ID + ";"
 		self.RunCommand(cmd)
 	
 

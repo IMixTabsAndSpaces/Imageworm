@@ -29,11 +29,10 @@ class AddDialog(QDialog):
     def __init__(self):
         super(AddDialog, self).__init__()
         #self.setWindowModality(QMainWindow)
-        #sys.stdout = EmittingStream(textWritten=self.normalOutputWritten)
-        self.ParameterFile= os.environ['SNDefaultParms']
+        sys.stdout = EmittingStream(textWritten=self.normalOutputWritten)
+        self.ParameterFile= '/media/zachlab/Windows/LinuxStorage/images/matlabParams'
         self.nd2_file= '/media/zachlab/Windows/LinuxStorage/images/ND2_Files'
         self.out_file= '/media/zachlab/Windows/LinuxStorage/images/archive'
-        self.outfiles= []
         #creat layout widgets
         self.createToolsGroupBox()
         self.createND2FileGroupBox()
@@ -45,7 +44,6 @@ class AddDialog(QDialog):
         buttonBox.accepted.connect(self.runpipline)
         buttonBox.rejected.connect(self.reject)
 
-
         #creat layout with built widgets
         mainLayout = QVBoxLayout()
         mainLayout.addWidget(self.ToolsBox)
@@ -55,6 +53,7 @@ class AddDialog(QDialog):
         mainLayout.addWidget(buttonBox)
         self.setLayout(mainLayout)
         self.setWindowTitle("ADD ENTRY FROM ND2 FILE")
+        self.setMinimumWidth(600)
     
     def __del__(self):
         # Restore sys.stdout
