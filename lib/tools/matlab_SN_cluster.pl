@@ -3,7 +3,7 @@ use File::Spec::Functions qw(rel2abs);
 use File::Basename;
 use File::Copy;
 use Cwd;
-$SCRIPTLOCATION=$ENV{'IW_LIB'};
+my $SCRIPTLOCATION=$ENV{'IW_LIB'};
 #SCRIPTLOCATION=dirname(0);
 printf("Scriptlocation: ".$SCRIPTLOCATION."\n");
 #check that have 2 arguments tiff path and parameter file
@@ -23,21 +23,15 @@ $SNPATH=$SCRIPTLOCATION."/starrynite_traceonly/starrynite";
 #$MCRPath = "/usr/local/MATLAB/R2018a/bin/matlab";
 #$LAUNCHDIR=cwd;
 
-
-
 #production version path
 
 ###$MATLABCOMMAND=  $SCRIPTLOCATION."/run_commandLineDriver.sh";
-
-
 
 #$MATLABCOMMAND="matlab -automation -wait  -r \"commandLineDriver('";
 #$MATLABCOMMAND="matlab  -nojvm -nodesktop -r \"try commandLineDriver('";
 $MATLABCOMMAND="matlab  -nojvm -nodesktop -r \"try addpath('/home/zachlab/ImageWorm/tools/matlab_SN/Matlab_detector/distribution_code'); commandLineDriver('";
 
-
 $TIFFLOCATION="";
-
 
 #parse sequence name from tiff path
 $_=$ARGV[0];
@@ -52,9 +46,6 @@ if(/(.*\/)(.*)/){
 }else{
     print "Couldn't parse tiff path\n";
 }
-
-
-
 
 if(length($SUFFIX)==0){
 printf("using fileroot - suffix ".$FILEROOT." ".$SUFFIX."\n");
@@ -170,6 +161,7 @@ system("mv ".$FILEROOT . ".zip ".$SERIESDIR ."/dats/");
 $XYRES="0.254";
 $ZRES="1";
 $SLICES="30";
+$end_time="599";
 open(PARAMFILEIN,"<".$ARGV[1]);
 
 while(<PARAMFILEIN>){
@@ -182,6 +174,9 @@ while(<PARAMFILEIN>){
     if(/slices\=\s*([\d\.]+)/){
 	$SLICES=$1;
     }
+    if(/end_time\=\s*([\d\.]+)/){
+	$end_time=$1;
+    }
 }
 
 printf("outputing xml file with xy res ".$XYRES." z res ".$ZRES." slices ".$SLICES."\n");
@@ -190,23 +185,26 @@ open (PARAMFILE, ">".$SERIESDIR ."/dats/" . $FILEROOT . ".xml");
 print PARAMFILE "<?xml version='1.0' encoding='utf-8'?>\n";
 print PARAMFILE  "<embryo>\n";
 
-my @subdir = split(/\//, $SERIESDIR, -1);
-my $index = 0;
-$index++ until $subdir[$index] eq 'temp';
-splice(@subdir, $index, 1);
-$SERIESDIR = join('/', @subdir);
-@subdir = split(/\//, $DIRECTORY, -1);
-$index = 0;
-$index++ until $subdir[$index] eq 'temp';
-splice(@subdir, $index, 1);
-$DIRECTORY = join('/', @subdir);
+if (index($SERIESDIR, 'temp') != -1) {
+    my @subdir = split(/\//, $SERIESDIR, -1);
+    my $index = 0;
+    $index++ until $subdir[$index] eq 'temp';
+    splice(@subdir, $index, 1);
+    $SERIESDIR = join('/', @subdir);
+    @subdir = split(/\//, $DIRECTORY, -1);
+    $index = 0;
+    $index++ until $subdir[$index] eq 'temp';
+    splice(@subdir, $index, 1);
+    $DIRECTORY = join('/', @subdir);
+}
+
 
 print PARAMFILE "<image file=\"".$DIRECTORY.$TIFFLOCATION.$FILEROOT."-t001-p01.tif\"/>\n";
 print PARAMFILE "<nuclei file=\"".$SERIESDIR."dats/".$FILEROOT."-edit.zip\"/>\n";
 #print PARAMFILE "<image file=\"../tif/".$TIFFLOCATION.$FILEROOT."-t001-p01.tif\"/>\n";
 #print PARAMFILE "<nuclei file=\"./".$FILEROOT."-edit.zip\"/>\n";
 
-print PARAMFILE "<end index=\"60\"/>\n";
+print PARAMFILE "<end index=\"".$end_time."\"/>\n";
 #print PARAMFILE "<resolution xyRes=\"0.254\" zRes=\"1\" planeEnd=\"30\"/> <exprCorr type=\"blot\"/>\n";
  
 print PARAMFILE "<resolution xyRes=\"".$XYRES."\" zRes=\"".$ZRES."\" planeEnd=\"".$SLICES."\"/>\n"; 

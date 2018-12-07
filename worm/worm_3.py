@@ -265,8 +265,8 @@ class MainWindow(QMainWindow):
         self.AddEntry.show()
     
     def rerunEntry(self):
-        rerun = runMenu()
-        rerun.exec_()
+        self.rerun = runMenu()
+        self.rerun.show()
     
     def archiveEntry(self):
         if self.isID:
@@ -281,9 +281,11 @@ class MainWindow(QMainWindow):
             self.UpdateTree()
 
     def LaunchAceTree(self):
-        pathAceTree = os.path.join(os.environ['IW_LIB'], 'AceTree/AceTree.jar')
-        cmd = ('java -jar ' + pathAceTree + ' ' +self.annots+ '/dats/'+self.acetree)
-        os.system(cmd)
+        if self.isID:
+            pathAceTree = os.path.join(os.environ['IW_LIB'], 'DB-Java/AceTree.jar')
+            #pathAceTree = os.path.join(os.environ['IW_LIB'], 'AceTree/AceTree.jar')
+            cmd = ('java -jar ' + pathAceTree + ' ' +self.annots+ '/dats/'+self.acetree + '&')
+            os.system(cmd)
 
     def UpdateDB(self):
         series_names = self.dbu.GetCol("series")

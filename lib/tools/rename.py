@@ -3,7 +3,7 @@ import sys
 from FSConvert import *
 import datetime
 import shutil
-
+#=====================================================================================
 
 def rename(fileArray, incorment, date):
     newfA = [""]* len(fileArray)
@@ -32,17 +32,19 @@ def rename(fileArray, incorment, date):
             length -= 1     
         s[2], s[4] = temp
 
-        '''added to find max timepoint and plain to edit matlab parameter file
+        #added to find max timepoint and plain to edit matlab parameter file
         if int(s[2]) > max_time:
             max_time = int(s[2])
         if int(s[4]) > max_planes:
             max_planes = int(s[4])
-        editfile(file="/media/zachlab/Windows/LinuxStorage/images/matlabParams",
-                parameter=(('end_time',max_time),('slices',max_planes)))
-        '''
+
         s[0] = date+s[0][-3:]
         newName = s[0]
         newfA[idx] = "".join(s)
+
+    #print("max time {}, Max_ Planes{}".format(max_time, max_planes) )
+    editfile(file=os.environ['mlParamLoc'],
+                parameter=(('end_time',max_time),('slices',max_planes)))
     return newfA, newName
 
 
@@ -79,5 +81,5 @@ def main():
         for ii in i:
             shutil.rmtree(ii)
 
-
-main()
+if __name__ == "__main__":
+    main()

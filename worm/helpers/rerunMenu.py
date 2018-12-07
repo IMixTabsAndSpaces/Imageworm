@@ -29,7 +29,7 @@ class runMenu(QDialog):
     def __init__(self):
         super(runMenu, self).__init__()
         #self.setWindowModality(QMainWindow)
-        sys.stdout = EmittingStream(textWritten=self.normalOutputWritten)
+        #sys.stdout = EmittingStream(textWritten=self.normalOutputWritten)
         self.ParameterFile= '/media/zachlab/Windows/LinuxStorage/images/matlabParams'
         self.series_file= []
         self.out_file= '/media/zachlab/Windows/LinuxStorage/images/archive'
@@ -133,6 +133,6 @@ if __name__ == '__main__':
     import sys
 
     app = QApplication(sys.argv)
-    mainWin = AddDialog()
+    mainWin = runMenu()
     mainWin.show()
     sys.exit(app.exec_())

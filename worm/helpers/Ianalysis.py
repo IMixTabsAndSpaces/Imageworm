@@ -8,8 +8,7 @@ try:
     from helpers.FSConvert import Timetrack, logger, Makefilelist
 except:
     from FSConvert import Timetrack, logger, Makefilelist
-ROOT_DIR = os.environ['IW_HOME'] # This is your Project Root
-print(ROOT_DIR)
+
 
 @Timetrack
 @logger
@@ -27,6 +26,7 @@ def Main(fileName=None, MATLAB=True, MakeDB=True, RedExtract=True,
     #targetDir = "/mnt/Disk_2/work/images/archive"
     #nd2File = "/mnt/Disk_2/work/images/images/ND2_Files"  #sys.argv[1]
     #mlParamLoc = "/mnt/Disk_2/work/images/images/matlabParams" #sys.argv[2]
+    ROOT_DIR = os.environ['IW_HOME'] # This is your Project Root
     targetDir = os.environ['targetDir']
     nd2File = os.environ['nd2File']  #sys.argv[1]
     mlParamLoc = os.environ['mlParamLoc'] #sys.argv[2]
@@ -45,17 +45,34 @@ def Main(fileName=None, MATLAB=True, MakeDB=True, RedExtract=True,
             extractTIFF(imagelist, targetDir+"/temp")
     
         print("RENAMEING IMAGES....")
+        print(("python rename.py {}/".format(targetDir+"/temp")))
         os.system("python rename.py {}/".format(targetDir+"/temp"))
-    
     if MATLAB:
         if not fileName:
             print("RUNNING MATLAB....")
             for x in os.listdir(targetDir+"/temp"):
                 os.system("cp {} {}/{}/matlabParams\n".format(mlParamLoc, targetDir+"/temp", x)) 
-                os.system("./matlabRunner.pl {}".format(targetDir+"/temp/"+x))
+                os.system("./matlab_SN_cluster.pl {0}/tif/{1} {0}/matlabParams".format(targetDir+"/temp/"+x, x))
         else:
-            for x in fileName: 
-                os.system("./matlabRunner.pl {}".format(os.path.join(targetDir,x)))
+            print("RUNNING MATLAB....")
+            for x in fileName:
+                x = os.path.basename(x)
+                try:
+                    shutil.rmtree(os.path.join(targetDir, x, 'dats'))
+                except:
+                    pass
+                try:
+                    shutil.rmtree(os.path.join(targetDir, x, 'matlab'))
+                except:
+                    pass
+                try:
+                    os.remove(os.path.join(targetDir, x, 'matlabParams'))
+                except:
+                    pass
+                finally:
+                    os.system("cp {} {}/{}".format(mlParamLoc, targetDir, x))
+                    #os.system("./matlabRunner.pl {}".format(os.path.join(targetDir,x)))
+                    os.system("./matlab_SN_cluster.pl {0}/tif/{1} {0}/matlabParams".format(os.path.join(targetDir, x), x))
 
     if not fileName:
         print("MOVING AND MAKEING DB ENTRY....")
@@ -65,9 +82,13 @@ def Main(fileName=None, MATLAB=True, MakeDB=True, RedExtract=True,
             print("./makeDBEntry.pl {}".format(targetDir+"/"+f))
             os.system("./makeDBEntry.pl {}".format(targetDir+"/"+f))
             print("./acebatch3.pl RedExtractor1 {}".format(f))
-            #os.system("./acebatch3.pl RedExtractor1 {}".format(f))
+            os.system("./acebatch3.pl RedExtractor1 {}".format(f))
             print("./acebatch3.pl Measure1 {}".format(f))
-            #os.system("./acebatch3.pl Measure1 {}".format(f))
+            os.system("./acebatch3.pl Measure1 {}".format(f))
+            print("./acebatch3.pl RedExcel1 {}".format(f))
+            os.system("./acebatch3.pl RedExcel1 {}".format(f))
+            print("./acebatch3.pl RedExcel2 {}".format(f))
+            os.system("./acebatch3.pl RedExcel2 {}".format(f))
         #remove temp folder
         shutil.rmtree(targetDir+"/temp")
         #input("press enter to continue...")
@@ -94,6 +115,7 @@ def Main(fileName=None, MATLAB=True, MakeDB=True, RedExtract=True,
             if Align:
                 print("./acebatch3.pl Align1 {}".format(f))
                 os.system("./acebatch3.pl Align1 {}".format(f))
+
 #------------------------------------------------------------------------------------------------------
 if __name__ == "__main__":
     outfile = Main()
