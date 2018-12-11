@@ -15,7 +15,7 @@ class DatabaseUtility:
 		self.cnx = mysql.connector.connect(
             host="localhost",
             user="root",
-            passwd="Qq1!Ww2@",
+            passwd="Qq1!Ww2@"
             )
 		self.cursor = self.cnx.cursor()
 
@@ -40,7 +40,7 @@ class DatabaseUtility:
 
 	def CreateTable(self):
 		cmd = (" CREATE TABLE IF NOT EXISTS " + self.tableName + " ("
-			" Worm_ID INT UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY,"
+			" Worm_ID INT(6) UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY,"
 			" series VARCHAR(30) NOT NULL DEFAULT 'SeriesName',"
 			" date TIMESTAMP,"
 			" person char(50) NULL,"

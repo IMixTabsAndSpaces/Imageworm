@@ -1,43 +1,53 @@
 #!/usr/bin/env python
-from PyQt5.QtCore import (QFile, QFileInfo, QPoint, QRect, QSettings, QSize,
-        Qt, QTextStream, QObject, pyqtSignal, QItemSelectionModel)
-from PyQt5.QtGui import QIcon, QKeySequence
+import os
+import sys
+
 import PyQt5.QtGui as QtGui
-from PyQt5.QtWidgets import (QAction, QApplication, QFileDialog, QMainWindow,
-        QMessageBox, QTextEdit, QVBoxLayout, QGroupBox, QHBoxLayout, QPushButton,
-        QLineEdit, QDialog, QWidget, QTableWidget, QLabel, QPushButton, QComboBox,
-        QTreeWidget, QTreeWidgetItem, QDialogButtonBox, QFormLayout, QMenu, QMenuBar,
-        QGridLayout, QSpinBox, QAbstractScrollArea, QSizePolicy, QHeaderView,
-        QTableWidgetItem, QAbstractItemView)
+from PyQt5.QtCore import (QFile, QFileInfo, QItemSelectionModel, QObject,
+                          QPoint, QRect, QSettings, QSize, Qt, QTextStream,
+                          pyqtSignal)
+from PyQt5.QtGui import QIcon, QKeySequence
 from PyQt5.QtSql import QSqlTableModel
-import DB_Manager, sys, os
-from helpers.subMenu import AddDialog
+from PyQt5.QtWidgets import (QAbstractItemView, QAbstractScrollArea, QAction,
+                             QApplication, QComboBox, QDialog,
+                             QDialogButtonBox, QFileDialog, QFormLayout,
+                             QGridLayout, QGroupBox, QHBoxLayout, QHeaderView,
+                             QLabel, QLineEdit, QMainWindow, QMenu, QMenuBar,
+                             QMessageBox, QPushButton, QSizePolicy, QSpinBox,
+                             QTableWidget, QTableWidgetItem, QTextEdit,
+                             QTreeWidget, QTreeWidgetItem, QVBoxLayout,
+                             QWidget)
+
+import DB_Manager
+import helpers.FSConvert as FSConvert
 from helpers.rerunMenu import runMenu
-from helpers.FSConvert import zipMove, unZipMove
-#=============================================================================
+from helpers.subMenu import AddDialog
+
+# =============================================================================
+
 
 class MainWindow(QMainWindow):
     root = QFileInfo(__file__).absolutePath()
 
     def __init__(self):
         super(MainWindow, self).__init__()
-        #this is just a default and not an required to be set
-        self.nd2_file= '/media/zachlab/Windows/LinuxStorage/images/ND2_Files'
-        self.isID=False
-        #create center widget stuff
+        # this is just a default and not an required to be set
+        self.nd2_file = '/media/zachlab/Windows/LinuxStorage/images/ND2_Files'
+        self.isID = False
+        # create center widget stuff
         self.createActions()
         self.createTabel()
-        self.createCenterWidget()        
+        self.createCenterWidget()
         self.setCentralWidget(self.centerWiget)
 
-        #set up application stuff
+        # set up application stuff
         self.createActions()
         self.createMenus()
         self.createToolBars()
         self.createStatusBar()
         self.setWindowTitle("IMAGEWORM")
         self.readSettings()
-    
+
     def createTabel(self):
         self.dataTable = QWidget()
         database = "test2"
@@ -51,13 +61,13 @@ class MainWindow(QMainWindow):
         self.tableWidget.itemSelectionChanged.connect(self.loadSelectedID)
         self.tableWidget.setSortingEnabled(True)
         self.tableWidget.setEditTriggers(QAbstractItemView.NoEditTriggers)
-        #self.tableWidget.setSizeAdjustPolicy(QAbstractScrollArea.AdjustToContents)
-        #self.tableWidget.horizontalHeader().setStretchLastSection(False)
-        #self.tableWidget.setHorizontalScrollBarPolicy(Qt.ScrollBarAlwaysOff)
-        #self.tableWidget.selectionModel().selectionChanged.connect(self.calledMethod)
+        # self.tableWidget.setSizeAdjustPolicy(QAbstractScrollArea.AdjustToContents)
+        # self.tableWidget.horizontalHeader().setStretchLastSection(False)
+        # self.tableWidget.setHorizontalScrollBarPolicy(Qt.ScrollBarAlwaysOff)
+        # self.tableWidget.selectionModel().selectionChanged.connect(self.calledMethod)
 
         #self.horizontalLayout = QHBoxLayout()
-        #self.horizontalLayout.addWidget(self.commitButton)
+        # self.horizontalLayout.addWidget(self.commitButton)
         #self.verticalLayout.addLayout(self.horizontalLayout, 0, 0)
         self.grid = QGridLayout()
         self.grid.addWidget(self.tableWidget, 0, 0)
@@ -93,13 +103,13 @@ class MainWindow(QMainWindow):
         sideMenuLayout.addWidget(updateButton, 0, 0, 1, 2)
         sideMenuLayout.addWidget(addButton, 1, 0)
         sideMenuLayout.addWidget(rerunButton, 1, 1)
-        sideMenuLayout.addWidget(ArchiveButton, 2,0)
+        sideMenuLayout.addWidget(ArchiveButton, 2, 0)
         sideMenuLayout.addWidget(unArchiveButton, 2, 1)
         sideMenuLayout.addWidget(AcetreeButton, 3, 0)
         sideMenuLayout.addWidget(treeButton, 3, 1)
         sideMenuLayout.setAlignment(Qt.AlignTop)
         self.Menu.setLayout(sideMenuLayout)
-        
+
         self.filters = QGroupBox("Add filter")
         layout = QHBoxLayout()
         layout.addWidget(QTextEdit())
@@ -134,30 +144,30 @@ class MainWindow(QMainWindow):
             tempW.setLayout(horizontalLayout)
             self.editLabels[col[c][0]] = lineEdit
             editMenuLayout.addWidget(tempW)
-        
+
         self.editmenu.setLayout(editMenuLayout)
         self.editmenu.setMaximumWidth(300)
         self.editmenu.setHidden(True)
 
-    def createActions(self): 
+    def createActions(self):
         self.processAct = QAction(QIcon(MainWindow.root + '/images/open.png'), "&Process", self,
-                shortcut=QKeySequence.New, statusTip="Create new DB Entry",
-                triggered=self.processEntry)
+                                  shortcut=QKeySequence.New, statusTip="Create new DB Entry",
+                                  triggered=self.processEntry)
 
         self.addAct = QAction(QIcon(MainWindow.root+'/images/new.png'), "&Add", self,
-                shortcut="Ctrl+P", statusTip="Manually add DB Entry", 
-                triggered=self.addEntry)
-        
+                              shortcut="Ctrl+P", statusTip="Manually add DB Entry",
+                              triggered=self.addEntry)
+
         self.delAct = QAction(QIcon(MainWindow.root + '/images/Delete.png'), "&Delete", self,
-                shortcut="Ctrl+x", statusTip="delet DB Entry: Ctrl+x",
-                triggered=self.delRow)
-        
-        self.editAct = QAction(QIcon(MainWindow.root+ '/images/edit.png'), "&Edit", self, 
-                shortcut="Ctrl+E", statusTip="Edit Entry: Ctrl+E",
-                triggered=self.showEditMenu)
-        
+                              shortcut="Ctrl+x", statusTip="delet DB Entry: Ctrl+x",
+                              triggered=self.delRow)
+
+        self.editAct = QAction(QIcon(MainWindow.root + '/images/edit.png'), "&Edit", self,
+                               shortcut="Ctrl+E", statusTip="Edit Entry: Ctrl+E",
+                               triggered=self.showEditMenu)
+
         self.exitAct = QAction("E&xit", self, shortcut="Ctrl+Q",
-                statusTip="Exit the application", triggered=self.close)
+                               statusTip="Exit the application", triggered=self.close)
 
         self.commit = QAction("&Refresh", self, triggered=self.update)
 
@@ -174,22 +184,18 @@ class MainWindow(QMainWindow):
         self.fileToolBar.addAction(self.addAct)
         self.fileToolBar.addAction(self.editAct)
         self.fileToolBar.addAction(self.delAct)
-   
+
     def createStatusBar(self):
         self.statusBar().showMessage("Ready")
-    
+
     def showSideMenu(self):
         self.editmenu.setHidden(True)
         self.sideMenu.setHidden(False)
-    
+
     def showEditMenu(self):
         self.sideMenu.setHidden(True)
         self.editmenu.setHidden(False)
-        #if self.isID:
-        #    values = self.dbu.GetRow(self.getSelectedID)
-        #    for i, key in enumerate(self.editLabels):
-        #        self.editLabels[key].setText(str(values[0][i]))
-    
+
     def loadSelectedID(self, col=0):
         getSelected = self.tableWidget.selectedItems()
         if getSelected:
@@ -204,7 +210,7 @@ class MainWindow(QMainWindow):
                     self.editLabels[key].setText(str(values[0][i]))
             else:
                 return value
-            
+
     def CommitEdit(self):
         results = {}
         for key in self.editLabels:
@@ -213,7 +219,7 @@ class MainWindow(QMainWindow):
         self.dbu.editTableEntry(results, self.getSelectedID)
         self.UpdateTree()
         self.showSideMenu()
-           
+
     def UpdateTree(self):
         col = self.dbu.GetColumns()
         table = self.dbu.GetTable()
@@ -222,22 +228,23 @@ class MainWindow(QMainWindow):
         self.model = QSqlTableModel(self)
         self.tableWidget.clear()
         for c in range(len(col)):
-            self.tableWidget.setHorizontalHeaderItem(c, QTableWidgetItem(col[c][0]))
+            self.tableWidget.setHorizontalHeaderItem(
+                c, QTableWidgetItem(col[c][0]))
             #self.tableWidget.headerItem().setText(c, col[c][0])
 
-        
-        #self.tableWidget.setSortingEnabled(False)
+        # self.tableWidget.setSortingEnabled(False)
         for item in range(len(table)):
-            #QTableWidgetItem(self.tableWidget)
+            # QTableWidgetItem(self.tableWidget)
             for value in range(len(table[item])):
-                self.tableWidget.setItem(item, value, QTableWidgetItem(str(table[item][value])))
+                self.tableWidget.setItem(
+                    item, value, QTableWidgetItem(str(table[item][value])))
 
-        #for i in range(len(self.dbu.GetColumns())):
+        # for i in range(len(self.dbu.GetColumns())):
         #    self.tableWidget.resizeColumnToContents(i)
         header = self.tableWidget.horizontalHeader()
-        
-        #for i in range(len(self.dbu.GetColumns())):
-        #    header.setSectionResizeMode(i, QHeaderView.Stretch)
+
+        for i in range(len(self.dbu.GetColumns())):
+            header.setSectionResizeMode(i, QHeaderView.Stretch)
 
             #self.tableWidget.resizeColumnToContents(i, QHeaderView.Stretch)
 
@@ -252,45 +259,49 @@ class MainWindow(QMainWindow):
     def addEntry(self):
         self.dbu.AddEntryToTable()
         self.UpdateTree()
-        #self.SelectIdRow()
+        # self.SelectIdRow()
         self.showEditMenu()
 
     def processEntry(self):
         self.AddEntry = AddDialog()
+
         def endprocess(*args, **kwargs):
             self.dbu.AddXmlToTable(self.AddEntry.outfiles)
             self.UpdateTree()
 
         self.AddEntry.accepted.connect(endprocess)
         self.AddEntry.show()
-    
+
     def rerunEntry(self):
         self.rerun = runMenu()
         self.rerun.show()
-    
+
     def archiveEntry(self):
         if self.isID:
-            zipMove(self.annots, os.environ['archiveDir'])
+            p = FSConvert.ProgressBar('Loading :')
+            FSConvert.moveFilesWithProgress(self.annots, os.environ['archiveDir'], p)
             self.dbu.editTableEntry({'status': str(0)}, self.getSelectedID)
             self.UpdateTree()
 
     def RetrieveEntry(self):
         if self.isID:
-            unZipMove(self.series, os.environ['targetDir'])
+            FSConvert.unZipMove(self.series, os.environ['targetDir'])
             self.dbu.editTableEntry({'status': str(1)}, self.getSelectedID)
             self.UpdateTree()
 
     def LaunchAceTree(self):
         if self.isID:
-            pathAceTree = os.path.join(os.environ['IW_LIB'], 'DB-Java/AceTree.jar')
+            pathAceTree = os.path.join(
+                os.environ['IW_LIB'], 'DB-Java/AceTree.jar')
             #pathAceTree = os.path.join(os.environ['IW_LIB'], 'AceTree/AceTree.jar')
-            cmd = ('java -jar ' + pathAceTree + ' ' +self.annots+ '/dats/'+self.acetree + '&')
+            cmd = ('java -jar ' + pathAceTree + ' ' +
+                   self.annots + '/dats/'+self.acetree + '&')
             os.system(cmd)
 
     def UpdateDB(self):
         series_names = self.dbu.GetCol("series")
         add_file = []
-        
+
         local_dir = os.environ['targetDir']
         local_vids = os.listdir(local_dir)
 
@@ -315,14 +326,15 @@ class MainWindow(QMainWindow):
     @property
     def annots(self):
         return self.loadSelectedID(9)
-    
+
     @property
     def acetree(self):
         return self.loadSelectedID(10)
-    
+
     @property
     def series(self):
         return self.loadSelectedID(1)
+
 
 if __name__ == '__main__':
 

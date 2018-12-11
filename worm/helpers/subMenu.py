@@ -30,9 +30,9 @@ class AddDialog(QDialog):
         super(AddDialog, self).__init__()
         #self.setWindowModality(QMainWindow)
         sys.stdout = EmittingStream(textWritten=self.normalOutputWritten)
-        self.ParameterFile= '/media/zachlab/Windows/LinuxStorage/images/matlabParams'
-        self.nd2_file= '/media/zachlab/Windows/LinuxStorage/images/ND2_Files'
-        self.out_file= '/media/zachlab/Windows/LinuxStorage/images/archive'
+        self.ParameterFile= os.environ['mlParamLoc']
+        self.nd2_file= os.environ['nd2File']
+        self.out_file= os.environ['targetDir']
         #creat layout widgets
         self.createToolsGroupBox()
         self.createND2FileGroupBox()
@@ -118,7 +118,7 @@ class AddDialog(QDialog):
     def runpipline(self):
         self.bigEditor = QTextEdit('''Processing Please wait...
             This will take a while.''')
-        self.outfiles = Ianalysis.Main()
+        self.outfiles = Ianalysis.Main(nd2=self.nd2_file, outDir=self.out_file)
         print(self.outfiles)
 
 if __name__ == '__main__':

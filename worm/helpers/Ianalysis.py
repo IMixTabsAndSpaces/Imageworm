@@ -21,15 +21,23 @@ def extractTIFF(files, targetDir):
 
         
 @Timetrack
-def Main(fileName=None, MATLAB=True, MakeDB=True, RedExtract=True, 
-        Measure=True, RedExcel1=True, RedExcel2=True, Align=True):
+def Main(fileName=None, nd2=None, outDir=None, MATLAB=True, MakeDB=True, RedExtract=True, 
+        Measure=True, RedExcel1=True, RedExcel2=False, Align=False):
     #targetDir = "/mnt/Disk_2/work/images/archive"
+
     #nd2File = "/mnt/Disk_2/work/images/images/ND2_Files"  #sys.argv[1]
     #mlParamLoc = "/mnt/Disk_2/work/images/images/matlabParams" #sys.argv[2]
     ROOT_DIR = os.environ['IW_HOME'] # This is your Project Root
-    targetDir = os.environ['targetDir']
-    nd2File = os.environ['nd2File']  #sys.argv[1]
-    mlParamLoc = os.environ['mlParamLoc'] #sys.argv[2]
+
+    if nd2:
+        nd2File = nd2
+    else:
+        nd2File = os.environ['nd2File']
+    if outDir:
+        targetDir = outDir
+    else:
+        targetDir = os.environ['targetDir']
+    mlParamLoc = os.environ['mlParamLoc']
     TOOLS_DIR = os.path.join(ROOT_DIR,'lib/tools/')
     os.chdir(TOOLS_DIR)
 
@@ -85,10 +93,6 @@ def Main(fileName=None, MATLAB=True, MakeDB=True, RedExtract=True,
             os.system("./acebatch3.pl RedExtractor1 {}".format(f))
             print("./acebatch3.pl Measure1 {}".format(f))
             os.system("./acebatch3.pl Measure1 {}".format(f))
-            print("./acebatch3.pl RedExcel1 {}".format(f))
-            os.system("./acebatch3.pl RedExcel1 {}".format(f))
-            print("./acebatch3.pl RedExcel2 {}".format(f))
-            os.system("./acebatch3.pl RedExcel2 {}".format(f))
         #remove temp folder
         shutil.rmtree(targetDir+"/temp")
         #input("press enter to continue...")
@@ -118,7 +122,8 @@ def Main(fileName=None, MATLAB=True, MakeDB=True, RedExtract=True,
 
 #------------------------------------------------------------------------------------------------------
 if __name__ == "__main__":
-    outfile = Main()
+    outfile =Main()
+    #Main(fileName=['/media/zachlab/Windows/LinuxStorage/images/archive/2018-12-11-12-14-xy6'], MATLAB=False)
     print(outfile)
     
 #------------------------------------------------------------------------------------------------------

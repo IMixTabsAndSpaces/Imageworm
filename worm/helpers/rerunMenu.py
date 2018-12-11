@@ -30,9 +30,9 @@ class runMenu(QDialog):
         super(runMenu, self).__init__()
         #self.setWindowModality(QMainWindow)
         #sys.stdout = EmittingStream(textWritten=self.normalOutputWritten)
-        self.ParameterFile= '/media/zachlab/Windows/LinuxStorage/images/matlabParams'
+        self.ParameterFile= os.environ['mlParamLoc']
         self.series_file= []
-        self.out_file= '/media/zachlab/Windows/LinuxStorage/images/archive'
+        self.out_file= os.environ['targetDir']
         #creat layout widgets
         self.bigEditor = QTextEdit("Process Info:")
         self.bigEditor.setReadOnly(True)
