@@ -53,81 +53,6 @@ def zipMove(Dpath, outF):
     #shutil.move(Dname+'.zip', outF)
 
 
-class ProgressBar(object):
-    def __init__(self, message, width=20, progressSymbol=u'▣ ', emptySymbol=u'□ '):
-        self.width = width
-
-        if self.width < 0:
-            self.width = 0
-
-        self.message = message
-        self.progressSymbol = progressSymbol
-        self.emptySymbol = emptySymbol
-
-    def update(self, progress):
-        totalBlocks = self.width
-        filledBlocks = int(round(progress / (100 / float(totalBlocks))))
-        emptyBlocks = totalBlocks - filledBlocks
-
-        progressBar = self.progressSymbol * filledBlocks + \
-            self.emptySymbol * emptyBlocks
-
-        if not self.message:
-            self.message = u''
-
-        progressMessage = u'\r{0} {1}  {2}%'.format(self.message,
-                                                    progressBar,
-                                                    progress)
-
-        sys.stdout.write(progressMessage)
-        sys.stdout.flush()
-
-    def calculateAndUpdate(self, done, total):
-        progress = int(round((done / float(total)) * 100))
-        self.update(progress)
-
-
-def countFiles(directory):
-    files = []
-
-    if os.path.isdir(directory):
-        for path, dirs, filenames in os.walk(directory):
-            files.extend(filenames)
-
-    return len(files)
-
-
-def makedirs(dest):
-    if not os.path.exists(dest):
-        os.makedirs(dest)
-
-
-def moveFilesWithProgress(src, dest, p):
-    numFiles = countFiles(src)
-
-    if numFiles > 0:
-        makedirs(dest)
-
-        numCopied = 0
-
-        for path, dirs, filenames in os.walk(src):
-            for directory in dirs:
-                destDir = path.replace(src, dest)
-                makedirs(os.path.join(destDir, directory))
-
-            for sfile in filenames:
-                srcFile = os.path.join(path, sfile)
-
-                destFile = os.path.join(path.replace(src, dest), sfile)
-
-                shutil.copy(srcFile, destFile)
-
-                numCopied += 1
-
-                p.calculateAndUpdate(numCopied, numFiles)
-            print('\n')
-
-
 def unZipMove(zpath, dpath):
     zfile = os.path.basename(zpath)
     zdir = os.path.splitext(zfile)[0]
@@ -182,6 +107,7 @@ def editfile(file="", parameter=None):
 
 
 def Makefilelist(root, pattern, fullpath):
+    print("i am here")
     """ Returns all files under the root direcctory with matching pattern. """
     paths, filenames = [], []
     for path, subdirs, files in os.walk(root):
@@ -318,6 +244,7 @@ class xmldata():
 
 
 if __name__ == "__main__":
-    zipMove("/media/zachlab/Windows/LinuxStorage/images/archive/2018-11-30-08-41-xy2",
-            "/media/zachlab/Windows/LinuxStorage/images/archive")
+    #zipMove("/media/zachlab/Windows/LinuxStorage/images/archive/2018-11-30-08-41-xy2",
+    #        "/media/zachlab/Windows/LinuxStorage/images/archive")
     # unZipMove('/media/zachlab/Windows/LinuxStorage/old/embryoDB.zip','/media/zachlab/Windows/LinuxStorage/old/')
+    pass

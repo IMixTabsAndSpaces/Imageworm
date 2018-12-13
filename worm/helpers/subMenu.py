@@ -6,7 +6,7 @@ from PyQt5.QtWidgets import (QAction, QApplication, QFileDialog, QMainWindow,
         QMessageBox, QTextEdit, QVBoxLayout, QGroupBox, QHBoxLayout, QPushButton,
         QLineEdit, QDialog, QWidget, QTableWidget, QLabel, QPushButton, QComboBox,
         QTreeWidget, QTreeWidgetItem, QDialogButtonBox, QFormLayout, QMenu, QMenuBar,
-        QGridLayout, QSpinBox, QAbstractScrollArea)
+        QGridLayout, QSpinBox, QAbstractScrollArea, QProgressBar)
 import sys, os
 try:
     import helpers.Ianalysis as Ianalysis
@@ -120,6 +120,32 @@ class AddDialog(QDialog):
             This will take a while.''')
         self.outfiles = Ianalysis.Main(nd2=self.nd2_file, outDir=self.out_file)
         print(self.outfiles)
+
+class ProgressBar(QDialog):
+    def __init__(self):
+        super().__init__()
+
+        self.pbar = QProgressBar()
+        self.pbar.setAlignment(Qt.AlignCenter)
+        self.pbar.setGeometry(130, 40, 200, 25)
+        self.lable = QLabel("MOVING TIFF IMAGES....")
+        self.lable.setGeometry(80, 40, 200, 20)
+        self.lable.setAlignment(Qt.AlignCenter)
+        #self.addWidget(self.lable)
+        grid = QGridLayout()
+        grid.addWidget(self.pbar, 0,0)
+        grid.addWidget(self.lable, 1, 0)
+        self.setLayout(grid)
+        self.setFixedSize(300, 150)
+        self.setWindowTitle('MOVING FILES')
+
+    def update(self, value):
+        self.pbar.setValue(value)
+
+    def calculateAndUpdate(self, done, total):
+        progress = int(round((done / float(total)) * 100))
+        self.update(progress)
+
 
 if __name__ == '__main__':
 

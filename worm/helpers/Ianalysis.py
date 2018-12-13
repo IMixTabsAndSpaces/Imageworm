@@ -8,7 +8,7 @@ try:
     from helpers.FSConvert import Timetrack, logger, Makefilelist
 except:
     from FSConvert import Timetrack, logger, Makefilelist
-
+import multiprocessing as mp
 
 @Timetrack
 @logger
@@ -19,7 +19,6 @@ def extractTIFF(files, targetDir):
         print("{}/Fiji.app/ImageJ-linux64 --ij2 -macro split_nd2 \"{} {}/\"".format(os.environ['IW_LIB'], i, targetDir))
         os.system("{}/Fiji.app/ImageJ-linux64 -- -macro split_nd2 \"{} {}/\"".format(os.environ['IW_LIB'], i, targetDir))
 
-        
 @Timetrack
 def Main(fileName=None, nd2=None, outDir=None, MATLAB=True, MakeDB=True, RedExtract=True, 
         Measure=True, RedExcel1=True, RedExcel2=False, Align=False):
@@ -44,6 +43,8 @@ def Main(fileName=None, nd2=None, outDir=None, MATLAB=True, MakeDB=True, RedExtr
     if not fileName:
         imagelist = Makefilelist(nd2File, "*.nd2", True)
         print("EXTRACTING IMAGES....")
+        print(imagelist)
+        print(nd2File)
         #creating temp folder and using it as output
         try:
             os.mkdir(targetDir+"/temp")
@@ -97,6 +98,7 @@ def Main(fileName=None, nd2=None, outDir=None, MATLAB=True, MakeDB=True, RedExtr
         shutil.rmtree(targetDir+"/temp")
         #input("press enter to continue...")
         outfiles = [os.path.join(targetDir, f) for f in files]
+        print(outfiles)
         return outfiles
     else:
         files = [os.path.basename(f) for f in fileName]
@@ -122,7 +124,7 @@ def Main(fileName=None, nd2=None, outDir=None, MATLAB=True, MakeDB=True, RedExtr
 
 #------------------------------------------------------------------------------------------------------
 if __name__ == "__main__":
-    outfile =Main()
+    outfile = Main()
     #Main(fileName=['/media/zachlab/Windows/LinuxStorage/images/archive/2018-12-11-12-14-xy6'], MATLAB=False)
     print(outfile)
     

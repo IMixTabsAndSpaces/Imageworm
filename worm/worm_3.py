@@ -1,11 +1,10 @@
 #!/usr/bin/env python
 import os
 import sys
-
+import shutil
+import threading
 import PyQt5.QtGui as QtGui
-from PyQt5.QtCore import (QFile, QFileInfo, QItemSelectionModel, QObject,
-                          QPoint, QRect, QSettings, QSize, Qt, QTextStream,
-                          pyqtSignal)
+from PyQt5 import QtCore  
 from PyQt5.QtGui import QIcon, QKeySequence
 from PyQt5.QtSql import QSqlTableModel
 from PyQt5.QtWidgets import (QAbstractItemView, QAbstractScrollArea, QAction,
@@ -16,19 +15,19 @@ from PyQt5.QtWidgets import (QAbstractItemView, QAbstractScrollArea, QAction,
                              QMessageBox, QPushButton, QSizePolicy, QSpinBox,
                              QTableWidget, QTableWidgetItem, QTextEdit,
                              QTreeWidget, QTreeWidgetItem, QVBoxLayout,
-                             QWidget)
+                             QWidget, QProgressDialog)
 
 import DB_Manager
 import helpers.FSConvert as FSConvert
 from helpers.rerunMenu import runMenu
-from helpers.subMenu import AddDialog
+from helpers.subMenu import AddDialog, ProgressBar
 
 # =============================================================================
 
 
 class MainWindow(QMainWindow):
-    root = QFileInfo(__file__).absolutePath()
-
+    root = QtCore.QFileInfo(__file__).absolutePath()
+    startMoveFilesSignal = QtCore.pyqtSignal(str, str)
     def __init__(self):
         super(MainWindow, self).__init__()
         # this is just a default and not an required to be set
@@ -47,6 +46,20 @@ class MainWindow(QMainWindow):
         self.createStatusBar()
         self.setWindowTitle("IMAGEWORM")
         self.readSettings()
+
+        # multi-thread display
+        self.progressbar =QProgressDialog(self)
+        self.progressbar.hide()
+
+        thread = QtCore.QThread(self)
+        thread.start()
+        self.helper = MoveFileHelper()
+        self.startMoveFilesSignal.connect(self.helper.moveFilesWithProgress)
+        self.helper.progressChanged.connect(self.progressbar.setValue)
+        self.helper.finished.connect(self.on_finished)
+        self.helper.started.connect(self.progressbar.show)
+        self.helper.errorOccurred.connect(self.on_errorOcurred)
+        self.helper.moveToThread(thread)
 
     def createTabel(self):
         self.dataTable = QWidget()
@@ -96,18 +109,18 @@ class MainWindow(QMainWindow):
         treeButton = QPushButton("Print Tree")
         AcetreeButton = QPushButton("Launch AceTree")
         AcetreeButton.clicked.connect(self.LaunchAceTree)
-        ArchiveButton = QPushButton("Archive")
-        ArchiveButton.clicked.connect(self.archiveEntry)
+        self.ArchiveButton = QPushButton("Archive")
+        self.ArchiveButton.clicked.connect(self.archiveEntry)
         unArchiveButton = QPushButton("Retrieve")
         unArchiveButton.clicked.connect(self.RetrieveEntry)
         sideMenuLayout.addWidget(updateButton, 0, 0, 1, 2)
         sideMenuLayout.addWidget(addButton, 1, 0)
         sideMenuLayout.addWidget(rerunButton, 1, 1)
-        sideMenuLayout.addWidget(ArchiveButton, 2, 0)
+        sideMenuLayout.addWidget(self.ArchiveButton, 2, 0)
         sideMenuLayout.addWidget(unArchiveButton, 2, 1)
         sideMenuLayout.addWidget(AcetreeButton, 3, 0)
         sideMenuLayout.addWidget(treeButton, 3, 1)
-        sideMenuLayout.setAlignment(Qt.AlignTop)
+        sideMenuLayout.setAlignment(QtCore.Qt.AlignTop)
         self.Menu.setLayout(sideMenuLayout)
 
         self.filters = QGroupBox("Add filter")
@@ -207,7 +220,7 @@ class MainWindow(QMainWindow):
                 self.isID = True
                 values = self.dbu.GetRow(self.getSelectedID)
                 for i, key in enumerate(self.editLabels):
-                    self.editLabels[key].setText(str(values[0][i]))
+                    self.editLabels[key].setText(str(values[i]))
             else:
                 return value
 
@@ -249,9 +262,9 @@ class MainWindow(QMainWindow):
             #self.tableWidget.resizeColumnToContents(i, QHeaderView.Stretch)
 
     def readSettings(self):
-        settings = QSettings("Trolltech", "Application Example")
-        pos = settings.value("pos", QPoint(200, 200))
-        size = settings.value("size", QSize(400, 400))
+        settings = QtCore.QSettings("Trolltech", "Application Example")
+        pos = settings.value("pos", QtCore.QPoint(200, 200))
+        size = settings.value("size", QtCore.QSize(400, 400))
         self.resize(size)
         self.move(pos)
         self.setGeometry(0, 0, 2040, 1080)
@@ -276,18 +289,32 @@ class MainWindow(QMainWindow):
         self.rerun = runMenu()
         self.rerun.show()
 
+    @QtCore.pyqtSlot()
+    def on_finished(self):
+        self.UpdateDB()
+
+    @QtCore.pyqtSlot(str)
+    def on_errorOcurred(self, msg):
+        QMessageBox.critical(self, "Error Ocurred", msg)
+
+    @QtCore.pyqtSlot()
     def archiveEntry(self):
         if self.isID:
-            p = FSConvert.ProgressBar('Loading :')
-            FSConvert.moveFilesWithProgress(self.annots, os.environ['archiveDir'], p)
-            self.dbu.editTableEntry({'status': str(0)}, self.getSelectedID)
-            self.UpdateTree()
+            src = self.annots
+            bname = os.path.basename(src)
+            dst = os.path.join(os.environ['archiveDir'], bname)
+            print(src, dst)
 
+            self.startMoveFilesSignal.emit(src, dst)
+            self.progressbar.hide()
+ 
+    @QtCore.pyqtSlot()
     def RetrieveEntry(self):
         if self.isID:
-            FSConvert.unZipMove(self.series, os.environ['targetDir'])
-            self.dbu.editTableEntry({'status': str(1)}, self.getSelectedID)
-            self.UpdateTree()
+            src = os.path.join(os.environ['archiveDir'],self.series)
+            dst = os.path.join(os.environ['targetDir'], self.series)
+            self.startMoveFilesSignal.emit(src, dst)
+            self.progressbar.hide()
 
     def LaunchAceTree(self):
         if self.isID:
@@ -300,22 +327,28 @@ class MainWindow(QMainWindow):
 
     def UpdateDB(self):
         series_names = self.dbu.GetCol("series")
-        add_file = []
 
         local_dir = os.environ['targetDir']
         local_vids = os.listdir(local_dir)
 
         for v in local_vids:
             if v not in series_names:
-                add_file.append(os.path.join(local_dir, v))
+                self.dbu.AddXmlToTable([os.path.join(local_dir, v)])
+            print(v)
+            id = self.dbu.GetSeriesID(v)
+            if int(self.dbu.GetRow(id)[16]) != 1:
+                self.dbu.editTableEntry({'status': str(1)}, id)
 
         archive_dir = os.environ['archiveDir']
         archive_vids = os.listdir(archive_dir)
         for v in archive_vids:
             if v not in series_names:
-                add_file.append(os.path.join(archive_dir, v))
-        print(add_file)
-        self.dbu.AddXmlToTable(add_file)
+                self.dbu.AddXmlToTable([os.path.join(archive_dir, v)])
+
+            id = self.dbu.GetSeriesID(v)
+            if int(self.dbu.GetRow(id)[16]) != 2:
+                self.dbu.editTableEntry({'status': str(2)}, id)
+
         self.UpdateTree()
 
     def delRow(self):
@@ -332,8 +365,58 @@ class MainWindow(QMainWindow):
         return self.loadSelectedID(10)
 
     @property
+    def status(self):
+        return self.loadSelectedID(16)
+
+    @property
     def series(self):
         return self.loadSelectedID(1)
+
+class MoveFileHelper(QtCore.QObject):
+    progressChanged = QtCore.pyqtSignal(int)
+    started = QtCore.pyqtSignal()
+    finished = QtCore.pyqtSignal()
+    errorOccurred = QtCore.pyqtSignal(str)
+
+    def calculateAndUpdate(self, done, total):
+        progress = int(round((done / float(total)) * 100))
+        self.progressChanged.emit(progress)
+
+    @staticmethod
+    def countFiles(directory):
+        count = 0
+        if os.path.isdir(directory):
+            for path, dirs, filenames in os.walk(directory):
+                count += len(filenames)
+        return count
+
+    @staticmethod
+    def makedirs(dest):
+        if not os.path.exists(dest):
+            os.makedirs(dest)
+
+    @QtCore.pyqtSlot(str, str)
+    def moveFilesWithProgress(self, src, dest):
+        numFiles = MoveFileHelper.countFiles(src)
+        if os.path.exists(dest):
+            self.errorOccurred.emit("Dest exist")
+            return 
+        if numFiles > 0:
+            self.started.emit()
+            MoveFileHelper.makedirs(dest)
+            numCopied = 0
+            for path, dirs, filenames in os.walk(src):
+                for directory in dirs:
+                    destDir = path.replace(src, dest)
+                    MoveFileHelper.makedirs(os.path.join(destDir, directory))
+
+                for sfile in filenames:
+                    srcFile = os.path.join(path, sfile)
+                    destFile = os.path.join(path.replace(src, dest), sfile)
+                    shutil.move(srcFile, destFile)
+                    numCopied += 1
+                    self.calculateAndUpdate(numCopied, numFiles)
+            self.finished.emit()           
 
 
 if __name__ == '__main__':

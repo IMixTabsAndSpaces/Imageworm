@@ -68,12 +68,15 @@ class DatabaseUtility:
 		return self.RunCommand("SHOW COLUMNS FROM %s;" % self.tableName)
 	
 	def GetRow(self, ID):
-		return self.RunCommand("SELECT * FROM {} WHERE Worm_ID = {};".format(self.tableName, ID))
+		return self.RunCommand("SELECT * FROM {} WHERE Worm_ID = {};".format(self.tableName, ID))[0]
 
 	def GetCol(self, COL_NAME):
 		cmd = ("SELECT {} FROM {};".format(COL_NAME, self.tableName))
 		ans = [i[0] for i in self.RunCommand(cmd)]
 		return ans
+	
+	def GetSeriesID(self, name):
+		return self.RunCommand("SELECT Worm_ID FROM {} WHERE series = '{}';".format(self.tableName, name))[0][0]
 
 	def RunCommand(self, cmd):
 		print ("RUNNING COMMAND: " + cmd)
@@ -113,9 +116,9 @@ class DatabaseUtility:
 
 		values = ", ".join(values)
 		cmd = "UPDATE " + self.tableName + " SET " + values
-		cmd += " WHERE Worm_ID = "+ ID + ";"
+		cmd += " WHERE Worm_ID = "+ str(ID) + ";"
 		self.RunCommand(cmd)
-	
+
 
 	def __del__(self):
 		self.cnx.commit()
