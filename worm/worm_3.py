@@ -18,7 +18,7 @@ from PyQt5.QtWidgets import (QAbstractItemView, QAbstractScrollArea, QAction,
                              QWidget, QProgressDialog)
 
 import DB_Manager
-import helpers.FSConvert as FSConvert
+from helpers import FSConvert
 from helpers.rerunMenu import runMenu
 from helpers.subMenu import AddDialog, ProgressBar
 
@@ -28,6 +28,9 @@ from helpers.subMenu import AddDialog, ProgressBar
 class MainWindow(QMainWindow):
     root = QtCore.QFileInfo(__file__).absolutePath()
     startMoveFilesSignal = QtCore.pyqtSignal(str, str)
+    database = "test2"
+    tableName = "worms"
+
     def __init__(self):
         super(MainWindow, self).__init__()
         # this is just a default and not an required to be set
@@ -49,6 +52,7 @@ class MainWindow(QMainWindow):
 
         # multi-thread display
         self.progressbar =QProgressDialog(self)
+        self.progressbar.show()
         self.progressbar.hide()
 
         thread = QtCore.QThread(self)
@@ -63,10 +67,7 @@ class MainWindow(QMainWindow):
 
     def createTabel(self):
         self.dataTable = QWidget()
-        database = "test2"
-        tableName = "worms"
-        self.dbu = DB_Manager.DatabaseUtility(database, tableName)
-
+        self.dbu = DB_Manager.DatabaseUtility(MainWindow.database, MainWindow.tableName)
         self.tableWidget = QTableWidget()
         self.tableWidget.setSelectionBehavior(QAbstractItemView.SelectRows)
         self.tableWidget.setShowGrid(False)
@@ -107,8 +108,10 @@ class MainWindow(QMainWindow):
         rerunButton = QPushButton("Rerun Entry")
         rerunButton.clicked.connect(self.rerunEntry)
         treeButton = QPushButton("Print Tree")
-        AcetreeButton = QPushButton("Launch AceTree")
+        AcetreeButton = QPushButton("AceTree")
         AcetreeButton.clicked.connect(self.LaunchAceTree)
+        NewAcetreeButton = QPushButton("New AceTree")
+        NewAcetreeButton.clicked.connect(self.LaunchNewAceTree)
         self.ArchiveButton = QPushButton("Archive")
         self.ArchiveButton.clicked.connect(self.archiveEntry)
         unArchiveButton = QPushButton("Retrieve")
@@ -120,6 +123,7 @@ class MainWindow(QMainWindow):
         sideMenuLayout.addWidget(unArchiveButton, 2, 1)
         sideMenuLayout.addWidget(AcetreeButton, 3, 0)
         sideMenuLayout.addWidget(treeButton, 3, 1)
+        sideMenuLayout.addWidget(NewAcetreeButton, 4,0)
         sideMenuLayout.setAlignment(QtCore.Qt.AlignTop)
         self.Menu.setLayout(sideMenuLayout)
 
@@ -230,6 +234,15 @@ class MainWindow(QMainWindow):
             results[key] = self.editLabels[key].text()
 
         self.dbu.editTableEntry(results, self.getSelectedID)
+        axis = results['comments']
+        if axis == None or axis == "None":
+            axis = "XXX"
+        src = os.path.join(self.annots, 'dats', self.series+'AuxInfo.csv')
+        try:
+            FSConvert.editcsvaxis(src, axis)
+        except:
+            pass
+        
         self.UpdateTree()
         self.showSideMenu()
 
@@ -300,17 +313,19 @@ class MainWindow(QMainWindow):
     @QtCore.pyqtSlot()
     def archiveEntry(self):
         if self.isID:
-            src = self.annots
-            bname = os.path.basename(src)
-            dst = os.path.join(os.environ['archiveDir'], bname)
+            print('running archive....')
+            self.progressbar.show()
+            src = os.path.join(os.environ['targetDir'], self.series)
+            dst = os.path.join(os.environ['archiveDir'],self.series)
             print(src, dst)
-
             self.startMoveFilesSignal.emit(src, dst)
             self.progressbar.hide()
  
     @QtCore.pyqtSlot()
     def RetrieveEntry(self):
         if self.isID:
+            print('running retrieve.....')
+            self.progressbar.show()
             src = os.path.join(os.environ['archiveDir'],self.series)
             dst = os.path.join(os.environ['targetDir'], self.series)
             self.startMoveFilesSignal.emit(src, dst)
@@ -324,6 +339,15 @@ class MainWindow(QMainWindow):
             cmd = ('java -jar ' + pathAceTree + ' ' +
                    self.annots + '/dats/'+self.acetree + '&')
             os.system(cmd)
+    
+    def LaunchNewAceTree(self):
+        if self.isID:
+            #pathAceTree = os.path.join(
+            #    os.environ['IW_LIB'], 'DB-Java/AceTree.jar')
+            pathAceTree = os.path.join(os.environ['IW_LIB'], 'AceTree/AceTree.jar')
+            cmd = ('java -jar ' + pathAceTree + ' ' +
+                   self.annots + '/dats/'+self.acetree + '&')
+            os.system(cmd)
 
     def UpdateDB(self):
         series_names = self.dbu.GetCol("series")
@@ -334,10 +358,19 @@ class MainWindow(QMainWindow):
         for v in local_vids:
             if v not in series_names:
                 self.dbu.AddXmlToTable([os.path.join(local_dir, v)])
-            print(v)
+
             id = self.dbu.GetSeriesID(v)
-            if int(self.dbu.GetRow(id)[16]) != 1:
+            row = self.dbu.GetRow(id)
+            if int(row[16]) != 1:
                 self.dbu.editTableEntry({'status': str(1)}, id)
+            #temp fix for editing axis
+            try:
+                src = os.path.join(os.environ['targetDir'], row[1], 'dats', row[1]+'AuxInfo.csv')
+                #src = os.path.join(row[9], 'dats', row[1]+'AuxInfo.csv')
+                axis = FSConvert.getcsvaxis(src)
+                self.dbu.editTableEntry({'comments': str(axis)}, id)
+            except:
+                pass
 
         archive_dir = os.environ['archiveDir']
         archive_vids = os.listdir(archive_dir)
@@ -416,6 +449,8 @@ class MoveFileHelper(QtCore.QObject):
                     shutil.move(srcFile, destFile)
                     numCopied += 1
                     self.calculateAndUpdate(numCopied, numFiles)
+            if os.path.exists(src):
+                shutil.rmtree(src)
             self.finished.emit()           
 
 

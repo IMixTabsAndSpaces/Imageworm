@@ -6,7 +6,7 @@ from PyQt5.QtWidgets import (QAction, QApplication, QFileDialog, QMainWindow,
         QMessageBox, QTextEdit, QVBoxLayout, QGroupBox, QHBoxLayout, QPushButton,
         QLineEdit, QDialog, QWidget, QTableWidget, QLabel, QPushButton, QComboBox,
         QTreeWidget, QTreeWidgetItem, QDialogButtonBox, QFormLayout, QMenu, QMenuBar,
-        QGridLayout, QSpinBox, QAbstractScrollArea, QCheckBox, QTreeView)
+        QGridLayout, QSpinBox, QAbstractScrollArea, QCheckBox, QTreeView,)
 import sys, os
 try:
     import helpers.Ianalysis as Ianalysis
@@ -96,14 +96,21 @@ class runMenu(QDialog):
         self.Measure.setChecked(True)
         self.RedExcel1 = QCheckBox("RedExcel1")
         self.RedExcel2 = QCheckBox("RedExcel2")
+        box = QGroupBox()
+        Horizontal = QHBoxLayout()
         self.Align = QCheckBox("Align")
+        self.AlignED = QLineEdit()
+        self.AlignED.setMaximumWidth(30)
+        Horizontal.addWidget(self.Align)
+        Horizontal.addWidget(self.AlignED)
+        box.setLayout(Horizontal)
         layout.addWidget(self.MATLAB, 0, 0)
         layout.addWidget(self.MakeDB, 1, 0)
         layout.addWidget(self.RedExtract, 2, 0)
         layout.addWidget(self.Measure, 3, 0)
         layout.addWidget(self.RedExcel1, 4, 0)
         layout.addWidget(self.RedExcel2, 5, 0)
-        layout.addWidget(self.Align, 6, 0)
+        layout.addWidget(box, 6, 0)
         self.ParamBox.setLayout(layout)
     
     def updateParameters(self):
@@ -126,7 +133,7 @@ class runMenu(QDialog):
             Ianalysis.Main(fileName=self.series_file, MATLAB=self.MATLAB.isChecked(), 
                 MakeDB=self.MakeDB.isChecked(), RedExtract=self.RedExtract.isChecked(), 
                 Measure=self.Measure.isChecked(), RedExcel1=self.RedExcel1.isChecked(), 
-                RedExcel2=self.RedExcel2.isChecked(), Align=self.Align.isChecked())
+                RedExcel2=self.RedExcel2.isChecked(), Align=self.Align.isChecked(), AlignN=self.AlignED.text())
 
 if __name__ == '__main__':
 

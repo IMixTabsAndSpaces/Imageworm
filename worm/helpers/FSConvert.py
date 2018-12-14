@@ -10,6 +10,7 @@ from fnmatch import fnmatch
 import shutil
 import zipfile
 import sys
+
 # ==============================================================
 
 
@@ -53,13 +54,16 @@ def zipMove(Dpath, outF):
     #shutil.move(Dname+'.zip', outF)
 
 
-def unZipMove(zpath, dpath):
-    zfile = os.path.basename(zpath)
-    zdir = os.path.splitext(zfile)[0]
-    os.mkdir(os.path.join(dpath, zdir))
+def editcsvaxis(src, axisvalue):
+    df = pd.read_csv(src)
+    df[['axis']] = str(axisvalue)
+    df.to_csv(src, mode='w', index=False)
 
-    zip = zipfile.ZipFile(zpath)
-    zip.extractall(os.path.join(dpath, zdir))
+def getcsvaxis(src):
+    df = pd.read_csv(src)
+    v = tuple(df['axis'])[0]
+    return v
+    
 
 
 def ReplaceAll(filelist, old, new):
@@ -247,4 +251,7 @@ if __name__ == "__main__":
     #zipMove("/media/zachlab/Windows/LinuxStorage/images/archive/2018-11-30-08-41-xy2",
     #        "/media/zachlab/Windows/LinuxStorage/images/archive")
     # unZipMove('/media/zachlab/Windows/LinuxStorage/old/embryoDB.zip','/media/zachlab/Windows/LinuxStorage/old/')
+    src  = '/media/zachlab/Windows/LinuxStorage/images/archive/2018-12-13-14-52-xy6/dats/2018-12-13-14-52-xy6AuxInfo.csv'
+    #editcsvaxis(src, "BLA")
+    print(getcsvaxis(src))
     pass

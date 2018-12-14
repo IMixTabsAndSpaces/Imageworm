@@ -21,7 +21,7 @@ def extractTIFF(files, targetDir):
 
 @Timetrack
 def Main(fileName=None, nd2=None, outDir=None, MATLAB=True, MakeDB=True, RedExtract=True, 
-        Measure=True, RedExcel1=True, RedExcel2=False, Align=False):
+        Measure=True, RedExcel1=True, RedExcel2=False, Align=False, AlignN="50"):
     #targetDir = "/mnt/Disk_2/work/images/archive"
 
     #nd2File = "/mnt/Disk_2/work/images/images/ND2_Files"  #sys.argv[1]
@@ -119,8 +119,8 @@ def Main(fileName=None, nd2=None, outDir=None, MATLAB=True, MakeDB=True, RedExtr
                 print("./acebatch3.pl RedExcel2 {}".format(f))
                 os.system("./acebatch3.pl RedExcel2 {}".format(f))
             if Align:
-                print("./acebatch3.pl Align1 {}".format(f))
-                os.system("./acebatch3.pl Align1 {}".format(f))
+                print("./acebatch3.pl Align1 {} {}".format(f, AlignN))
+                os.system("./acebatch3.pl Align1 {} {}".format(f, AlignN))
 
 #------------------------------------------------------------------------------------------------------
 if __name__ == "__main__":
