@@ -2,11 +2,7 @@ from PyQt5.QtCore import (QFile, QFileInfo, QPoint, QRect, QSettings, QSize,
         Qt, QTextStream, QObject, pyqtSignal)
 from PyQt5.QtGui import QIcon, QKeySequence, QStandardItemModel
 import PyQt5.QtGui
-from PyQt5.QtWidgets import (QAction, QApplication, QFileDialog, QMainWindow,
-        QMessageBox, QTextEdit, QVBoxLayout, QGroupBox, QHBoxLayout, QPushButton,
-        QLineEdit, QDialog, QWidget, QTableWidget, QLabel, QPushButton, QComboBox,
-        QTreeWidget, QTreeWidgetItem, QDialogButtonBox, QFormLayout, QMenu, QMenuBar,
-        QGridLayout, QSpinBox, QAbstractScrollArea, QCheckBox, QTreeView,)
+from PyQt5 import QtWidgets
 import sys, os
 try:
     import helpers.Ianalysis as Ianalysis
@@ -24,7 +20,7 @@ class EmittingStream(QObject):
 
 
 SERIES, SENDER, DATE = range(3)
-class runMenu(QDialog):
+class runMenu(QtWidgets.QDialog):
  
     def __init__(self):
         super(runMenu, self).__init__()
@@ -34,19 +30,19 @@ class runMenu(QDialog):
         self.series_file= []
         self.out_file= os.environ['targetDir']
         #creat layout widgets
-        self.bigEditor = QTextEdit("Process Info:")
+        self.bigEditor = QtWidgets.QTextEdit("Process Info:")
         self.bigEditor.setReadOnly(True)
         self.createToolsGroupBox()
         self.createParamGroupBox()
         self.row = 0
 
 
-        buttonBox = QDialogButtonBox(QDialogButtonBox.Ok | QDialogButtonBox.Cancel)
+        buttonBox = QtWidgets.QDialogButtonBox(QtWidgets.QDialogButtonBox.Ok | QtWidgets.QDialogButtonBox.Cancel)
         buttonBox.accepted.connect(self.runpipline)
         buttonBox.rejected.connect(self.reject)
 
         #creat layout with built widgets
-        mainLayout = QVBoxLayout()
+        mainLayout = QtWidgets.QVBoxLayout()
         mainLayout.addWidget(self.ToolsBox)
         mainLayout.addWidget(self.ParamBox)
         mainLayout.addWidget(self.bigEditor)
@@ -64,42 +60,42 @@ class runMenu(QDialog):
         self.bigEditor.append(text)
 
     def createToolsGroupBox(self):
-        self.ToolsBox = QGroupBox()
-        layout = QHBoxLayout()
+        self.ToolsBox = QtWidgets.QGroupBox()
+        layout = QtWidgets.QHBoxLayout()
 
-        bntFile = QPushButton('Edit Parameters')
+        bntFile = QtWidgets.QPushButton('Edit Parameters')
         bntFile.clicked.connect(self.updateParameters)
         layout.addWidget(bntFile)
         self.ToolsBox.setLayout(layout)
 
     def createParamGroupBox(self):
-        self.ParamBox = QGroupBox("Options")
-        layout = QGridLayout()
+        self.ParamBox = QtWidgets.QGroupBox("Options")
+        layout = QtWidgets.QGridLayout()
 
-        bntFile = QPushButton('Find File')
+        bntFile = QtWidgets.QPushButton('Find File')
         bntFile.clicked.connect(self.updateSeries)
         layout.addWidget(bntFile, 0, 1, 1, 3)
-        self.listView = QTreeView()
+        self.listView = QtWidgets.QTreeView()
         self.listView.setRootIsDecorated(False)
         self.listView.setAlternatingRowColors(True)
         self.model = QStandardItemModel(0, 1)
         self.model.setHeaderData(SERIES, Qt.Horizontal, "Series")
         self.listView.setModel(self.model)
         layout.addWidget(self.listView, 1, 1, 6, 3)
-        self.MATLAB = QCheckBox("MATLAB")
+        self.MATLAB = QtWidgets.QCheckBox("MATLAB")
         self.MATLAB.setChecked(True)
-        self.MakeDB = QCheckBox("MakeDB")
+        self.MakeDB = QtWidgets.QCheckBox("MakeDB")
         self.MakeDB.setChecked(True)
-        self.RedExtract = QCheckBox("RedExtract")
+        self.RedExtract = QtWidgets.QCheckBox("RedExtract")
         self.RedExtract.setChecked(True)
-        self.Measure = QCheckBox("Measure")
+        self.Measure = QtWidgets.QCheckBox("Measure")
         self.Measure.setChecked(True)
-        self.RedExcel1 = QCheckBox("RedExcel1")
-        self.RedExcel2 = QCheckBox("RedExcel2")
-        box = QGroupBox()
-        Horizontal = QHBoxLayout()
-        self.Align = QCheckBox("Align")
-        self.AlignED = QLineEdit()
+        self.RedExcel1 = QtWidgets.QCheckBox("RedExcel1")
+        self.RedExcel2 = QtWidgets.QCheckBox("RedExcel2")
+        box = QtWidgets.QGroupBox()
+        Horizontal = QtWidgets.QHBoxLayout()
+        self.Align = QtWidgets.QCheckBox("Align")
+        self.AlignED = QtWidgets.QLineEdit()
         self.AlignED.setMaximumWidth(30)
         Horizontal.addWidget(self.Align)
         Horizontal.addWidget(self.AlignED)
@@ -118,7 +114,7 @@ class runMenu(QDialog):
         self.editor.show()
 
     def updateSeries(self):
-        f = str(QFileDialog.getExistingDirectory(self, 'Select Series', self.out_file))
+        f = str(QtWidgets.QFileDialog.getExistingDirectory(self, 'Select Series', self.out_file))
         if f not in self.series_file:
             self.series_file.append(f)
             self.model.insertRow(self.row)
@@ -128,7 +124,7 @@ class runMenu(QDialog):
 
     def runpipline(self):
         if self.series_file:
-            self.bigEditor = QTextEdit('''Processing Please wait...
+            self.bigEditor = QtWidgets.QTextEdit('''Processing Please wait...
                 This will take a while.''')
             Ianalysis.Main(fileName=self.series_file, MATLAB=self.MATLAB.isChecked(), 
                 MakeDB=self.MakeDB.isChecked(), RedExtract=self.RedExtract.isChecked(), 
@@ -139,7 +135,7 @@ if __name__ == '__main__':
 
     import sys
 
-    app = QApplication(sys.argv)
+    app = QtWidgets.QApplication(sys.argv)
     mainWin = runMenu()
     mainWin.show()
     sys.exit(app.exec_())
