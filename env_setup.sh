@@ -9,10 +9,10 @@ export archiveDir=/mnt/NAS/data/Documents/embryo_movies
 export nd2File=/media/zachlab/Windows/LinuxStorage/images/ND2_Files
 #==========================================================
 
-export IW_HOME=$PWD
+export IW_HOME=/home/zachlab/Documents/python/Imageworm
 export IW_LIB=$IW_HOME/lib
 export targetDir=$Storage
-export mlParamLoc=$IW_LIB/matlabParams
+export mlParamLoc=/home/zachlab/Documents/python/Imageworm/docs/matlabParams
 
 #for Java
 export DBLocation=/media/zachlab/Windows/LinuxStorage/embryoDB/

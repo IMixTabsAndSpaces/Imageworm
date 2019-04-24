@@ -40,6 +40,10 @@ class MainWindow(QtWidgets.QMainWindow):
         self.setWindowTitle("IMAGEWORM")
         self.readSettings()
 
+        #create icon
+        icon = os.path.join(os.environ['IW_HOME'], 'worm.png')
+        self.setWindowIcon(QtGui.QIcon(icon))
+
         # multi-thread display
         self.progressbar = QtWidgets.QProgressDialog(self)
         self.progressbar.show()
@@ -94,7 +98,7 @@ class MainWindow(QtWidgets.QMainWindow):
         updateButton.clicked.connect(self.UpdateDB)
         addButton = QtWidgets.QPushButton("Add Entry")
         addButton.clicked.connect(self.processEntry)
-        rerunButton = QtWidgets.QPushButton("Rerun Entry")
+        rerunButton = QtWidgets.QPushButton("Run Analysis")
         rerunButton.clicked.connect(self.rerunEntry)
         treeButton = QtWidgets.QPushButton("Print Tree")
         AcetreeButton = QtWidgets.QPushButton("AceTree")
@@ -438,7 +442,6 @@ class MoveFileHelper(QtCore.QObject):
                 for directory in dirs:
                     destDir = path.replace(src, dest)
                     MoveFileHelper.makedirs(os.path.join(destDir, directory))
-
                 for sfile in filenames:
                     srcFile = os.path.join(path, sfile)
                     destFile = os.path.join(path.replace(src, dest), sfile)
