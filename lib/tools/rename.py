@@ -22,7 +22,7 @@ def rename(fileArray, incorment, date):
         s[2] = str(int(s[2]) + (idx * incorment))
 
         #adding correct zero padding
-        #must be 3 and 2 char long, to much work to find why this is the case when it is not a problem right now   
+        #must be 3 and 2 char long 
         for ii in s[2], s[4]:
             while len(ii) >=3 and length == 2:
                 ii = ii[1:]
@@ -49,7 +49,8 @@ def rename(fileArray, incorment, date):
 
 
 def main(): 
-    tifdir = sys.argv[1]
+    #tifdir = sys.argv[1]
+    tifdir = "/media/zachlab/Windows/LinuxStorage/images/archive/temp/"
     filelist = os.listdir(tifdir)
     print(filelist)
     matches = groupfile(filelist)
@@ -67,16 +68,23 @@ def main():
 
         # for each set of matching files
         for fidx, File in enumerate(filelist):
-            newFile, outDirName = rename(File, 60, date)
-            if not os.path.isdir(tifdir+outDirName):
-                os.mkdir(tifdir+outDirName)
-                os.mkdir(tifdir+outDirName+"/tif")
-                os.mkdir(tifdir+outDirName+"/tifR")
-            inDir = path[fidx]
-            outDir = [iii.replace(Dir[ID][path[fidx].index(iii)], outDirName) for iii in inDir]
+            if None in File:
+                idxlen = File.index(None)
+                File = File[0:idxlen]
+                newFile, outDirName = rename(File, 61, date)
+                inDir = path[fidx][0:idxlen]
+                outDir = [iii.replace(Dir[ID][inDir.index(iii)], outDirName) for iii in inDir]
+            else:
+                newFile, outDirName = rename(File, 61, date)
+                if not os.path.isdir(tifdir+outDirName):
+                    os.mkdir(tifdir+outDirName)
+                    os.mkdir(tifdir+outDirName+"/tif")
+                    os.mkdir(tifdir+outDirName+"/tifR")
+                inDir = path[fidx]
+                outDir = [iii.replace(Dir[ID][path[fidx].index(iii)], outDirName) for iii in inDir]
             
             for idx in range(len(File)):
-                #print("os.rename("+"{}/{}".format(inDir[idx],File[idx])+", "+"{}/{})".format(outDir[idx],newFile[idx]))
+                #print("{}/{}".format(inDir[idx],File[idx])+", "+"{}/{})".format(outDir[idx],newFile[idx]))
                 shutil.move("{}/{}".format(inDir[idx],File[idx]), "{}/{}".format(outDir[idx],newFile[idx]))
         for ii in i:
             shutil.rmtree(ii)

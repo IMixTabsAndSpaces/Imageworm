@@ -1,6 +1,7 @@
 import os
 import fileinput
 import time
+import itertools
 from fnmatch import fnmatch
 
 
@@ -9,8 +10,9 @@ def ReplaceAll(filelist, old, new):
         filelist[i] = x.replace(old, new)
     return filelist
 
-def transpose(array):
-    array = list(map(list, zip(*array)))
+#works with ragged 2D list, meaning imbedded list do not need to be of the same length
+def transpose(list_list):
+    array = list(map(list, itertools.zip_longest(*list_list, fillvalue=None)))
     return array
 
 def breakup(array, s, idx):

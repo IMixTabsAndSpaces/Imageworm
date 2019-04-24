@@ -353,7 +353,14 @@ class MainWindow(QtWidgets.QMainWindow):
 
         for v in local_vids:
             if v not in series_names:
-                self.dbu.AddXmlToTable([os.path.join(local_dir, v)])
+                try:
+                    self.dbu.AddXmlToTable([os.path.join(local_dir, v)])
+                except:
+                    pass
+            if v not in series_names:
+                self.on_errorOcurred("Error Ocurred: xml not found")
+                break
+                
 
             id = self.dbu.GetSeriesID(v)
             row = self.dbu.GetRow(id)
@@ -370,8 +377,8 @@ class MainWindow(QtWidgets.QMainWindow):
         archive_dir = os.environ['archiveDir']
 
         if not os.path.isdir(archive_dir):
-            QtWidgets.QMessageBox.warning("please connect to NAS!")
-            return
+            self.on_errorOcurred("please connect to NAS!")
+            
 
         archive_vids = os.listdir(archive_dir)
         for v in archive_vids:

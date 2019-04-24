@@ -11,7 +11,7 @@ zres=.504;
 
 %Start and end time to be processed
 start_time=1;
-end_time=64;
+end_time=61;
 
 %Diameter of a nucleus at start time.
 %At the first time point this parameter needs to be manually set to the size of the nuclei.

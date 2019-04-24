@@ -98,9 +98,13 @@ class DatabaseUtility:
 	
 	def AddXmlToTable(self, files):
 		for f in files:
-			name = os.path.basename(f)
-			dat = xmldata(os.path.join(f, 'dats', name+'.xml'))
-			self.RunCommand(dat.mysqlentry('worms'))
+			try:
+				name = os.path.basename(f)
+				dat = xmldata(os.path.join(f, 'dats', name+'.xml'))
+				self.RunCommand(dat.mysqlentry('worms'))
+			except:
+				pass
+
 
 	def delEntry(self, ID):
 		cmd = "DELETE FROM " + self.tableName + " WHERE Worm_ID=" + ID + ";"
